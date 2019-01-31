@@ -6,15 +6,7 @@
     "embedderURL": ["/"],
     "rootRedirect":"",
     "noTest": false,
-    "geppetto_client_path": "node_modules/webapp00001", 
-    "extensions": {
-        "geppetto-default/ComponentsInitialization": true,
-        "geppetto-osb/ComponentsInitialization": false,
-        "geppetto-vfb/ComponentsInitialization": false,
-        "geppetto-neuron/ComponentsInitialization": false,
-        "geppetto-netpyne/ComponentsInitialization": false,
-        "geppetto-hm/ComponentsInitialization": false
-    },
+    "geppetto_client_path": "node_modules/@geppettoengine/geppetto-client",
     "themes": "css/colors",
     "properties": {
         "title" : "geppetto",
