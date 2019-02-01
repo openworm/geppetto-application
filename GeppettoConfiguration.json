@@ -6,7 +6,6 @@
     "embedderURL": ["/"],
     "rootRedirect":"",
     "noTest": false,
-    "geppetto_client_path": "node_modules/@geppettoengine/geppetto-client",
     "themes": "css/colors",
     "properties": {
         "title" : "geppetto",
