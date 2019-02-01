@@ -2,7 +2,7 @@ global.jQuery = require("jquery");
 global.GEPPETTO_CONFIGURATION = require('./GeppettoConfiguration.json');
 
 jQuery(function () {
-  require('geppetto-client/js/pages/geppetto/main');
+  require('geppetto-client-initialization');
   const Console = require('geppetto-client/js/components/interface/console/Console');
   const PythonConsole = require('geppetto-client/js/components/interface/pythonConsole/PythonConsole');
   const ExperimentsTable = require('geppetto-client/js/components/interface/experimentsTable/ExperimentsTable');
