@@ -12,7 +12,7 @@
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
   "devDependencies": {
-    "@geppettoengine/geppetto-client": "0.0.5"
+    "@geppettoengine/geppetto-client": "0.0.6"
   },
   "buildOptions": {
     "emitEntryPoint": true,
