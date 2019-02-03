@@ -97,7 +97,7 @@ module.exports = function(env){
 	        }),
 	        new HtmlWebpackPlugin({
 	            filename: '../WEB-INF/web.xml',
-	            template: path.resolve(__dirname, geppetto_client_path, 'WEB-INF/web.ejs'),
+	            template: path.resolve(__dirname, 'WEB-INF/web.ejs'),
 	            GEPPETTO_CONFIGURATION: geppettoConfig,
 	            chunks: []
 	        }),
