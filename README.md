@@ -1,5 +1,7 @@
 # Geppetto Application
 
+[![Build Status](https://travis-ci.org/openworm/geppetto-application.svg?branch=feature-split_dependencies)](https://travis-ci.org/openworm/geppetto-application)
+
 This module contains a template to create Geppetto applications.
 
 ### Quick start
