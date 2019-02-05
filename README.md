@@ -12,7 +12,7 @@ This module contains a template to create Geppetto applications.
 - Edit `ComponentInitialization.js` to bring your App.js custom file.
 - Create a bundle file by runing `npm run build-dev-noTest`.
 
-#### If you want to install Geppetto client in development mode, follow this steps:
+#### If you want to install Geppetto client in development mode, follow these steps:
 
 - Clone [geppetto-client](https://github.com/openworm/geppetto-client.git).
 - Run `npm install` inside `geppetto-client`.
