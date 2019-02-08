@@ -5,14 +5,16 @@
   "repository": "http://git.geppetto.org",
   "license": "MIT",
   "scripts": {
-    "build": "webpack -p --progress",
+    "lint-client": "eslint ./node_modules/@geppettoengine/geppetto-client/js/**/*.js",
+    "lint-app": "eslint --ignore-pattern 'node_modules/*' .",
+    "build": "npm run lint && webpack -p --progress",
     "build-dev": "webpack --devtool eval",
-    "build-dev-noTest": "webpack --devtool source-map --env.noTest=true",
+    "build-dev-noTest": "npm run lint-client ; npm run lint-app ; webpack --devtool source-map --env.noTest=true",
     "build-dev-noTest:watch": "webpack --devtool source-map --env.noTest=true --progress --watch",
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
   "devDependencies": {
-    "@geppettoengine/geppetto-client": "0.0.6"
+    "@geppettoengine/geppetto-client": "openworm/geppetto-client#lint"
   },
   "buildOptions": {
     "emitEntryPoint": true,
