@@ -9,12 +9,12 @@ jQuery(function () {
   var Switch = require('react-router-dom').Switch;
   var Redirect = require('react-router-dom').Redirect;
   var Router = require('react-router-dom').BrowserRouter;
-  var Main = require('./components/Main').default;
+  var Application = require('./components/Application').default;
 
   ReactDOM.render(
     <Router basename={GEPPETTO_CONFIGURATION.contextPath}>
       <Switch>
-        <Route path="/geppetto" component={Main} />
+        <Route path="/geppetto" component={Application} />
         <Redirect from="/" to="/geppetto" />
       </Switch>
     </Router>

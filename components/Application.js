@@ -17,9 +17,9 @@ const ExperimentsTable = require('geppetto-client/js/components/interface/experi
 var $ = require('jquery');
 var GEPPETTO = require('geppetto');
 
-require('../css/Main.less');
+require('../css/Application.less');
 
-export default class Main extends Component {
+export default class Application extends Component {
 
     constructor(props) {
         super(props);
