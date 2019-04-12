@@ -9,8 +9,8 @@ if [ -d "$DIRECTORY" ]; then
   git checkout $BRANCH
   npm install;
   npm link;
-  npm link @geppettoengine/geppetto-client;
   popd;
+  npm link @geppettoengine/geppetto-client;
 else
   git clone https://github.com/openworm/geppetto-client
   pushd geppetto-client;
@@ -18,6 +18,6 @@ else
   git checkout $BRANCH
   npm install;
   npm link;
-  npm link @geppettoengine/geppetto-client;
   popd;
+  npm link @geppettoengine/geppetto-client;
 fi
