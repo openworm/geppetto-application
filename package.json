@@ -1,7 +1,7 @@
 {
   "name": "geppetto-application",
-  "version": "0.4.2",
-  "description": "Geppetto web frontend. Geppetto is an open-source platform to build web-based tools to visualize and simulate neuroscience data and models.",
+  "version": "1.0.0-alpha",
+  "description": "Geppetto Sample Application. Geppetto is an open-source platform to build web-based tools to visualize and simulate neuroscience data and models.",
   "repository": "http://git.geppetto.org",
   "license": "MIT",
   "scripts": {
@@ -16,7 +16,7 @@
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
   "devDependencies": {
-    "@geppettoengine/geppetto-client": "openworm/geppetto-client#infra-merge"
+    "@geppettoengine/geppetto-client": "openworm/geppetto-client#development"
   },
   "buildOptions": {
     "emitEntryPoint": true,
