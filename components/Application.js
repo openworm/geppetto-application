@@ -80,7 +80,7 @@ export default class Application extends Component {
   render () {
 
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div id='controls' style={{ height: '100%', width: '100%' }}>
 
         <Logo
           logo='gpt-gpt_logo'
