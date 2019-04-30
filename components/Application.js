@@ -116,7 +116,7 @@ export default class Application extends Component {
 
         <div id="sim">
           <Canvas
-            id="CanvasContainer"
+            id="Canvas1"
             name={"Canvas"}
             ref="canvasRef" />
         </div>
