@@ -127,7 +127,7 @@ export default class Application extends Component {
 
         <div id="controlpanel" style={{ top: 0 }}>
           <ControlPanel ref="controlPanelRef" icon={"styles.Modal"} enableInfiniteScroll={true}
-            useBuiltInFilter={true} resultsPerPage={10} enablePagination={true} />
+            useBuiltInFilters={true} resultsPerPage={10} enablePagination={true} />
         </div>
 
         <div id="footer">
