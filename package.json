@@ -15,8 +15,12 @@
     "build-dev-noTest:watch": "webpack --devtool source-map --env.noTest=true --progress --watch",
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
+  "dependencies": {
+    "d3": "^4.2.7"
+  },
   "devDependencies": {
-    "@geppettoengine/geppetto-client": "openworm/geppetto-client#development"
+    "@geppettoengine/geppetto-client": "openworm/geppetto-client#fix_component_factory_register_and_d3_conflict",
+    "d3": "^4.2.7"
   },
   "buildOptions": {
     "emitEntryPoint": true,
