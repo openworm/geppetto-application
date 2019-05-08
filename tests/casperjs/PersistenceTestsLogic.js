@@ -149,7 +149,7 @@ function testProject(test, url, expect_error, persisted, spotlight_record_variab
 							canvasObject = Balanced_240cells_36926conns;
 						}
 						G.addWidget(6);
-						GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([canvasObject])});
+						GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas', id: "Canvas2"}, function () {this.setName('Widget Canvas');this.setPosition();this.display([canvasObject])});
 						G.addWidget(1).then(w=>{w.setMessage("Hhcell popup").addCustomNodeHandler(function(){},'click');});
 						$(".nextBtn").click();
 						$(".nextBtn").click();
