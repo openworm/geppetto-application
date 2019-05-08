@@ -124,6 +124,7 @@ module.exports = function (env){
       },
       // symlinks: true,
       modules: [
+        path.resolve(__dirname, 'geppetto-client', 'node_modules'),
         path.resolve(__dirname, geppetto_client_path, 'node_modules'), 
         'node_modules'
       ],
