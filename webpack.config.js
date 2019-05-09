@@ -119,10 +119,8 @@ module.exports = function (env){
         'geppetto-client': path.resolve(__dirname, geppetto_client_path),
         geppetto: path.resolve(__dirname, geppetto_client_path, 'js/pages/geppetto/GEPPETTO.js'),
         'geppetto-client-initialization': path.resolve(__dirname, geppetto_client_path, 'js/pages/geppetto/main'),
-        handlebars: 'handlebars/dist/handlebars.js',
-        d4: path.resolve(__dirname, 'node_modules/d3/index.js')
+        handlebars: 'handlebars/dist/handlebars.js'
       },
-      // symlinks: true,
       modules: [
         path.resolve(__dirname, 'geppetto-client', 'node_modules'),
         path.resolve(__dirname, geppetto_client_path, 'node_modules'), 
