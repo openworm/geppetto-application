@@ -67,7 +67,7 @@ export default class Application extends Component {
     if (this.refs.canvasRef !== undefined) {
       this.refs.canvasRef.displayAllInstances();
     }
-        
+
     if (this.refs.controlPanelRef !== undefined) {
       this.refs.controlPanelRef.setDataFilter(this.passThroughDataFilter);
     }
@@ -127,12 +127,12 @@ export default class Application extends Component {
 
         <div id="controlpanel" style={{ top: 0 }}>
           <ControlPanel ref="controlPanelRef" icon={"styles.Modal"} enableInfiniteScroll={true}
-            useBuiltInFilter={true} resultsPerPage={10} enablePagination={true} />
+            useBuiltInFilters={true} resultsPerPage={10} enablePagination={true} />
         </div>
 
         <div id="footer">
           <div id="footerHeader">
-            <TabbedDrawer labels={["Console", "Python"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
+            <TabbedDrawer labels={["Console", "Experiments"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
               <Console />
               <ExperimentsTable />
             </TabbedDrawer>

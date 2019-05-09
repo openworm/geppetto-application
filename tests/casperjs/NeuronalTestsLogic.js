@@ -118,7 +118,7 @@ function testSingleCompononetHHProject(test,name){
         closeSpotlight();
         //adding few widgets to the project to test View state later
         casper.evaluate(function(){
-            GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([hhcell])});
+            GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas', id: "Canvas2"}, function () {this.setName('Widget Canvas');this.setPosition();this.display([hhcell])});
             Plot1.setPosition(0,300);
             G.addWidget(1).then(w=>{w.setMessage("Hhcell popup");});
             G.addWidget(1).then(w=>{w.setMessage("Hhcell popup 2").addCustomNodeHandler(function(){},'click');});
