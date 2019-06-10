@@ -5,6 +5,7 @@
   "repository": "http://git.geppetto.org",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "prebuild": "eslint --ignore-pattern 'node_modules/*' --ignore-pattern 'geppetto-client/node_modules' . --color && eslint ./node_modules/@geppettoengine/geppetto-client/js/**/*.js --color",
     "build": "webpack -p --progress",
     "prebuild-dev": "eslint --ignore-pattern 'node_modules/*' --ignore-pattern 'geppetto-client/node_modules' . --color && eslint ./node_modules/@geppettoengine/geppetto-client/js/**/*.js --color",
@@ -26,5 +27,10 @@
         "node_modules"
       ]
     }
+  },
+  "dependencies": {
+    "jest": "^24.8.0",
+    "jest-puppeteer": "^3.9.0",
+    "puppeteer": "^1.17.0"
   }
 }
