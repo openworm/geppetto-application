@@ -35,6 +35,7 @@ export const SPOT_LIGHT_SEARCH_INPUT_SELECTOR = 'input#typeahead';
 export const CONTROL_PANEL_SELECTOR = 'div#controlpanel';
 export const CONTROL_PANEL_MESSAGE = "The control panel is correctly open.";
 export const CONTROL_PANEL_BUTTON = '#controlPanelBtn';
+export const CONTROL_PANEL_CONTAINER_SELECTOR = '#controlpanel'
 
 export const SEARCH_ICON_SELECTOR = 'i.fa.search';
 export const SEARCH_ICON_MESSAGE = 'Attempting to open spotlight';
@@ -78,10 +79,14 @@ export const WIDGET_LIST = [ POPUP, PLOT, TREE, VAR_LIST ]
 
 
 export const HHCELL_SELECTOR = 'hhcell.hhpop[0]';
+export const HHCELL_V_SELECTOR = 'hhcell.hhpop[0].v';
 export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility_ctrlPanel_btn';
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';
 
 
-export const PROJECT_FILTER_BUTTON_SELECTOR = 'anyProjectFilterBtn';
+export const PROJECT_FILTER_BUTTON_SELECTOR = '#anyProjectFilterBtn';
+
+
+export const PLOT1_SELECTOR = 'div[id="Plot1"]';

@@ -102,14 +102,14 @@ describe('Test UI Components', () => {
 
     })
 
-    describe.skip('Control Panel', () => {
+    describe('Control Panel', () => {
       it('The control panel opened with right amount of rows.', async () => {
         await click(ST.CONTROL_PANEL_BUTTON);
         await testInitialControlPanelValues(3);
       })
     })
 
-    describe.skip('Mesh', () => {
+    describe('Mesh', () => {
       it('Initial visibility correct', async () => {
         await testMeshVisibility(true, ST.HHCELL_SELECTOR);
       })
@@ -123,11 +123,11 @@ describe('Test UI Components', () => {
       })
     })
 
-    describe.skip('Plot from control panel', () => {
+    describe('Plot from control panel', () => {
       it('Plot V.', async () => {
         await click(ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR)
         await click(ST.HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR)
-        await wait4selector('div[id="Plot1"]', { visible: true })
+        await wait4selector(ST.PLOT1_SELECTOR, { visible: true })
       })
       
       it('Remove all plots.', async () => {
@@ -139,31 +139,42 @@ describe('Test UI Components', () => {
         expect(
           await page.evaluate(async () => $(".standard-row").length)
         ).toBe(10)
-        await page.evaluate(async () => {
-          $("#controlpanel").hide()
-        })
+
+        await page.evaluate(async selector => {
+          $(selector).hide()
+        }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
       })
     })
 
 
-    describe.skip('Spotlight', () => {
-      it('', async () => {
-        testSpotlight("hhcell.hhpop[0].v",'div[id="Plot1"]',"hhcell","hhcell.hhpop[0]");
-        await click(ST.SEARCH_ICON_SELECTOR);
-        await wait4selector(ST.SEARCH_ICON_SELECTOR, { visible: true });
+    describe('Spotlight', () => {
+      it('Opens and shows correct butttons.', async () => {
+        await click(ST.SPOT_LIGHT_BUTTON_SELECTOR);
+        await wait4selector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
       })
 
       it('Spotlight button exists', async () => {
         await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
-        await page.keyboard.type("hhcell.hhpop[0].v");
+        
+      })
+      it('Spotlight button exists2', async () => {
+        
+        await page.keyboard.type(ST.HHCELL_V_SELECTOR);
+        
+      })
+      it('Spotlight button exists3', async () => {
+        
         await page.keyboard.press(String.fromCharCode(13))
-        await page.waitForSelector(ST.SEARCH_ICON_SELECTOR, { visible: true });
+        
+      })
+      it('Spotlight button exists4', async () => {
+        
+        await page.waitForSelector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
       })
 
       it('Plot visible', async () => {
-        await wait4selector(ST.PLOT_BUTTON_SELECTOR, { visible: true });
-        await page.click("#plot");
-        await wait4selector('div[id="Plot1"]', { visible: true });
+        await click(ST.PLOT_BUTTON_SELECTOR);
+        await wait4selector(ST.PLOT1_SELECTOR, { visible: true });
       })
 
       it('Close', async () => {
@@ -185,10 +196,6 @@ describe('Test UI Components', () => {
     
     })
 
-    /*
-     * function testSingleCompononetHHProject (test,name){
-     *   casper.echo("------------STARTING HHCELL TEST--------------");
-     */
 
     /*
      *   casper.then(function () {
