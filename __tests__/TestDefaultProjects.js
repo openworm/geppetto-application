@@ -9,18 +9,15 @@ import {
   testCameraControls, 
   testInitialControlPanelValues, 
   testMeshVisibility,
-  testSpotlight
 } from './wip';
 import * as ST from './selectors';
 
-const COLLAPSE_WIDGET_HEIGHT = 35;
-const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
-
 
 describe('Test UI Components', () => {
-
+  let page
   beforeAll(async () => {
     jest.setTimeout(30000);
+    page = await browser.newPage();
     await page.goto(getUrlFromProjectId(1));
   });
 
@@ -31,24 +28,25 @@ describe('Test UI Components', () => {
     
     describe('Landing page', () => {
       it("Spinner goes away", async () => {
-        await wait4selector(ST.SPINNER_SELECTOR, { hidden: true })
+        await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
       })
       
       it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-        await wait4selector(selector, { visible: true })
+        // console.log(page.url())
+        await wait4selector(page, selector, { visible: true, timeout: 10000 })
       })
     })
 
 
     describe('Widgets', () => {
       it('Right amount of graph elements for Plot1', async () => {
-        await wait4selector('div[id="Plot1"]', { visible: true, timeout: 5000 }); 
+        await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true, timeout: 30000 }); 
         await page.waitFor(1000);
-        await testPlotWidgets("Plot1", 1);
+        await testPlotWidgets(page, "Plot1", 1);
       })
 
       it('Right amount of graph elements for Plot2', async () => {
-        await testPlotWidgets("Plot2", 3);
+        await testPlotWidgets(page, "Plot2", 3);
       })
 
       it('Initial amount of experiments for hhcell checked.', async () => {
@@ -89,50 +87,50 @@ describe('Test UI Components', () => {
 
       it('REPEATED!! Right amount of graph elements for Plot1', async () => {
         await page.evaluate(async () => Plot1.plotData(eval('hhcell').hhpop[0].v))
-        await testPlotWidgets("Plot1", 1)
+        await testPlotWidgets(page, "Plot1", 1)
       })
 
       it('Remove data', async () => {
-        await removeAllPlots();
+        await removeAllPlots(page, );
       })
 
       it('Camera controls', async () => {
-        await testCameraControls([0, 0, 30.90193733102435]);
+        await testCameraControls(page, [0, 0, 30.90193733102435]);
       })
 
     })
 
     describe('Control Panel', () => {
       it('The control panel opened with right amount of rows.', async () => {
-        await click(ST.CONTROL_PANEL_BUTTON);
-        await testInitialControlPanelValues(3);
+        await click(page, ST.CONTROL_PANEL_BUTTON);
+        await testInitialControlPanelValues(page, 3);
       })
     })
 
     describe('Mesh', () => {
       it('Initial visibility correct', async () => {
-        await testMeshVisibility(true, ST.HHCELL_SELECTOR);
+        await testMeshVisibility(page, true, ST.HHCELL_SELECTOR);
       })
       it('Hide correct', async () => {
-        await click(ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
-        await testMeshVisibility(false, ST.HHCELL_SELECTOR);
+        await click(page, ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
+        await testMeshVisibility(page, false, ST.HHCELL_SELECTOR);
       })
       it('Visible again correct', async () => {
-        await click(ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
-        await testMeshVisibility(true, ST.HHCELL_SELECTOR);
+        await click(page, ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
+        await testMeshVisibility(page, true, ST.HHCELL_SELECTOR);
       })
     })
 
     describe('Plot from control panel', () => {
       it('Plot V.', async () => {
-        await click(ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR)
-        await click(ST.HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR)
-        await wait4selector(ST.PLOT1_SELECTOR, { visible: true })
+        await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR)
+        await click(page, ST.HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR)
+        await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true })
       })
       
       it('Remove all plots.', async () => {
-        await click(ST.PROJECT_FILTER_BUTTON_SELECTOR);
-        removeAllPlots();
+        await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
+        removeAllPlots(page, );
       })
 
       it('Correct amount of rows for Global filter.', async () => {
@@ -149,8 +147,8 @@ describe('Test UI Components', () => {
 
     describe('Spotlight', () => {
       it('Opens and shows correct butttons.', async () => {
-        await click(ST.SPOT_LIGHT_BUTTON_SELECTOR);
-        await wait4selector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
+        await click(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
+        await wait4selector(page, ST.SPOT_LIGHT_SELECTOR, { visible: true });
       })
 
       it('Spotlight button exists', async () => {
@@ -173,8 +171,8 @@ describe('Test UI Components', () => {
       })
 
       it('Plot visible', async () => {
-        await click(ST.PLOT_BUTTON_SELECTOR);
-        await wait4selector(ST.PLOT1_SELECTOR, { visible: true });
+        await click(page, ST.PLOT_BUTTON_SELECTOR);
+        await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
       })
 
       it('Close', async () => {

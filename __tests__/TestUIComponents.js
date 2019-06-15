@@ -11,9 +11,10 @@ const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.f
 
 
 describe('Test UI Components', () => {
-
+  let page
   beforeAll(async () => {
     jest.setTimeout(30000);
+    page = await browser.newPage();
     await page.goto(baseURL);
   });
 
@@ -37,11 +38,11 @@ describe('Test UI Components', () => {
 
     describe('Landing page', () => {
       it("Spinner goes away", async () => {
-        await wait4selector(ST.SPINNER_SELECTOR, { hidden: true })
+        await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
       })
       
       it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-        await wait4selector(selector, { visible: true })
+        await wait4selector(page, selector, { visible: true })
       })
        
     }) 
@@ -49,37 +50,37 @@ describe('Test UI Components', () => {
 
     describe('Console', () => {
       it('The console panel is correctly visible.', async () => {
-        await click(ST.CONSOLE_SELECTOR)
-        await wait4selector(ST.DRAWER_SELECTOR, { visible: true });
+        await click(page, ST.CONSOLE_SELECTOR)
+        await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true });
       })
       
       it('The console panel is correctly hidden.', async () => {
-        await click(ST.DRAWER_MINIMIZE_ICON_SELECTOR);
-        await wait4selector(ST.DRAWER_SELECTOR, { hidden: true });
+        await click(page, ST.DRAWER_MINIMIZE_ICON_SELECTOR);
+        await wait4selector(page, ST.DRAWER_SELECTOR, { hidden: true });
       })
       
       it('Console is maximized correctly.', async () => {
-        await click(ST.CONSOLE_SELECTOR)
-        await wait4selector(ST.DRAWER_SELECTOR, { visible: true });
-        await click(ST.DRAWER_MAXIMIZE_ICON_SELECTOR)
+        await click(page, ST.CONSOLE_SELECTOR)
+        await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true });
+        await click(page, ST.DRAWER_MAXIMIZE_ICON_SELECTOR)
         expect(
           await page.evaluate( async selector => $(selector).height() > 250, ST.DRAWER_CONTAINER_SELECTOR)
         ).toBeTruthy()
       })
       
       it('Console output empty.', async () => {
-        await click(ST.DRAWER_CLOSE_ICON_SELECTOR)
-        await wait4selector(ST.DRAWER_SELECTOR, { hidden: true });
-        await click(ST.CONSOLE_SELECTOR)
-        await wait4selector(ST.DRAWER_CMD_INPUT_SELECTOR, { visible: true });
+        await click(page, ST.DRAWER_CLOSE_ICON_SELECTOR)
+        await wait4selector(page, ST.DRAWER_SELECTOR, { hidden: true });
+        await click(page, ST.CONSOLE_SELECTOR)
+        await wait4selector(page, ST.DRAWER_CMD_INPUT_SELECTOR, { visible: true });
         expect(
           await page.evaluate( async selector => $(selector).find("span").length, ST.CONSOLE_OUTPUT_SELECTOR)
         ).toBe(1)
       })
 
       it('Console output not empty.', async () => {
-        await page.evaluate( async () => G.debug(true))
-        await click(ST.PAN_HOME_BUTTON_SELECTOR)
+        await page.evaluate(async () => G.debug(true))
+        await click(page, ST.PAN_HOME_BUTTON_SELECTOR)
         await page.waitFor(50)
         expect(
           await page.evaluate( async selector => $(selector).find("span").length, ST.CONSOLE_OUTPUT_SELECTOR)
@@ -88,20 +89,20 @@ describe('Test UI Components', () => {
 
       it('G.clear command not null.', async () => {
         expect(
-          await page.evaluate( async () => G.clear())
+          await page.evaluate(async () => G.clear())
         ).toBe("Console history cleared")
       })
 
       it('Console output not empty after G.clear.', async () => {
         expect(
-          await page.evaluate( async selector => $(selector).find("span").length, ST.CONSOLE_OUTPUT_SELECTOR)
+          await page.evaluate(async selector => $(selector).find("span").length, ST.CONSOLE_OUTPUT_SELECTOR)
         ).toBe(0)
       })
 
       it('Leave debug mode and hide console.', async () => {
         await page.evaluate( async () => G.debug(false))
-        await click(ST.CONSOLE_SELECTOR)
-        await wait4selector(ST.DRAWER_SELECTOR, { hidden: true });
+        await click(page, ST.CONSOLE_SELECTOR)
+        await wait4selector(page, ST.DRAWER_SELECTOR, { hidden: true });
       })
     })
 
@@ -135,16 +136,16 @@ describe('Test UI Components', () => {
 
     describe('Help window', () => {
       it('Right amount of title headers for tutorial window', async () => {
-        await click(ST.HELP_BUTTON_SELECTOR);
-        await wait4selector(ST.HELP_MODAL_SELECTOR, { visible: true });
+        await click(page, ST.HELP_BUTTON_SELECTOR);
+        await wait4selector(page, ST.HELP_MODAL_SELECTOR, { visible: true });
         expect(
           await page.evaluate( async selector => $(selector).find("h4").length, ST.HELP_MODAL_SELECTOR)
         ).toBe(7)
       })
 
       it('Right amount of status circles for tutorial window', async () => {
-        await click(ST.HELP_BUTTON_SELECTOR);
-        await wait4selector(ST.HELP_MODAL_SELECTOR, { visible: true });
+        await click(page, ST.HELP_BUTTON_SELECTOR);
+        await wait4selector(page, ST.HELP_MODAL_SELECTOR, { visible: true });
         expect(
           await page.evaluate( async selector => $(selector).find("div").find(".circle").length, ST.HELP_MODAL_SELECTOR)
         ).toBe(10)
@@ -152,13 +153,13 @@ describe('Test UI Components', () => {
 
       it('G.help command not null.', async () => {
         expect(
-          await page.evaluate( async () => G.help())
+          await page.evaluate(async () => G.help())
         ).not.toBeNull()
       })
         
       it("I've waited for help window to go away.", async () => {
-        await page.evaluate( async selector => $(selector).find("button")[0].click(), ST.HELP_MODAL_SELECTOR)
-        await wait4selector(ST.HELP_MODAL_SELECTOR, { hidden: true });
+        await page.evaluate(async selector => $(selector).find("button")[0].click(), ST.HELP_MODAL_SELECTOR)
+        await wait4selector(page, ST.HELP_MODAL_SELECTOR, { hidden: true });
       })
     })
 
@@ -166,7 +167,7 @@ describe('Test UI Components', () => {
     describe.each(ST.WIDGET_LIST)('%s', (title, widgetType, widgetName, originalDimensions) => {
       beforeAll(async () => {
         await page.evaluate( async widgetType => G.addWidget(widgetType), widgetType)
-        await wait4selector(`#${widgetName}`, { visible: true });
+        await wait4selector(page, `#${widgetName}`, { visible: true });
       });
 
       it('Initial dimensions correct.', async () => {
@@ -253,7 +254,7 @@ describe('Test UI Components', () => {
       describe('Destroy', () => {
         it("Doesn't exist anymore.", async () => {
           await page.evaluate( async widgetName => eval(widgetName).destroy(), widgetName);
-          await wait4selector(`#${widgetName}`, { hidden: true });
+          await wait4selector(page, `#${widgetName}`, { hidden: true });
         })
       })
     })
@@ -262,7 +263,7 @@ describe('Test UI Components', () => {
     describe('Units control.', () => {
       beforeAll(async () => {
         await page.evaluate( async () => G.addWidget(0))
-        await wait4selector('#Plot1', { visible: true });
+        await wait4selector(page, '#Plot1', { visible: true });
       });
       
       it("'S / m2' unit.", async () => {
