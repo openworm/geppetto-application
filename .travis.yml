@@ -10,8 +10,8 @@ env:
     - CONTAINER_NAME: geppetto_container
     - DEFAULT_BRANCH: development
     - LANDING_PAGE: "http://localhost:8080/org.geppetto.frontend"
-before_install:
-- sudo apt-get install -y xserver-xorg-dev libxext-dev libxi-dev 
+# before_install:
+# - sudo apt-get install -y xserver-xorg-dev libxext-dev libxi-dev 
 install:
   - npm install jest@24.8.0 jest-puppeteer@3.9.0 puppeteer@1.17.0 eslint-plugin-jest@22.6.4 babel-preset-env@1.6.0 url-join@4.0.0
 services:
@@ -27,7 +27,7 @@ script:
   - echo "$http_status"
   - while [ "$http_status" == "404" ]; do
       echo "Restart run. Printing logs for debugging purposes";
-      sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc;
+      docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc;
       tail -n 200 /etc/log.log;
       docker stop $(docker ps -a -q);
       sleep 10;
@@ -40,9 +40,10 @@ script:
       echo "Done restarting $http_status";
     done;
   - "curl -s -I $1 $LANDING_PAGE | grep HTTP/1.1 | awk {'print $2'}"
-  - npm test -- --verbose --colors --runInBand
+  - npm test -- --verbose --colors
   - docker ps -a;
-  - sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
+  - docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
+  # - sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
   - tail /etc/log.log -n 200
   - docker stop $(docker ps -a -q)
   - docker rm $(docker ps -a -q)
