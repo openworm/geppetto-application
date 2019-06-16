@@ -12,7 +12,6 @@ env:
     - LANDING_PAGE: "http://localhost:8080/org.geppetto.frontend"
 services:
   - docker
-  - xvfb
 install:
   - npm install jest@24.8.0 puppeteer@1.17.0 jest-puppeteer@3.9.0 babel-preset-env@1.6.0 url-join@4.0.0
 script:
@@ -36,7 +35,7 @@ script:
       http_status=$(curl -s -I $1 $LANDING_PAGE | grep HTTP/1.1 | awk {'print $2'});
       echo "Done restarting $http_status";
     done;
-  - travis_retry xvfb-run -a --server-args="-screen 0 1024x768x24" npm test -- --verbose --colors
+  - travis_retry npm test -- --verbose --colors
   - docker ps -a;
   - sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
   - tail /etc/log.log -n 200
