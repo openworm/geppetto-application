@@ -155,7 +155,8 @@ export const testCameraControls = async (page, expectedCameraPosition) => {
 
   for (const [ repetitions, selector ] of scheduler) {
     for (const i of Array(repetitions)) {
-      await page.click(selector)
+      page.click(selector)
+      await page.waitFor(20)
     }
     await resetCameraTest(page, expectedCameraPosition);
   }
@@ -176,11 +177,14 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   ];
 
   await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
-    await asyncForEach(Array(repetitions), async () => {
-      await page.click(firstSelector);
-      await page.click(secondSelector);
-    })
-      
+    
+    for (let i in Array(repetitions).fill(1)) {
+      // time blows up if we wait the clicks
+      page.click(firstSelector);
+      await page.waitFor(10)
+      page.click(secondSelector);
+      await page.waitFor(10)
+    }
     await resetCameraTest(page, expectedCameraPosition);
   })
 

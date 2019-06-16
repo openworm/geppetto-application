@@ -10,15 +10,13 @@ import {
   testInitialControlPanelValues, 
   testMeshVisibility,
   testCameraControlsWithCanvasWidget
-} from './wip';
+} from './functions';
 import * as ST from './selectors';
 
 
 describe('Test UI Components', () => {
-  // let page
   beforeAll(async () => {
     jest.setTimeout(30000);
-    // page = await browser.newPage();
     
     await page.goto(getUrlFromProjectId(1));
     
@@ -35,7 +33,6 @@ describe('Test UI Components', () => {
       })
       
       it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-        // console.log(page.url())
         await wait4selector(page, selector, { visible: true, timeout: 10000 })
       })
     })
@@ -136,7 +133,7 @@ describe('Test UI Components', () => {
       
       it('Remove all plots.', async () => {
         await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
-        removeAllPlots(page, );
+        await removeAllPlots(page, );
       })
 
       it('Correct amount of rows for Global filter.', async () => {
@@ -164,7 +161,6 @@ describe('Test UI Components', () => {
       })  
         
       it('Spotlight button exists4', async () => {
-        
         await page.waitForSelector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
       })
 
@@ -209,11 +205,10 @@ describe('Test UI Components', () => {
     describe('Widget canvas mesh', () => {
       it('Canvas widget has hhcell', async () => {
         expect(
-          await page.evaluate(async selector => Canvas2.engine.getRealMeshesForInstancePath(selector).length, ST.HHCELL_SELECTOR)
+          await page.evaluate(async selector => window.Canvas2.engine.getRealMeshesForInstancePath(selector).length, ST.HHCELL_SELECTOR)
         ).toBe(1)
       })
     })
-
 
     describe('Camera Controls on main Canvas and Canvas widget', () => {
       it('Canvas widget has hhcell', async () => {
@@ -255,7 +250,7 @@ describe('Test UI Components', () => {
           if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null){
             await page.wait4selector(page, ST.TUTORIAL_1_DIV_SELECTOR, { visible: true });
             expect(
-              await page.evaluate(async () => Tutorial1.state.currentStep)
+              await page.evaluate(async () => window.Tutorial1.state.currentStep)
             ).toBe(2)
           }
         })
@@ -268,7 +263,7 @@ describe('Test UI Components', () => {
       })
 
       it('Popup2 custom handlers event restored correctly.', async () => {
-        const popUpCustomHandler = await page.evaluate(async () => Popup2.customHandlers)
+        const popUpCustomHandler = await page.evaluate(async () => window.Popup2.customHandlers)
         expect(popUpCustomHandler.length).toBe(1)
         expect(popUpCustomHandler[0].event).toBe("click")
       })
