@@ -162,21 +162,28 @@ export const testCameraControls = async (page, expectedCameraPosition) => {
 }
 
 
-export const testCameraControlsWithCanvasWidget = (page, expectedCameraPosition) => {
-  
+export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPosition) => {
+  const asyncForEach = async (array, callback) => {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array)
+    }
+  }
+
   const scheduler = [
     [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR],
     [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR],
     [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR]
   ];
 
-  scheduler.forEach( ([repetitions, firstSelector, secondSelector]) => {
-    Array(repetitions).forEach(async () => {
+  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
+    await asyncForEach(Array(repetitions), async () => {
       await page.click(firstSelector);
       await page.click(secondSelector);
     })
-    resetCameraTest(page, expectedCameraPosition);
+      
+    await resetCameraTest(page, expectedCameraPosition);
   })
+
 }
 
 

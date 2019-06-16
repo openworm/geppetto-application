@@ -10,16 +10,13 @@ env:
     - CONTAINER_NAME: geppetto_container
     - DEFAULT_BRANCH: development
     - LANDING_PAGE: "http://localhost:8080/org.geppetto.frontend"
-# before_install:
-# - sudo apt-get install -y xserver-xorg-dev libxext-dev libxi-dev 
-install:
-  - npm install jest@24.8.0 jest-puppeteer@3.9.0 puppeteer@1.17.0 eslint-plugin-jest@22.6.4 babel-preset-env@1.6.0 url-join@4.0.0
 services:
   - docker
+  - xvfb
+install:
+  - npm install jest@24.8.0 puppeteer@1.17.0 jest-puppeteer@3.9.0 babel-preset-env@1.6.0 url-join@4.0.0
 script:
-  - docker pull frodriguez4600/geppetto:latest
-  - docker tag frodriguez4600/geppetto:latest $IMAGE_NAME
-  # - travis_retry docker build -t=$IMAGE_NAME --build-arg targetBranch=$TRAVIS_BRANCH --build-arg originBranch=$TRAVIS_PULL_REQUEST_BRANCH --build-arg defaultBranch=$DEFAULT_BRANCH $DOCKER_FOLDER
+  - travis_retry docker build -t=$IMAGE_NAME --build-arg targetBranch=$TRAVIS_BRANCH --build-arg originBranch=$TRAVIS_PULL_REQUEST_BRANCH --build-arg defaultBranch=$DEFAULT_BRANCH $DOCKER_FOLDER
   - travis_retry docker run  -t -dit --name=$CONTAINER_NAME -p 8080:8080 $IMAGE_NAME
   - bash $TRAVIS_BUILD_DIR/tests/casperjs/utilities/test_geppetto_server.sh
   - sleep 30
@@ -27,7 +24,7 @@ script:
   - echo "$http_status"
   - while [ "$http_status" == "404" ]; do
       echo "Restart run. Printing logs for debugging purposes";
-      docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc;
+      sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc;
       tail -n 200 /etc/log.log;
       docker stop $(docker ps -a -q);
       sleep 10;
@@ -39,11 +36,9 @@ script:
       http_status=$(curl -s -I $1 $LANDING_PAGE | grep HTTP/1.1 | awk {'print $2'});
       echo "Done restarting $http_status";
     done;
-  - "curl -s -I $1 $LANDING_PAGE | grep HTTP/1.1 | awk {'print $2'}"
-  - npm test -- --verbose --colors
+  - travis_retry xvfb-run -a --server-args="-screen 0 1024x768x24" npm test -- --verbose --colors
   - docker ps -a;
-  - docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
-  # - sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
+  - sudo docker cp $CONTAINER_NAME:/home/developer/virgo/serviceability/logs/log.log /etc
   - tail /etc/log.log -n 200
   - docker stop $(docker ps -a -q)
   - docker rm $(docker ps -a -q)

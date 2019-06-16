@@ -23,10 +23,8 @@ export const ZOOM_BUTTON_CANVAS_2_SELECTOR = '#Canvas2 ' + ZOOM_BUTTON_SELECTOR;
 export const PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR = '#Canvas2 ' + PAN_RIGHT_BUTTON_SELECTOR;
 export const ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR = '#Canvas2 ' + ROTATE_RIGHT_BUTTON_SELECTOR;
 
-
 export const WATCH_BUTTON_SELECTOR = 'button#watch';
 export const WATCH_BUTTON_VISIBLE_MESSAGE = 'Watch button correctly hidden';
-
 
 export const PAN_HOME_BUTTON_SELECTOR = '#panHomeBtn';
 export const SPOT_LIGHT_BUTTON_SELECTOR = '#spotlightBtn';
@@ -63,20 +61,12 @@ export const DIALOG_SELECTOR = 'div.dialog';
 
 export const BUTTON_ONE_SELECTOR = 'button#buttonOne';
 
-
-export const ELEMENTS_IN_LANDING_PAGE = [
-  [ SIM_TOOLBAR_MESSAGE, SIM_TOOLBAR_SELECTOR ],
-  [ CONTROLS_MESSAGE, CONTROLS_SELECTOR],
-  [ FOREGROUND_MESSAGE, FOREGROUND_TOOLBAR_SELECTOR]
-];
-
 export const POPUP = ['Popups' , 1, 'Popup1', { width: 490, height: 394 }]
 export const PLOT = ['Plots' , 0, 'Plot1', { width: 350, height: 300 }]
 export const TREE = ['Trees' , 3, "TreeVisualiserDAT1", { width: 350, height: 260 }]
 export const VAR_LIST = ['Variables', 5, "VarVis1", { width: 350, height: 120 }]
 
 export const WIDGET_LIST = [ POPUP, PLOT, TREE, VAR_LIST ]
-
 
 export const HHCELL_SELECTOR = 'hhcell.hhpop[0]';
 export const HHCELL_V_SELECTOR = 'hhcell.hhpop[0].v';
@@ -85,8 +75,23 @@ export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0
 
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';
 
-
 export const PROJECT_FILTER_BUTTON_SELECTOR = '#anyProjectFilterBtn';
 
-
 export const PLOT1_SELECTOR = 'div[id="Plot1"]';
+
+export const TUTORIAL_BUTTON_SELECTOR = 'button#tutorialBtn'
+
+export const CANVAS_2_DIV_SELECTOR = 'div#Canvas2'
+export const PLOT_1_DIV_SELECTOR = 'div#Plot1'
+export const POPUP_1_DIV_SELECTOR = 'div#Popup1'
+export const POPUP_2_DIV_SELECTOR = 'div#Popup2'
+export const POPUP_1_SELECTOR = '#Popup1'
+
+export const TUTORIAL_1_DIV_SELECTOR = 'div#Tutorial1'
+
+
+export const ELEMENTS_IN_LANDING_PAGE = [
+  [ SIM_TOOLBAR_MESSAGE, SIM_TOOLBAR_SELECTOR ],
+  [ CONTROLS_MESSAGE, CONTROLS_SELECTOR],
+  [ FOREGROUND_MESSAGE, FOREGROUND_TOOLBAR_SELECTOR]
+];

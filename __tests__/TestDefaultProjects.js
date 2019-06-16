@@ -9,16 +9,19 @@ import {
   testCameraControls, 
   testInitialControlPanelValues, 
   testMeshVisibility,
+  testCameraControlsWithCanvasWidget
 } from './wip';
 import * as ST from './selectors';
 
 
 describe('Test UI Components', () => {
-  let page
+  // let page
   beforeAll(async () => {
     jest.setTimeout(30000);
-    page = await browser.newPage();
+    // page = await browser.newPage();
+    
     await page.goto(getUrlFromProjectId(1));
+    
   });
 
   afterAll(async () => {
@@ -41,13 +44,8 @@ describe('Test UI Components', () => {
     describe('Widgets', () => {
       it('Right amount of graph elements for Plot1', async () => {
         await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true, timeout: 30000 });
-      })
-
-      it('Right amount of graph elements for Plot1 2', async () => {
-        await page.waitFor(1000);
-      })
-
-      it('Right amount of graph elements for Plot1 3', async () => {
+        // watch out here (the labels in the plot appear a little after the plot)
+        await page.waitFor(1500);
         await testPlotWidgets(page, "Plot1", 1);
       })
 
@@ -117,10 +115,12 @@ describe('Test UI Components', () => {
       it('Initial visibility correct', async () => {
         await testMeshVisibility(page, true, ST.HHCELL_SELECTOR);
       })
+
       it('Hide correct', async () => {
         await click(page, ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
         await testMeshVisibility(page, false, ST.HHCELL_SELECTOR);
       })
+
       it('Visible again correct', async () => {
         await click(page, ST.HHCELL_CONTROL_PANEL_BUTTON_SELECTOR);
         await testMeshVisibility(page, true, ST.HHCELL_SELECTOR);
@@ -159,18 +159,10 @@ describe('Test UI Components', () => {
 
       it('Spotlight button exists', async () => {
         await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
-        
-      })
-      it('Spotlight button exists2', async () => {
-        
         await page.keyboard.type(ST.HHCELL_V_SELECTOR);
-        
-      })
-      it('Spotlight button exists3', async () => {
-        
         await page.keyboard.press(String.fromCharCode(13))
+      })  
         
-      })
       it('Spotlight button exists4', async () => {
         
         await page.waitForSelector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
@@ -200,115 +192,92 @@ describe('Test UI Components', () => {
     
     })
 
+    describe('Tutorials', () => {
+      it('Click tut button', async () => {
+        if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null){
+          await click(page, ST.TUTORIAL_BUTTON_SELECTOR);
+          await page.evaluate(async () => {
+            const nextBtnSelector = $(".nextBtn");
+            nextBtnSelector.click();
+            nextBtnSelector.click();
+          })
+        }
+      })
+    })
 
-    /*
-     *   casper.then(function () {
-     *     // toggle tutorial if tutorial button exists
-     *     if (casper.exists('#tutorialBtn')){
-     *       casper.mouseEvent('click', 'button#tutorialBtn', "attempting to open tutorial");
-     *       // click on next step for Tutorial
-     *       casper.evaluate(function () {
-     *         var nextBtnSelector = $(".nextBtn");
-     *         nextBtnSelector.click();
-     *         nextBtnSelector.click();
-     *       });
-     *     }
-     *   });
-     */
 
-    /*
-     *   casper.then(function () {
-     *     // tests widget canvas has mesh
-     *     var mesh = casper.evaluate(function (){
-     *       var mesh = Canvas2.engine.getRealMeshesForInstancePath("hhcell.hhpop[0]").length;
-     *       return mesh;
-     *     });
-     *     test.assertEquals(mesh, 1, "Canvas widget has hhcell");
-     *   });
-     */
+    describe('Widget canvas mesh', () => {
+      it('Canvas widget has hhcell', async () => {
+        expect(
+          await page.evaluate(async selector => Canvas2.engine.getRealMeshesForInstancePath(selector).length, ST.HHCELL_SELECTOR)
+        ).toBe(1)
+      })
+    })
 
-    /*
-     *   casper.then(function (){	
-     *     casper.echo("-------Testing Camera Controls on main Canvas and Canvas widget--------");
-     *     testCameraControlsWithCanvasWidget(test, [0,0,30.90193733102435]);
-     *   });
-     */
 
-    /*
-     *   // test color Function
-     *   casper.then(function (){
-     *     var initialColorFunctions = casper.evaluate(function (){
-     *       return GEPPETTO.SceneController.getColorFunctionInstances().length;
-     *     });
-     *     casper.echo("-------Testing Color Function--------");
-     *     // add color Function
-     *     casper.evaluate(function (){
-     *       GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
-     *       Project.getActiveExperiment().play({ step:10 });
-     *     });
-     *     var colorFunctionInstances = casper.evaluate(function (){
-     *       return GEPPETTO.SceneController.getColorFunctionInstances().length;
-     *     });
-     *     test.assertNotEquals(initialColorFunctions,colorFunctionInstances, "More than one color function instance found");
-     *     // test3DMeshColorNotEquals(test,defaultColor,"hhcell.hhpop[0]");
-     *     casper.echo("Done Playing, now exiting");
-     *   });
-     */
+    describe('Camera Controls on main Canvas and Canvas widget', () => {
+      it('Canvas widget has hhcell', async () => {
+        await testCameraControlsWithCanvasWidget(page, [0, 0, 30.90193733102435])
+      }, 120000)
+    })
 
-    /*
-     *   // reload test, needed for testing view comes up
-     *   casper.then(function (){
-     *     launchTest(test,"Hhcell",30000);
-     *   });
-     */
+    describe('Color Function', () => {
+      it('More than one color function instance found.', async () => {
+        const initialColorFunctions = await page.evaluate(async () => GEPPETTO.SceneController.getColorFunctionInstances().length)
+        await page.evaluate(async () => {
+          GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
+          Project.getActiveExperiment().play({ step:10 });
+        })
+        expect(
+          await page.evaluate(async () => GEPPETTO.SceneController.getColorFunctionInstances().length)
+        ).not.toBe(initialColorFunctions)
+      })
+    })
 
-    /*
-     *   // testing widgets stored in View state come up
-     *   casper.then(function (){
-     *     test.assertVisible('div#Canvas2', "Canvas2 is correctly open on reload.");
-     *     test.assertVisible('div#Plot1', "Plot1 is correctly open on reload");
-     *     test.assertVisible('div#Popup1', "Popup1 is correctly open on reload");
-     *     test.assertVisible('div#Popup2', "Popup2 is correctly open on reload");
-     */
+    describe('Widgets stored in View', () => {
+      it('Reload page', async () => {
+        /*
+         * TODO? / FIXME? / OK?: I thought casper test was reloading the page at this point, but it is not.
+         * await page.reload();
+         */
+        await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
+      })
 
-    /*
-     *     // if tutorial button exists, tests existence of Tutorial
-     *     if (casper.exists('#tutorialBtn')){
-     *       test.assertVisible('div#Tutorial1', "Tutorial1 is correctly open on reload");
-     *       var tutorialStep = casper.evaluate(function () {
-     *         return Tutorial1.state.currentStep;
-     *       });
-     *       test.assertEquals(tutorialStep, 2, "Tutorial1 step restored correctly");
-     *     }
-     *     // Tests content of Popup1 
-     *     var popUpMessage = casper.evaluate(function () {
-     *       return $("#Popup1").html();
-     *     });
-     *     test.assertEquals(popUpMessage, "Hhcell popup", "Popup1 message restored correctly");
-     */
+      it('Widgets stored in View state come up', async () => {
+        await wait4selector(page, ST.CANVAS_2_DIV_SELECTOR, { visible: true })
+        await wait4selector(page, ST.PLOT_1_DIV_SELECTOR, { visible: true })
+        await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, { visible: true })
+        await wait4selector(page, ST.POPUP_2_DIV_SELECTOR, { visible: true })
+      })
 
-    /*
-     *     // Tests popup has custom handlers
-     *     var popUpCustomHandler = casper.evaluate(function () {
-     *       return Popup2.customHandlers;
-     *     });
-     *     test.assertEquals(popUpCustomHandler.length, 1, "Popup2 custom handlers restored correctly");
-     *     test.assertEquals(popUpCustomHandler[0]["event"], "click", "Popup2 custom handlers event restored correctly");
-     */
+      describe('Tutorials', () => {
+        it('Tutorial1 step restored correctly', async () => {
+          if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null){
+            await page.wait4selector(page, ST.TUTORIAL_1_DIV_SELECTOR, { visible: true });
+            expect(
+              await page.evaluate(async () => Tutorial1.state.currentStep)
+            ).toBe(2)
+          }
+        })
+      })
 
-    /*
-     *     // Test canvas widget has mesh 
-     *     var meshInCanvas2Exists = casper.evaluate(function () {
-     *       var mesh = Canvas1.engine.meshes["hhcell.hhpop[0]"];
-     *       if (mesh != null && mesh != undefined){
-     *         return true;
-     *       }
-     *       return false;
-     *     });
-     *     test.assertEquals(meshInCanvas2Exists, true, "Canvas2 hhcell set correctly");
-     *   })
-     * }
-     */
+      it('Popup1 message restored correctly.', async () => {
+        expect(
+          await page.evaluate(async selector => $(selector).html(), ST.POPUP_1_SELECTOR)
+        ).toBe("Hhcell popup")
+      })
+
+      it('Popup2 custom handlers event restored correctly.', async () => {
+        const popUpCustomHandler = await page.evaluate(async () => Popup2.customHandlers)
+        expect(popUpCustomHandler.length).toBe(1)
+        expect(popUpCustomHandler[0].event).toBe("click")
+      })
+      
+      it('Canvas2 hhcell set correctly', async () => {
+        expect(
+          await page.evaluate(async selector => !!Canvas1.engine.meshes["hhcell.hhpop[0]"], ST.HHCELL_SELECTOR)
+        ).toBeTruthy()
+      })
+    })
   })
-
 })
