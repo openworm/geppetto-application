@@ -17,7 +17,6 @@ install:
 - npm install --silent -g slimerjs
 - npm install --silent -g gl
 - npm config set registry http://registry.npmjs.org/
-- npm install -g webpack-cli --save-dev
 
 services:
   - docker
