@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var ExtractTextPlugin = require("mini-css-extract-plugin");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 /*
  *var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
  * <%=htmlWebpackPlugin.options.GEPPETTO_CONFIGURATION._webapp_folder%>
@@ -67,11 +67,6 @@ module.exports = function (env){
       filename: '[name].bundle.js',
       publicPath: publicPath
     },
-    optimization: {
-        splitChunks: {
-          chunks: 'common',
-        },
-      },
     plugins: [
       /*
        * new BundleAnalyzerPlugin({
@@ -114,7 +109,7 @@ module.exports = function (env){
         chunks: []
       }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'), } }),
-      new ExtractTextPlugin("[name].css"),
+      new MiniCssExtractPlugin("[name].css"),
     ],
       
     resolve: {
@@ -161,10 +156,24 @@ module.exports = function (env){
         {
                   
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: "style-loader",
-            use: "css-loader"
-          })
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader
+            },
+
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+                modules: true,
+                localIdentName: "[local]___[hash:base64:5]"
+              }
+            },
+
+            {
+              loader: 'postcss-loader'
+            }
+          ]
                     
         },
         {
