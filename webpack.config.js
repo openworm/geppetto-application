@@ -73,7 +73,7 @@ module.exports = function (env){
        *     analyzerMode: 'static'
        * }),
        */
-      new webpack.optimize.CommonsChunkPlugin(['common']),
+      new config.optimization.splitChunks(['common']),
       new CopyWebpackPlugin(availableExtensions),
       new HtmlWebpackPlugin({
         filename: 'geppetto.vm',
