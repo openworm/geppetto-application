@@ -67,13 +67,17 @@ module.exports = function (env){
       filename: '[name].bundle.js',
       publicPath: publicPath
     },
+    optimization: {
+        splitChunks: {
+          chunks: 'common',
+        },
+      },
     plugins: [
       /*
        * new BundleAnalyzerPlugin({
        *     analyzerMode: 'static'
        * }),
        */
-      new config.optimization.splitChunks(['common']),
       new CopyWebpackPlugin(availableExtensions),
       new HtmlWebpackPlugin({
         filename: 'geppetto.vm',
