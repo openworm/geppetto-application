@@ -156,7 +156,7 @@ module.exports = function (env){
           loader: 'url-loader?limit=100000'
         },
         {
-          test: /\.scss$/,
+          test: /\.css$/,
           use: [
              {
                  loader: MiniCssExtractPlugin.loader

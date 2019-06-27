@@ -358,7 +358,7 @@ function testMaximizeWidget(test, widgetIdentifier,originalWidth, originalHeight
 			},widgetIdentifier);
 
 			var expectedHeight = casper.evaluate(function(widgetIdentifier) {
-				return $(window).height();
+				return $(window).height()-5.2;
 			},widgetIdentifier);
 
 			var popupWidth = casper.evaluate(function(widgetIdentifier) {
@@ -367,7 +367,7 @@ function testMaximizeWidget(test, widgetIdentifier,originalWidth, originalHeight
 			},widgetIdentifier);
 
 			var expectedWidth = casper.evaluate(function(widgetIdentifier) {
-				return $(window).width();
+				return $(window).width()-0.2;
 			},widgetIdentifier);
 
 			test.assertEquals(popupWidth, expectedWidth, widgetIdentifier+" maximize width correct");
