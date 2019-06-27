@@ -109,7 +109,9 @@ module.exports = function (env){
         chunks: []
       }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'), } }),
-      new MiniCssExtractPlugin("[name].css"),
+      new MiniCssExtractPlugin({
+    	    filename: '[name].[contenthash].css'
+      }),
     ],
       
     resolve: {
@@ -154,7 +156,7 @@ module.exports = function (env){
           loader: 'url-loader?limit=100000'
         },
         {
-          test: /\.css$/,
+          test: /\.scss$/,
           use: [
              {
                  loader: MiniCssExtractPlugin.loader
@@ -166,12 +168,6 @@ module.exports = function (env){
                    modules: true,
                    localIdentName: "[local]___[hash:base64:5]"
                  }
-              },
-              {
-                 loader: 'postcss-loader',
-                 options: {
-                     options: {},
-                   }
               }
           ]
         },
