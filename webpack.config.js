@@ -109,9 +109,7 @@ module.exports = function (env){
         chunks: []
       }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'), } }),
-      new MiniCssExtractPlugin({
-    	    filename: '[name].[contenthash].css'
-      }),
+      new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' })
     ],
       
     resolve: {
@@ -157,14 +155,12 @@ module.exports = function (env){
         },
         {
           test: /\.css$/,
-          use: [
-             {
-               loader: MiniCssExtractPlugin.loader
-             },
-             {
-               loader: "css-loader"
-             }
-          ]
+          use: [{
+              loader: MiniCssExtractPlugin.loader
+            },
+            {
+              loader: "css-loader"
+            }]
         },
         {
           test: /\.less$/,
