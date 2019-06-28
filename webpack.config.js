@@ -181,12 +181,8 @@ module.exports = function (env){
         {
           test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader
-            },
-            {
-              loader: "css-loader"
-            }
+            { loader: MiniCssExtractPlugin.loader },
+            { loader: "css-loader" }
           ]
         },
         {
