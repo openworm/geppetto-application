@@ -64,16 +64,24 @@ module.exports = function (env){
     
     optimization: {
       splitChunks: {
+        chunks: 'async',
+        minSize: 30000,
+        maxSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: '~',
+        automaticNameMaxLength: 30,
+        name: true,
         cacheGroups: {
-          commons: {
+          vendors: {
             test: /[\\/]node_modules[\\/]/,
-            // cacheGroupKey here is `commons` as the key of the cacheGroup
-            name(module, chunks, cacheGroupKey) {
-              const moduleFileName = module.identifier().split('/').reduceRight(item => item);
-              const allChunksNames = chunks.map((item) => item.name).join('~');
-              return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
-            },
-            chunks: 'all'
+            priority: 1
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
           }
         }
       }
