@@ -74,6 +74,7 @@ module.exports = function (env){
               return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
             },
             chunks: 'all'
+          }
         }
       }
     },
