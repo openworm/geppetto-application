@@ -134,7 +134,7 @@ module.exports = function (env){
         chunks: []
       }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'), } }),
-      new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' })
+      new MiniCssExtractPlugin({ filename: '[name].css' })
     ],
       
     resolve: {
