@@ -78,6 +78,11 @@ module.exports = function (env){
             test: /[\\/]node_modules[\\/]/,
             priority: 1
           },
+          commons: {
+              name: 'common',                   
+              minChunks: entries.length,
+              chunks: 'all'
+          },
           default: {
             minChunks: 2,
             priority: -20,
