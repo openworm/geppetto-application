@@ -79,7 +79,7 @@ module.exports = function (env){
             priority: 1
           },
           commons: {
-              name: 'commons',                   
+              name: 'common',                   
               minChunks: entries.length,
               chunks: 'all'
           },
