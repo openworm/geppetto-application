@@ -65,14 +65,10 @@ module.exports = function (env){
     optimization: {
         splitChunks: {
           cacheGroups: {
-            vendors: {
-              test: /[\\/]node_modules[\\/]/,
-              priority: 1
-            },
             commons: {
                 name: 'common',                   
                 minChunks: entries.length,
-                chunks: 'async'
+                chunks: 'initial'
             }
           }
         }
