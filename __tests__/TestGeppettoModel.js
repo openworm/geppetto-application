@@ -32,9 +32,6 @@ describe('Test Geppetto Model', () => {
 
 			it('Right amount of graph elements for Plot1', async () => {
 				await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true, timeout: 30000 });
-				// watch out here (the labels in the plot appear a little after the plot)
-				await page.waitFor(1500);
-				await testPlotWidgets(page, "Plot1", 1);
 			})
 
 		})
