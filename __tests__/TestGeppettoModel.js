@@ -6,8 +6,6 @@ import { wait4selector, click } from './utils';
 
 import * as ST from './selectors';
 
-const COLLAPSE_WIDGET_HEIGHT = 35;
-
 describe('Test Geppetto Model', () => {
 	beforeAll(async () => {
 		jest.setTimeout(60000);
@@ -30,7 +28,7 @@ describe('Test Geppetto Model', () => {
 				await wait4selector(page, selector, { visible: true, timeout: 60000 })
 			})
 
-			it('Right amount of graph elements for Plot1', async () => {
+			it('Initial Plot1 Created', async () => {
 				await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true, timeout: 30000 });
 			})
 

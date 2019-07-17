@@ -1,27 +1,20 @@
 const puppeteer = require('puppeteer');
 const { TimeoutError } = require('puppeteer/Errors');
 
-import { getCommandLineArg, getUrlFromProjectId } from './cmdline.js';
+import { baseURL, getCommandLineArg, getUrlFromProjectUrl } from './cmdline.js';
 import { wait4selector, click } from './utils';
 
 import { 
-	  testPlotWidgets, 
-	  removeAllPlots, 
-	  testCameraControls, 
-	  testInitialControlPanelValues, 
-	  testMeshVisibility,
-	  testCameraControlsWithCanvasWidget
-	} from './functions';
+	testProjectSequence
+	} from './persistence_functions';
 	
 import * as ST from './selectors';
-
-const COLLAPSE_WIDGET_HEIGHT = 35;
 
 describe('Test Persistence', () => {
 	beforeAll(async () => {
 		jest.setTimeout(60000);
 
-		await page.goto(getUrlFromProjectId(5));
+		await page.goto(baseURL);
 	});
 
 	afterAll(async () => {
@@ -34,11 +27,11 @@ describe('Test Persistence', () => {
 		})
 
 		it("Loging out", async () => {
-			await page.goto(baseURL + "/org.geppetto.frontend/logout");
+			await page.goto(baseURL + "/logout");
 		})
 
 		it("Login in as 'guest1' user", async () => {
-			await page.goto(baseURL + "/org.geppetto.frontend/login?username=guest1&password=guest");
+			await page.goto(baseURL + "/login?username=guest1&password=guest");
 		})
 
 		describe('Test Dashboard', () => {
@@ -46,6 +39,12 @@ describe('Test Persistence', () => {
 			it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
 				wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
 			})
+		})
+	})
+	
+	describe('Test First Persistence Project', () => {
+		it('Set of tests for first persistence project', async () => {
+			await testProjectSequence(page);
 		})
 	})
 })

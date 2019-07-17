@@ -18,4 +18,6 @@ const getFullPath = (relativePath = 'geppetto?') => urljoin(baseURL, relativePat
 export const getUrlFromProjectId = (id = undefined) => urljoin(baseURL, 'geppetto?') + (id ? `load_project_from_id=${id}` : '');
 export const getProjectUrlFromId = id => getFullPath(`geppetto?load_project_from_id=${id}`);
 
+export const getUrlFromProjectUrl = (url = undefined) => urljoin(baseURL, 'geppetto?') + (url ? `load_project_from_url=${url}` : '');
+
 export const getEmptySceneUrl = () => getFullPath();

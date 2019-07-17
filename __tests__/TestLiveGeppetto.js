@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const { TimeoutError } = require('puppeteer/Errors');
 
-import { getCommandLineArg, getUrlFromProjectId } from './cmdline.js';
+import { getCommandLineArg } from './cmdline.js';
 import { wait4selector, click } from './utils';
 import { 
 	testPlotWidgets 
@@ -9,7 +9,6 @@ import {
 
 import * as ST from './selectors';
 
-const COLLAPSE_WIDGET_HEIGHT = 35;
 const baseURL = getCommandLineArg('--url', 'http://live.geppetto.org');
 
 describe('Test live.geppetto.org', () => {

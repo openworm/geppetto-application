@@ -1,3 +1,4 @@
+/**Default core projects**/
 const CA1_PROJECT = 'CA1 Project';
 const ACNET_PROJECT = 'ACNET Project';
 const C_302_PROJECT = 'C 302 Project';
@@ -46,3 +47,8 @@ export const getProjectNameById = id => {
     return '';
   }
 };
+
+
+const PERSISTENCE_PROJECT_1 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/GEPPETTO.json'
+const PERSISTENCE_PROJECT_2 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/pharyngeal/project.json'
+const PERSISTENCE_PROJECT_3 =  'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/balanced/project.json'
