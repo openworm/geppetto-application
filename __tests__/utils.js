@@ -30,7 +30,4 @@ export const click = async (page, selector) => {
   expect(success).toBeDefined()
 }
 
-export const Projects = Object.freeze({
-  HH_CELL: 1,
-  ACNET: 5,
-});
+

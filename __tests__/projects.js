@@ -1,3 +1,8 @@
+export const Projects = Object.freeze({
+  HH_CELL: 1,
+  ACNET: 5,
+});
+
 const CA1_PROJECT = 'CA1 Project';
 const ACNET_PROJECT = 'ACNET Project';
 const C_302_PROJECT = 'C 302 Project';

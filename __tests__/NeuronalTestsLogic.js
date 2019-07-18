@@ -1,4 +1,5 @@
-import {click, wait4selector, Projects} from "./utils";
+import {click, wait4selector} from "./utils";
+import {Projects} from "./projects";
 import * as ST from "./selectors";
 import {
     removeAllPlots,
@@ -333,9 +334,9 @@ export function testACNET2Project() {
             await removeAllPlots(page);
         });
 
-/*        it('Camera controls', async () => {
+        it('Camera controls', async () => {
             await testCameraControls(page, [231.95608349343888,508.36555704435455,1849.839]);
-        })*/
+        })
     });
 
 }
