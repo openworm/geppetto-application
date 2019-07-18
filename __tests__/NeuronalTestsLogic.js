@@ -277,5 +277,65 @@ export function testACNET2Project() {
                 await page.evaluate(async () => window.Project.getExperiments().length)
             ).toBe(2)
         });
+
+        it('Top level instance present.', async () => {
+            expect(
+                await page.evaluate(async () => eval('acnet2') != null)
+            ).toBeTruthy()
+        });
+
+        it("Instances exploded as expected", async () => {
+            expect(
+                await page.evaluate(async () => acnet2.baskets_12[3] !== undefined &&
+                    acnet2.pyramidals_48[12] !== undefined)
+            ).toBeTruthy();
+        });
+
+        it("bask and pyramidal connections check after resolveAllImportTypes() call", async () => {
+            await page.evaluate(async () =>  Model.neuroml.resolveAllImportTypes(window.callPhantom));
+            expect(
+                await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length===60 &&
+                    acnet2.pyramidals_48[23].getConnections().length===22)
+            ).toBeTruthy();
+        });
+
+        it("Test number of Visual Groups on pyramidals", async () => {
+            expect(
+                await page.evaluate(async () => acnet2.pyramidals_48[23].getVisualGroups().length)
+            ).toBe(5);
+        });
+
+        it("2 top Variables as expected for ACNET2", async () => {
+            expect(
+                await page.evaluate(async () => window.Model.getVariables() !== undefined &&
+                    window.Model.getVariables().length === 2 &&
+                    window.Model.getVariables()[0].getId() === 'acnet2' &&
+                    window.Model.getVariables()[1].getId() === 'time')
+            ).toBeTruthy();
+        });
+
+        it("2 Libraries as expected for ACNET2", async () => {
+            expect(
+                await page.evaluate(async () => window.Model.getLibraries() !== undefined &&
+                    window.Model.getLibraries().length === 2)
+            ).toBeTruthy();
+        });
+
+        it("1 top level instance as expected for ACNET2", async () => {
+            expect(
+                await page.evaluate(async () => window.Instances !== undefined &&
+                    window.Instances.length === 2 &&
+                    window.Instances[0].getId() === 'acnet2')
+            ).toBeTruthy();
+        });
+
+        it("Remove Plots", async () => {
+            await removeAllPlots(page);
+        });
+
+/*        it('Camera controls', async () => {
+            await testCameraControls(page, [231.95608349343888,508.36555704435455,1849.839]);
+        })*/
     });
+
 }

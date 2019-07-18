@@ -12,8 +12,8 @@ describe('Test UI Components', () => {
     
   });
 
-
-  describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  //TODO: Uncomment all tests and rename TestUIComponents
+  //describe('Single Component HH Project', () => testSingleCompononetHHProject());
   describe('Acnet project', () => testACNET2Project());
 
 
