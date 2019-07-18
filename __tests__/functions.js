@@ -1,5 +1,6 @@
 import * as ST from './selectors'
-import { click, wait4selector } from './utils';
+import {click, Projects, wait4selector} from './utils';
+import {getUrlFromProjectId} from "./cmdline";
 
 const zoomClicks = 50;
 const panClicks = 10;
@@ -219,4 +220,10 @@ export const testPlotWidgets = async (page, widget, expectedGElements) => {
   expect(
     await page.evaluate(async selector => $(selector)[0].getElementsByClassName("legendtoggle").length, `#${widget}`)
   ).toBe(expectedGElements)
+}
+
+
+export const launchTest = async (projectId, timeout) => {
+  await page.goto(getUrlFromProjectId(projectId));
+  await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true})
 }

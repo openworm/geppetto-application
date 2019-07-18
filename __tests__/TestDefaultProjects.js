@@ -1,18 +1,20 @@
 
 import { getUrlFromProjectId } from './cmdline.js';
-import { testSingleCompononetHHProject } from './NeuronalTestsLogic'
+import {
+  testSingleCompononetHHProject,
+  testACNET2Project
+} from './NeuronalTestsLogic'
 
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(30000);
     
-    await page.goto(getUrlFromProjectId(1));
-    
   });
 
 
   describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  describe('Acnet project', () => testACNET2Project());
 
 
   afterAll(async () => {

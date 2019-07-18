@@ -1,4 +1,4 @@
-import {click, wait4selector} from "./utils";
+import {click, wait4selector, Projects} from "./utils";
 import * as ST from "./selectors";
 import {
     removeAllPlots,
@@ -7,8 +7,14 @@ import {
     testMeshVisibility,
     testPlotWidgets
 } from "./functions";
+import {getUrlFromProjectId} from "./cmdline";
+import { launchTest } from "./functions";
 
 export function testSingleCompononetHHProject(){
+
+    beforeAll(async() => {
+        await page.goto(getUrlFromProjectId(Projects.HH_CELL));
+    });
 
     describe('Landing page', () => {
         it("Spinner goes away", async () => {
@@ -257,4 +263,19 @@ export function testSingleCompononetHHProject(){
             ).toBeTruthy()
         })
     })
+}
+
+export function testACNET2Project() {
+
+    beforeAll(async() => {
+        await launchTest(Projects.ACNET);
+    });
+
+    describe('Primary Auditory Cortary', () => {
+        it("Initial amount of experiments for ACNE2 checked", async () => {
+            expect(
+                await page.evaluate(async () => window.Project.getExperiments().length)
+            ).toBe(2)
+        });
+    });
 }
