@@ -40,19 +40,15 @@ export const testExperimentTableRow = async (page) => {
 
 export const testConsole = async (page) => {
 	await wait4selector(page, ST.TABBER_ANCHOR, { visible: true })
-	await wait4selector(page, ST.DRAWER_SELECTOR, { visible : true})
+	await wait4selector(page, ST.DRAWER_SELECTOR, { visible : false})
 
-	await page.evaluate(async () => {
-		$('.fa-terminal').click();
-	})
-	await page.waitForSelector(ST.CONSOLE_SELECTOR, { visible: true });
-
+	await click(page, ST.CONSOLE_SELECTOR)
+    await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true });
+	
 	await page.waitFor(500);
 
 	await testConsoleInputArea(page, 'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()')
-
 	await testConsoleInputArea(page, 'hhcell.isS', 'hhcell.isSelected()')
-	console.log("test console")
 };
 
 const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
@@ -66,7 +62,7 @@ const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
 
 	expect(
 			await page.evaluate(async (input_area) => $(input_area).val())
-	).toBe(expectedAutoComplete))
+	).toBe(expectedAutoComplete);
 
 	await page.focus(ST.DRAWER_CMD_INPUT_SELECTOR);
 	await page.keyboard.type("");

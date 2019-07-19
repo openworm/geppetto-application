@@ -11,6 +11,9 @@ import {
   testMeshVisibility,
   testCameraControlsWithCanvasWidget
 } from './functions';
+import { 
+	  testConsole
+	} from './persistence_functions';
 import * as ST from './selectors';
 
 
@@ -46,8 +49,12 @@ describe('Test UI Components', () => {
         await testPlotWidgets(page, "Plot1", 1);
       })
 
+      it('Test Console', async () => {
+        await testConsole(page);
+      })
+      
       it('Right amount of graph elements for Plot2', async () => {
-        await testPlotWidgets(page, "Plot2", 3);
+        await testConsole(page, "Plot2", 3);
       })
 
       it('Initial amount of experiments for hhcell checked.', async () => {
