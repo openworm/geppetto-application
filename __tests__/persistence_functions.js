@@ -37,34 +37,3 @@ export const testDownloadExperimentModel = async (page) => {
 
 export const testExperimentTableRow = async (page) => {
 };
-
-export const testConsole = async (page) => {
-	await wait4selector(page, ST.TABBER_ANCHOR, { visible: true })
-	await wait4selector(page, ST.DRAWER_SELECTOR, { visible : false})
-
-	await click(page, ST.CONSOLE_SELECTOR)
-    await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true });
-	
-	await page.waitFor(500);
-
-	await testConsoleInputArea(page, 'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()')
-	await testConsoleInputArea(page, 'hhcell.isS', 'hhcell.isSelected()')
-};
-
-const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
-	await page.evaluate(async (value) => {
-		$(ST.DRAWER_CMD_INPUT_SELECTOR).val(value);
-		$(ST.DRAWER_CMD_INPUT_SELECTOR).trigger('keydown');
-		console.log("value ", value)
-	}, input)
-
-	await page.waitFor(5000);
-
-	expect(
-			await page.evaluate(async (input_area) => $(input_area).val())
-	).toBe(expectedAutoComplete);
-
-	await page.focus(ST.DRAWER_CMD_INPUT_SELECTOR);
-	await page.keyboard.type("");
-	await page.keyboard.press(String.fromCharCode(13))
-}

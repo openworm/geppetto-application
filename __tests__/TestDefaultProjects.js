@@ -9,11 +9,9 @@ import {
   testCameraControls, 
   testInitialControlPanelValues, 
   testMeshVisibility,
-  testCameraControlsWithCanvasWidget
+  testCameraControlsWithCanvasWidget,
+  testConsole
 } from './functions';
-import { 
-	  testConsole
-	} from './persistence_functions';
 import * as ST from './selectors';
 
 
@@ -48,13 +46,17 @@ describe('Test UI Components', () => {
         await page.waitFor(1500);
         await testPlotWidgets(page, "Plot1", 1);
       })
-
-      it('Test Console', async () => {
-        await testConsole(page);
-      })
       
       it('Right amount of graph elements for Plot2', async () => {
-        await testConsole(page, "Plot2", 3);
+        await testPlotWidgets(page, "Plot2", 3);
+      })
+      
+      it('Console exists and autocompletion of expected command works', async () => {
+        await testConsole(page,'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()');
+      })
+      
+      it('Console exists and autocompletion of expected command works', async () => {
+        await testConsole(page,'hhcell.isS', 'hhcell.isSelected()');
       })
 
       it('Initial amount of experiments for hhcell checked.', async () => {

@@ -6,7 +6,7 @@ import { wait4selector, click } from './utils';
 
 import { 
 	testConsole
-	} from './persistence_functions';
+	} from './functions';
 	
 import * as ST from './selectors';
 
