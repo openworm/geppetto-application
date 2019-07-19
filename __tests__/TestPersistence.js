@@ -10,11 +10,15 @@ import {
 	
 import * as ST from './selectors';
 
+const PERSISTENCE_PROJECT_1 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/GEPPETTO.json'
+const PERSISTENCE_PROJECT_2 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/pharyngeal/project.json'
+const PERSISTENCE_PROJECT_3 =  'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/balanced/project.json'
+		
 describe('Test Persistence', () => {
 	beforeAll(async () => {
 		jest.setTimeout(60000);
 		
-		console.log("persietence ", baseURL)
+		console.log("persirtence ", baseURL)
 		await page.goto(baseURL);
 	});
 
@@ -34,15 +38,19 @@ describe('Test Persistence', () => {
 		it("Login in as 'guest1' user", async () => {
 			await page.goto(baseURL + "/login?username=guest1&password=guest");
 		})
+	})
 
-		describe('Test Dashboard', () => {
-			const PROJECT_IDS = [1, 2];
-			it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
-				wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
-			})
+	describe('Test Dashboard', () => {
+		const PROJECT_IDS = [1, 2];
+		it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
+			wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
+		})
+
+		it("Open Single Component HH Project", async () => {
+			await page.goto(getUrlFromProjectUrl(PERSISTENCE_PROJECT_1));
 		})
 	})
-	
+
 	describe('Test First Persistence Project', () => {
 		describe('Landing page', () => {
 			it("Spinner goes away", async () => {

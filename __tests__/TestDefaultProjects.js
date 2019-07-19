@@ -110,6 +110,16 @@ describe('Test UI Components', () => {
 
     })
 
+    describe('Console', () => {
+    	it('Console works and autocompletion of "hhcell.hhpop[0].v.getTimeSeries()" command works', async () => {
+    		await testConsole(page,'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()');
+    	})
+
+    	it('Console works and autocompletion of "hhcell.isSelected()" command works', async () => {
+    		await testConsole(page,'hhcell.isS', 'hhcell.isSelected()');
+    	})
+    })
+
     describe('Control Panel', () => {
       it('The control panel opened with right amount of rows.', async () => {
         await click(page, ST.CONTROL_PANEL_BUTTON);
