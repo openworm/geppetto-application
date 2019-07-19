@@ -48,7 +48,8 @@ export const DRAWER_MAXIMIZE_ICON_SELECTOR = '.maxIcons';
 export const DRAWER_CLOSE_ICON_SELECTOR = '.closeIcons';
 export const DRAWER_CONTAINER_SELECTOR = '.drawer,.react-draggable';
 export const DRAWER_CMD_INPUT_SELECTOR = '#commandInputArea';
-
+export const TABBER_ANCHOR = 'span[class*="tabber"]'
+	
 export const HELP_BUTTON_SELECTOR = '#genericHelpBtn';
 export const HELP_MODAL_SELECTOR = '#help-modal';
 
