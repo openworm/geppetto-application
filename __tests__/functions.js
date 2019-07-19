@@ -1,5 +1,5 @@
 import * as ST from './selectors'
-import {click, Projects, wait4selector} from './utils';
+import {click, wait4selector} from './utils';
 import {getUrlFromProjectId} from "./cmdline";
 
 const zoomClicks = 50;
@@ -149,15 +149,15 @@ export const testSpotlight = async (page, variableName,plotName,expectButton,tes
 
 export const testCameraControls = async (page, expectedCameraPosition) => {
   const scheduler = [
-    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR],
-    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR],
-    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR]
+    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR, 200],
+    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR, 200],
+    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR, 450]
   ];
 
-  for (const [ repetitions, selector ] of scheduler) {
+  for (const [ repetitions, selector, timeout ] of scheduler) {
     for (const i of Array(repetitions)) {
       page.click(selector)
-      await page.waitFor(20)
+      await page.waitFor(timeout)
     }
     await resetCameraTest(page, expectedCameraPosition);
   }

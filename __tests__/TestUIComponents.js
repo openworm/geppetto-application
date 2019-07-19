@@ -13,7 +13,7 @@ const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.f
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(30000);
-    
+
     await page.goto(baseURL);
   });
 
