@@ -39,33 +39,20 @@ export const testExperimentTableRow = async (page) => {
 };
 
 export const testConsole = async (page) => {
-	it('Tabber anchor is present', async () => {
-		await wait4selector(page, ST.TABBER_ANCHOR, { visible: true })
+	await wait4selector(page, ST.TABBER_ANCHOR, { visible: true })
+	await wait4selector(page, ST.DRAWER_SELECTOR, { visible : true})
+
+	await page.evaluate(async () => {
+		$('.fa-terminal').click();
 	})
-	
-	it('Console panel is present', async () => {
-		await wait4selector(page, ST.DRAWER_SELECTOR, { visible : true})
-	})
-	
-	it('The console panel is correctly closed.', async () => {
-		await wait4selector(page, ST.DRAWER_SELECTOR, { hidden : true})
-	})
-	
-	it('The console panel is correctly open.', async () => {
-		await page.evaluate(async () => {
-			$('.fa-terminal').click();
-	    })
-		await page.waitForSelector(ST.CONSOLE_SELECTOR, { visible: true });
-    })
-    
-    await page.waitFor(5000);
-    
-    it('The console panel is correctly open.', async () => {
-	    await testConsoleInputArea(page, 'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()')
-	    
-	    await testConsoleInputArea(page, 'hhcell.isS', 'hhcell.isSelected()')
-    })
-    console.log("test console")
+	await page.waitForSelector(ST.CONSOLE_SELECTOR, { visible: true });
+
+	await page.waitFor(500);
+
+	await testConsoleInputArea(page, 'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()')
+
+	await testConsoleInputArea(page, 'hhcell.isS', 'hhcell.isSelected()')
+	console.log("test console")
 };
 
 const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
@@ -73,20 +60,15 @@ const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
 		$(ST.DRAWER_CMD_INPUT_SELECTOR).val(value);
 		$(ST.DRAWER_CMD_INPUT_SELECTOR).trigger('keydown');
 		console.log("value ", value)
-		console.log("ST.DRAWER_CMD_INPUT_SELECTOR", ST.DRAWER_CMD_INPUT_SELECTOR)
 	}, input)
 
 	await page.waitFor(5000);
-	
-	it('Autocomplete for state variable present.' + expectedAutoComplete, async () => {
-		expect(
-				await page.evaluate(async (input_area) => $(input_area).val())
-		).toBe(expectedAutoComplete)
-	}, ST.DRAWER_CMD_INPUT_SELECTOR)
 
-	it('Reset Input Area', async () => {
-		await page.focus(ST.DRAWER_CMD_INPUT_SELECTOR);
-		await page.keyboard.type("");
-		await page.keyboard.press(String.fromCharCode(13))
-	})
+	expect(
+			await page.evaluate(async (input_area) => $(input_area).val())
+	).toBe(expectedAutoComplete))
+
+	await page.focus(ST.DRAWER_CMD_INPUT_SELECTOR);
+	await page.keyboard.type("");
+	await page.keyboard.press(String.fromCharCode(13))
 }
