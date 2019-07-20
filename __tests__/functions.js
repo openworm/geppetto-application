@@ -77,8 +77,8 @@ export const getMeshColor = async (page, variableName, index = 0) =>
     Canvas1.engine.getRealMeshesForInstancePath(variableName)[index].material.color.toArray(), variableName, index)
 
 
-export const test3DMeshColor = (page, testColor,variableName,index) => {
-  const color = getMeshColor(page, variableName, index)
+export const test3DMeshColor = async (page, testColor,variableName,index) => {
+  const color = await getMeshColor(page, variableName, index)
   expect(color).toEqual(testColor);
 }
 

@@ -6,7 +6,8 @@ import {
     testCameraControls, testCameraControlsWithCanvasWidget,
     testInitialControlPanelValues,
     testMeshVisibility,
-    testPlotWidgets
+    testPlotWidgets,
+    test3DMeshColor
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
 import { launchTest } from "./functions";
@@ -273,26 +274,26 @@ export function testACNET2Project() {
     });
 
     describe('Primary Auditory Cortary', () => {
-        it("Initial amount of experiments for ACNE2 checked", async () => {
+        it("Initial amount of experiments for ACNE2", async () => {
             expect(
                 await page.evaluate(async () => window.Project.getExperiments().length)
             ).toBe(2)
         });
 
-        it('Top level instance present.', async () => {
+        it('Top level instance', async () => {
             expect(
                 await page.evaluate(async () => eval('acnet2') != null)
             ).toBeTruthy()
         });
 
-        it("Instances exploded as expected", async () => {
+        it("Instances exploded", async () => {
             expect(
                 await page.evaluate(async () => acnet2.baskets_12[3] !== undefined &&
                     acnet2.pyramidals_48[12] !== undefined)
             ).toBeTruthy();
         });
 
-        it("bask and pyramidal connections check after resolveAllImportTypes() call", async () => {
+        it("Bask and pyramidal connections after resolveAllImportTypes() call", async () => {
             await page.evaluate(async () =>  Model.neuroml.resolveAllImportTypes(window.callPhantom));
             expect(
                 await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length===60 &&
@@ -300,13 +301,13 @@ export function testACNET2Project() {
             ).toBeTruthy();
         });
 
-        it("Test number of Visual Groups on pyramidals", async () => {
+        it("5 Visual Groups on pyramidals", async () => {
             expect(
                 await page.evaluate(async () => acnet2.pyramidals_48[23].getVisualGroups().length)
             ).toBe(5);
         });
 
-        it("2 top Variables as expected for ACNET2", async () => {
+        it("2 top Variables for ACNET2", async () => {
             expect(
                 await page.evaluate(async () => window.Model.getVariables() !== undefined &&
                     window.Model.getVariables().length === 2 &&
@@ -315,14 +316,14 @@ export function testACNET2Project() {
             ).toBeTruthy();
         });
 
-        it("2 Libraries as expected for ACNET2", async () => {
+        it("2 Libraries for ACNET2", async () => {
             expect(
                 await page.evaluate(async () => window.Model.getLibraries() !== undefined &&
                     window.Model.getLibraries().length === 2)
             ).toBeTruthy();
         });
 
-        it("1 top level instance as expected for ACNET2", async () => {
+        it("1 top level instance for ACNET2", async () => {
             expect(
                 await page.evaluate(async () => window.Instances !== undefined &&
                     window.Instances.length === 2 &&
@@ -334,9 +335,28 @@ export function testACNET2Project() {
             await removeAllPlots(page);
         });
 
+
+    });
+
+    describe('Camera Controls', () => {
         it('Camera controls', async () => {
             await testCameraControls(page, [231.95608349343888,508.36555704435455,1849.839]);
         })
     });
+
+    describe('Original Colors', () => {
+        it('Original Colors', async () => {
+            await test3DMeshColor(page, [0.796078431372549,0,0], "acnet2.pyramidals_48[0]", 0);
+            await test3DMeshColor(page, [0.796078431372549,0,0],"acnet2.pyramidals_48[47]", 0);
+            await test3DMeshColor(page, [0,0.2,0.596078431372549],"acnet2.baskets_12[0]", 0);
+            await test3DMeshColor(page, [0,0.2,0.596078431372549],"acnet2.baskets_12[11]", 0);
+        })
+    });
+
+    // describe('Control Panel', () => {
+    //     it('Open control panel', async () => {
+    //         await click(page, ST.CONTROL_PANEL_BUTTON)
+    //     })
+    // });
 
 }
