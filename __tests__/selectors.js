@@ -73,6 +73,12 @@ export const HHCELL_V_SELECTOR = 'hhcell.hhpop[0].v';
 export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility_ctrlPanel_btn';
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
+export const ACNET2_SELECTOR = 'acnet2.pyramidals_48[0]';
+export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__visibility_ctrlPanel_btn";
+export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
+export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;
+
+
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';
 
 export const PROJECT_FILTER_BUTTON_SELECTOR = '#anyProjectFilterBtn';

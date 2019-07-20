@@ -227,3 +227,10 @@ export const launchTest = async (projectId, timeout) => {
   await page.goto(getUrlFromProjectId(projectId));
   await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true})
 }
+
+
+export const assertExists = async(selector) => {
+  expect(
+      await page.evaluate(async selector => { return $(selector) !== null}, selector)
+  ).toBeTruthy();
+}

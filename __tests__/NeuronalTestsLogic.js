@@ -7,10 +7,14 @@ import {
     testInitialControlPanelValues,
     testMeshVisibility,
     testPlotWidgets,
-    test3DMeshColor
+    test3DMeshColor,
+    testVisibility,
+    assertExists
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
 import { launchTest } from "./functions";
+import {ACNET2_SELECTOR} from "./selectors";
+import {ACNET2_CONTROL_PANEL_BUTTON_SELECTOR} from "./selectors";
 
 export function testSingleCompononetHHProject(){
 
@@ -116,7 +120,7 @@ export function testSingleCompononetHHProject(){
     });
 
     describe('Plot from control panel', () => {
-        it('Plot V.', async () => {
+        it('Plot V', async () => {
             await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
             await click(page, ST.HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR);
             await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true })
@@ -353,10 +357,38 @@ export function testACNET2Project() {
         })
     });
 
-    // describe('Control Panel', () => {
-    //     it('Open control panel', async () => {
-    //         await click(page, ST.CONTROL_PANEL_BUTTON)
-    //     })
-    // });
+    describe('Control Panel', () => {
+        it('The control panel opened with right amount of rows', async () => {
+            await click(page, ST.CONTROL_PANEL_BUTTON);
+            await testInitialControlPanelValues(page, 10);
+        })
+    });
+
+    describe('Mesh', () => {
+        it('Mesh Visibility', async () => {
+            await testVisibility(page, ST.ACNET2_SELECTOR, '#'+ST.ACNET2_CONTROL_PANEL_BUTTON_SELECTOR);
+        });
+    });
+
+    describe('Plot from Control Panel', () => {
+        it('Plot V', async () => {
+            await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
+            await wait4selector(page, ST.ACNET2_V_CONTROL_PANEL_BUTTON, { visible: true });
+            await click(page, '#'+ST.ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR)
+        });
+
+        it('Hide Plot 1', async () => {
+            await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
+            await assertExists(ST.PLOT1_SELECTOR);
+            await page.evaluate(async selector => {
+                $(selector).hide()
+            }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+        });
+
+        it('Remove all plots.', async () => {
+            await removeAllPlots(page);
+        });
+
+    });
 
 }
