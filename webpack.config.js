@@ -121,11 +121,6 @@ module.exports = function (env){
         'geppetto-client-initialization': path.resolve(__dirname, geppetto_client_path, 'js/pages/geppetto/main'),
         handlebars: 'handlebars/dist/handlebars.js'
       },
-      modules: [
-        path.resolve(__dirname, 'geppetto-client', 'node_modules'),
-        path.resolve(__dirname, geppetto_client_path, 'node_modules'), 
-        'node_modules'
-      ],
       extensions: ['*', '.js', '.json', '.ts', '.tsx', '.jsx'],
     },
   
