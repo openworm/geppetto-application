@@ -110,3 +110,6 @@ export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
 export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'
 	
 export const SPOTLIGHT_PARAMETER_INPUT = 'input.spotlight-input'
+
+export const CONNECTIVITY_1_DIV_SELECTOR = "div#Connectivity1"
+	

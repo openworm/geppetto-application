@@ -55,7 +55,9 @@ const PERSISTENCE_PROJECT_1 = {
 		autocomplete_test_2 : {input: 'hhcell.isS', expected: 'hhcell.isSelected()'},
 		canvas_widget_object_test : "hhcell",
 		parameter_test : 'Model.neuroml.pulseGen1.delay',
-		recorded_variable_test : 'hhcell.hhpop[0].v'
+		recorded_variable_test : 'hhcell.hhpop[0].v',
+		expectedTutorialHandlers : 1,
+		customHandlerEvent : 'click'
 }
 
 const PERSISTENCE_PROJECT_2 = {

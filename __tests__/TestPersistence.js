@@ -58,9 +58,18 @@ describe('Test Persistence', () => {
 		describe("Test First Project",  async () => {
 			await testProjectAfterPersistence(page,project_1);
 		})
+		
+		it("Open Single Component HH Project",  async () => {
+	        const persistedProjectID = await page.evaluate(async () => Project.getId())
+			await page.goto(getUrlFromProjectUrl(project_1.url));
+		})
 
 		describe('Test First Project After Persisted',  async () => {
-			await testProjectBeforePersistence(page,project_1);
+			await testProjectBeforePersistence(page,project_1, persistedProjectID);
+		})
+		
+		describe('Test Delete Project After Persisted',  async () => {
+			await testProjectBeforePersistence(page,project_1, persistedProjectID);
 		})
 	})
 	
