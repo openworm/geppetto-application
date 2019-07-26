@@ -9,8 +9,7 @@ import {
   testCameraControls, 
   testInitialControlPanelValues, 
   testMeshVisibility,
-  testCameraControlsWithCanvasWidget,
-  testConsole
+  testCameraControlsWithCanvasWidget
 } from './functions';
 import * as ST from './selectors';
 
@@ -49,14 +48,6 @@ describe('Test UI Components', () => {
       
       it('Right amount of graph elements for Plot2', async () => {
         await testPlotWidgets(page, "Plot2", 3);
-      })
-      
-      it('Console exists and autocompletion of expected command works', async () => {
-        await testConsole(page,'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()');
-      })
-      
-      it('Console exists and autocompletion of expected command works', async () => {
-        await testConsole(page,'hhcell.isS', 'hhcell.isSelected()');
       })
 
       it('Initial amount of experiments for hhcell checked.', async () => {
@@ -108,16 +99,6 @@ describe('Test UI Components', () => {
         await testCameraControls(page, [0, 0, 30.90193733102435]);
       })
 
-    })
-
-    describe('Console', () => {
-    	it('Console works and autocompletion of "hhcell.hhpop[0].v.getTimeSeries()" command works', async () => {
-    		await testConsole(page,'hhcell.hhpop[0].v.getTi', 'hhcell.hhpop[0].v.getTimeSeries()');
-    	})
-
-    	it('Console works and autocompletion of "hhcell.isSelected()" command works', async () => {
-    		await testConsole(page,'hhcell.isS', 'hhcell.isSelected()');
-    	})
     })
 
     describe('Control Panel', () => {

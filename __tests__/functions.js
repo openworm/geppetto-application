@@ -220,36 +220,3 @@ export const testPlotWidgets = async (page, widget, expectedGElements) => {
     await page.evaluate(async selector => $(selector)[0].getElementsByClassName("legendtoggle").length, `#${widget}`)
   ).toBe(expectedGElements)
 }
-
-export const testConsole = async (page, command, autoCompleteCommand) => {
-	await wait4selector(page, ST.TABBER_ANCHOR, { visible: true })
-	await wait4selector(page, ST.DRAWER_SELECTOR, { visible : false})
-
-	await click(page, ST.CONSOLE_SELECTOR)
-    await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true });
-	
-	await page.waitFor(500);
-
-	await testConsoleInputArea(page,command, autoCompleteCommand)
-	
-	await click(page, ST.DRAWER_MINIMIZE_ICON_SELECTOR);
-    await wait4selector(page, ST.DRAWER_SELECTOR, { hidden: true });
-};
-
-const testConsoleInputArea = async (page, input, expectedAutoComplete) => {
-	await page.evaluate(async (value, selector) => {
-		$(selector).val(value);
-		$(selector).trigger('keydown');
-		console.log("value ", value)
-	}, input, ST.DRAWER_CMD_INPUT_SELECTOR)
-
-	await page.waitFor(5000);
-
-	expect(
-			await page.evaluate(async (input_area) => $(input_area).val(), ST.DRAWER_CMD_INPUT_SELECTOR)
-	).toBe(expectedAutoComplete);
-
-	await page.focus(ST.DRAWER_CMD_INPUT_SELECTOR);
-	await page.keyboard.type("");
-	await page.keyboard.press(String.fromCharCode(13))
-}

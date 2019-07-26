@@ -97,4 +97,14 @@ export const ELEMENTS_IN_LANDING_PAGE = [
   [ FOREGROUND_MESSAGE, FOREGROUND_TOOLBAR_SELECTOR]
 ];
 
-export const GEPPETTO_LOGO = 'div#logo'
+export const GEPPETTO_LOGO = 'div#logo';
+	
+export const EXPERIMENT_TABLE = 'div#experimentsOutput';
+export const EXPERIMENT_TABLE_SELECTOR = 'div.fa.fa-flask';
+export const EXPERIMENT_TABLE_COLUMN_1 = 'tr.experimentsTableColumn:nth-child(1)';
+export const EXPERIMENT_TABLE_EXTENDED_ROW_VARS = 'td[name=variables]'
+export const EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS = 'td[name=PARAMETERS]'
+
+export const PERSIST_BUTTON = 'button.btn.SaveButton';
+export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
+export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'

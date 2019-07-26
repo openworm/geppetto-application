@@ -47,3 +47,44 @@ export const getProjectNameById = id => {
     return '';
   }
 };
+
+
+const PERSISTENCE_PROJECT_1 = {
+		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/GEPPETTO.json',
+		autocomplete_test_1: {input: 'hhcell.hhpop[0].v.getTi', expected: 'hhcell.hhpop[0].v.getTimeSeries()'},
+		autocomplete_test_2 : {input: 'hhcell.isS', expected: 'hhcell.isSelected()'},
+		canvas_widget_object_test : "hhcell",
+		parameter_test : 'Model.neuroml.pulseGen1.delay',
+		recorded_variable_test : 'hhcell.hhpop[0].v'
+}
+
+const PERSISTENCE_PROJECT_2 = {
+		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/pharyngeal/project.json',
+		autocomplete_test_1: {input: 'c302_A_Pharyngeal.M1[0].v.getTi', expected: 'c302_A_Pharyngeal.M1[0].v.getTimeSeries()'},
+		autocomplete_test_2 : {input: 'c302_A_Pharyngeal.isS', expected: 'c302_A_Pharyngeal.isSelected()'},
+		canvas_widget_object_test : "c302_A_Pharyngeal",
+		parameter_test : 'Model.neuroml.generic_neuron_iaf_cell.C',
+		recorded_variable_test : 'c302_A_Pharyngeal.M1[0].v'
+}
+const PERSISTENCE_PROJECT_3 =  {
+		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/balanced/project.json',
+		autocomplete_test_1: {input: 'Balanced_240cells_36926conns.popExc[0].getVa', expected: 'Balanced_240cells_36926conns.popExc[0].getVariable()'},
+		autocomplete_test_2 : {input: 'Balanced_240cells_36926conns.isS', expected: 'Balanced_240cells_36926conns.isSelected()'},
+		canvas_widget_object_test : "Balanced_240cells_36926conns",
+		parameter_test : 'Model.neuroml.Balanced_240cells_36926conns.temperature',
+		recorded_variable_test : 'Balanced_240cells_36926conns.popExc[0].biophys.membraneProperties.Na_all.Na.g'
+}
+
+export const getPersistenceProjectJSON = id => {
+	switch (id) {
+	case 1:
+		return PERSISTENCE_PROJECT_1;
+	case 2:
+		return PERSISTENCE_PROJECT_2;
+	case 3:
+		return PERSISTENCE_PROJECT_3;
+
+	default:
+		return '';
+	}
+};	

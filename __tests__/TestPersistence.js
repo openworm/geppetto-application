@@ -5,15 +5,16 @@ import { baseURL, getCommandLineArg, getUrlFromProjectUrl } from './cmdline.js';
 import { wait4selector, click } from './utils';
 
 import { 
-	testConsole
-	} from './functions';
-	
+	testProjectAfterPersistence,
+	testProjectBeforePersistence	
+} from './persistence_functions';
+import { 
+	getPersistenceProjectURL
+} from './projects';
 import * as ST from './selectors';
 
-const PERSISTENCE_PROJECT_1 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/GEPPETTO.json'
-const PERSISTENCE_PROJECT_2 = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/pharyngeal/project.json'
-const PERSISTENCE_PROJECT_3 =  'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/balanced/project.json'
-		
+const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend/');
+
 describe('Test Persistence', () => {
 	beforeAll(async () => {
 		jest.setTimeout(60000);
@@ -45,27 +46,22 @@ describe('Test Persistence', () => {
 		it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
 			wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
 		})
-
-		it("Open Single Component HH Project", async () => {
-			await page.goto(getUrlFromProjectUrl(PERSISTENCE_PROJECT_1));
-		})
 	})
 
-	describe('Test First Persistence Project', () => {
-		describe('Landing page', () => {
-			it("Spinner goes away", async () => {
-				await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
-			})
-
-			it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-				await wait4selector(page, selector, { visible: true, timeout: 60000 })
-			})
-		})
+	describe('Test First Project Before Persisted', () => {
+		const project_1 = getPersistenceProjectJSON(1);
 		
-		describe('Test Console', () => {
-			it("Spinner goes away", async () => {
-		          await testConsole(page);
-			})
+		it("Open Single Component HH Project",  () => {
+			await page.goto(getUrlFromProjectUrl(project_1.url));
+		})
+
+		describe("Test First Project",  () => {
+			await testProjectAfterPersistence(page,project_1);
+		})
+
+		describe('Test First Project After Persisted',  () => {
+			await testProjectBeforePersistence(page,project_1);
 		})
 	})
+	
 })

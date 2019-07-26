@@ -11,7 +11,7 @@ export const getCommandLineArg = (param, defaultValue) => {
   }
 }
 
-export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
+const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
 const getFullPath = (relativePath = 'geppetto?') => urljoin(baseURL, relativePath);
 
