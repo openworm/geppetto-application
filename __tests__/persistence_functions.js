@@ -1,9 +1,5 @@
 import * as ST from './selectors'
 import { click, wait4selector } from './utils';
-import { 
-	testConsole,
-	testExperimentTable
-} from './functions';
 
 export const testProjectBeforePersistence= async (page, projectJSON) => {
 	describe('Landing page', () => {
@@ -94,8 +90,39 @@ const testDownloadExperimentResults = async (page) => {
 const testDownloadExperimentModel = async (page) => {
 };
 
-const testSpotlight = async (page) => {
+const testSpotlight = async (page, persisted, checkComponent) => {
+	it('Spotlight present', async () => {
+		await click(page, ST.SEARCH_ICON_SELECTOR);
+		await wait4selector(page, ST.SEARCH_ICON_SELECTOR, { visible: true });;
+
+		await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
+		await page.keyboard.type(variableName);
+		await page.keyboard.press(String.fromCharCode(13))
+
+		await page.waitForSelector(ST.SEARCH_ICON_SELECTOR, { visible: true });
+	})
 	
+	if(persisted){
+		if(checkComponent == ST.WATCH_BUTTON_SELECTOR){
+			it('Record variable icon correctly visible in spotlight', async () => {
+				await wait4selector(page, ST.WATCH_BUTTON_SELECTOR, { visible: true });
+			})
+		}else if(checkComponent == ST.SPOTLIGHT_PARAMETER_INPUT){
+			it('Parameter input field correctly visible in spotlight', async () => {
+				await wait4selector(page, ST.SPOTLIGHT_PARAMETER_INPUT, { visible: true });
+			})
+		}
+	}else{
+		if(checkComponent == ST.WATCH_BUTTON_SELECTOR){
+			it('Record variable icon correctly hidden in spotlight', async () => {
+				await wait4selector(page, ST.WATCH_BUTTON_SELECTOR, { visible: false });
+			})
+		}else if(checkComponent == ST.SPOTLIGHT_PARAMETER_INPUT){
+			it('Parameter input field correctly hidden in spotlight', async () => {
+				await wait4selector(page, ST.SPOTLIGHT_PARAMETER_INPUT, { visible: false });
+			})
+		}
+	}
 }
 
 const testExperimentTable = async (page) => {

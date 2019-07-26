@@ -108,3 +108,5 @@ export const EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS = 'td[name=PARAMETERS]'
 export const PERSIST_BUTTON = 'button.btn.SaveButton';
 export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
 export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'
+	
+export const SPOTLIGHT_PARAMETER_INPUT = 'input.spotlight-input'
