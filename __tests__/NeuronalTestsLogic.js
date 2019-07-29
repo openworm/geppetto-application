@@ -9,12 +9,12 @@ import {
     testPlotWidgets,
     test3DMeshColor,
     testVisibility,
-    assertExists
+    assertExists,
+    testSpotlight,
+    closeSpotlight
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
 import { launchTest } from "./functions";
-import {ACNET2_SELECTOR} from "./selectors";
-import {ACNET2_CONTROL_PANEL_BUTTON_SELECTOR} from "./selectors";
 
 export function testSingleCompononetHHProject(){
 
@@ -379,7 +379,7 @@ export function testACNET2Project() {
 
         it('Hide Plot 1', async () => {
             await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
-            await assertExists(ST.PLOT1_SELECTOR);
+            await assertExists(page, ST.PLOT1_SELECTOR);
             await page.evaluate(async selector => {
                 $(selector).hide()
             }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
@@ -388,6 +388,18 @@ export function testACNET2Project() {
         it('Remove all plots.', async () => {
             await removeAllPlots(page);
         });
+
+    });
+
+    describe('Spotlight', () => {
+        it('Test Spotlight.', async () => {
+            await testSpotlight(page, ST.ACNET2_V1_SELECTOR, ST.PLOT1_SELECTOR, true, true, ST.ACNET2_SELECTOR, ST.ACNET2_SELECTOR);
+        });
+
+
+        it('Close', async () => {
+            await closeSpotlight(page)
+        })
 
     });
 

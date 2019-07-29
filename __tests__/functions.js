@@ -104,14 +104,14 @@ export const testSelection = async (page, variableName, selectColorVarName) => {
    
   await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
   await page.keyboard.type(variableName);
-  await page.keyboard.press(String.fromCharCode(13))
-  
-  await wait4selector(page, ST.BUTTON_ONE_SELECTOR, { visible: true });
-  
-  await click(page, ST.BUTTON_ONE_SELECTOR);
-  await page.waitFor(500);
+  await page.keyboard.press(String.fromCharCode(13));
 
-  test3DMeshColor(page, [1, 0.8, 0], selectColorVarName, 0);
+  await wait4selector(page, ST.BUTTON_ONE_SELECTOR, { visible: true });
+  //
+  // await click(page, ST.BUTTON_ONE_SELECTOR);
+  // await page.waitFor(500);
+  //
+  // await test3DMeshColor(page, [1, 0.8, 0], selectColorVarName, 0);
 }
 
 
@@ -120,21 +120,22 @@ export const closeSpotlight = async page => {
 }
 
 
-export const testSpotlight = async (page, variableName,plotName,expectButton,testSelect, selectionName, selectColorVarName) => {  
-  await click(page, ST.SEARCH_ICON_SELECTOR);
+export const testSpotlight = async (page, variableName,plotName,expectButton,testSelect, selectionName, selectColorVarName) => {
+  await assertExists(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
+  await click(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
 
-  await wait4selector(page, ST.SEARCH_ICON_SELECTOR, { visible: true });
+  await wait4selector(page, ST.SPOT_LIGHT_DIV, { visible: true });
 
   await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
   await page.keyboard.type(variableName);
-  await page.keyboard.press(String.fromCharCode(13))
-  
-  await page.waitForSelector(ST.SEARCH_ICON_SELECTOR, { visible: true });
-
+  await page.keyboard.press('Enter');
+  await page.waitForSelector(ST.SPOT_LIGHT_DIV, { visible: true });
   if (expectButton) {
     await wait4selector(page, ST.PLOT_BUTTON_SELECTOR, { visible: true });
     await page.click("#plot");
     await wait4selector(page, plotName, { visible: true });
+    await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
+    await page.keyboard.press('Escape');
 
   } else {
     await page.waitFor(1000);
@@ -142,7 +143,7 @@ export const testSpotlight = async (page, variableName,plotName,expectButton,tes
     await wait4selector(page, ST.WATCH_BUTTON_SELECTOR, { hidden: true });
   }
   if (testSelect){
-    testSelection(page, selectionName, selectColorVarName);
+    await testSelection(page, selectionName, selectColorVarName);
   }
 }
 
@@ -229,8 +230,9 @@ export const launchTest = async (projectId, timeout) => {
 }
 
 
-export const assertExists = async(selector) => {
+export const assertExists = async(page, selector) => {
   expect(
       await page.evaluate(async selector => { return $(selector) !== null}, selector)
   ).toBeTruthy();
 }
+

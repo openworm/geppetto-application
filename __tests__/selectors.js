@@ -29,6 +29,7 @@ export const WATCH_BUTTON_VISIBLE_MESSAGE = 'Watch button correctly hidden';
 export const PAN_HOME_BUTTON_SELECTOR = '#panHomeBtn';
 export const SPOT_LIGHT_BUTTON_SELECTOR = '#spotlightBtn';
 export const SPOT_LIGHT_SEARCH_INPUT_SELECTOR = 'input#typeahead';
+export const SPOT_LIGHT_DIV= 'div#spotlight';
 
 export const CONTROL_PANEL_SELECTOR = 'div#controlpanel';
 export const CONTROL_PANEL_MESSAGE = "The control panel is correctly open.";
@@ -74,6 +75,7 @@ export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
 export const ACNET2_SELECTOR = 'acnet2.pyramidals_48[0]';
+export const ACNET2_V1_SELECTOR = 'acnet2.pyramidals_48[1].soma_0.v';
 export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__visibility_ctrlPanel_btn";
 export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
 export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;
