@@ -42,30 +42,29 @@ describe('Test Persistence', () => {
 
 	describe('Test First Project Before Persisted', () => {
 		const project_1 = getPersistenceProjectJSON(1);
-
+		it("Open Single Component HH Project",  async () => {
+			await page.goto(getUrlFromProjectUrl(project_1.url));
+		})
 		describe("Test First Project", () => {
-			it("Open Single Component HH Project",  async () => {
-				await page.goto(getUrlFromProjectUrl(project_1.url));
-			})
 			async () => {
 				await testProjectBeforePersistence(page,project_1);				
 			}
 		})
 
+		it("Open Persisted Project",  async () => {
+			const persistedProjectID = await page.evaluate(async () => Project.getId())
+			await page.goto(getUrlFromProjectUrl(project_1.url));
+		})
 		describe('Test First Project After Persisted',  () => {
-			it("Open Single Component HH Project",  async () => {
-				const persistedProjectID = await page.evaluate(async () => Project.getId())
-				await page.goto(getUrlFromProjectUrl(project_1.url));
-			})
 			async () => {
 				await testProjectAfterPersistence(page,project_1, persistedProjectID);				
 			}
 		})
 
+		it("Open Dashboard",  async () => {
+			await page.goto(baseURL);
+		})
 		describe('Test Delete Project After Persisted', () => {
-			it("Open Dashboard",  async () => {
-				await page.goto(baseURL);
-			})
 			async () => {
 				await testDeletePersistedProject(page,project_1, persistedProjectID);				
 			}
