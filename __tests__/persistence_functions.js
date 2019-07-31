@@ -35,6 +35,9 @@ export const testProjectBeforePersistence= async (page, projectJSON) => {
 		async () => {
 			await testExperimentTableRow(page)
 		}
+		async () => {
+			await testExperimentTableRowIcons(page, false)
+		}
 	})
 
 	/**
@@ -154,23 +157,105 @@ export const testProjectAfterPersistence = async (page,projectJSON) => {
 			await testSpotlight(page, projectJSON.parameter_test, true, false);
 		})
 	})
+	
+	describe('Test Experiment Table', () => {
+		async () => {
+			await textExperimentTable(page);
+		}
+		async () => {
+			await testExperimentTableRowIcons(page, false)
+		}
+	})
 };
 
 /**
  * Deletes persisted project using the dashboard
  */
-export const testDeletePersistedProject = async (page) => {
-	
+export const testDeletePersistedProject = async (page, projectID) => {
+	//Test the existence of Popup widget on persisted project, if project got persisted the widget should exist
+	describe('Delete persisted project', () => {
+		it('Dashboard Loaded', async () => {
+			await wait4selector(page, ST.DASHBOAD_PROJECT_PREVIEW_SELECTOR)
+		})
+		async () => {
+			await page.evaluate(async () => { $("#projects").scrollTop($("#projects")[0].scrollHeight+1000);})
+		}
+		it('Waited for scrolldown projects to appear in dashboard', async () => {
+			await page.evaluate(async (id) => { this.mouse.click('div[project-id=\"'+id+'\"]');}, projectID)
+		})
+		it('waited for delete icon to delete project', async () => {
+			await wait4selector(page, ST.DASHBOARD_DELETE_PROJECT_SELECTOR, {visible : true})
+		})
+		async () => {
+			await page.evaluate(async (selector) => { this.mouse.click(selector);}, ST.DASHBOARD_DELETE_ICON_SELECTOR)
+		}
+		it('Correctly deleted persisted project using the dashboard', async () => {
+			await wait4selector(page, ST.DASHBOARD_OPEN_PROJECT, {visible : false})
+		})
+	})
 }
 
 
 const testCreateExperiment = async (page) => {
+	async () => {
+		await page.evaluate(async () => { window.Project.newExperiment();})
+		await page.waitFor(1000)
+	}
+	
+	it('New experiment created using persisted project', async () => {
+		expect(
+				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
+		).toBe(4)
+	})
 };
 
 const testCloneExperiment = async (page) => {
+	async () => {
+		window.Project.getExperiments()[0].clone();
+		await page.waitFor(1000)
+	}
+	
+	it('Experiment cloned using persisted project', async () => {
+		expect(
+				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
+		).toBe(4)
+	})
+	
+	it('"Clone Experiment - Simulator Configuration duration checked', async () => {
+		expect(
+				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].length ===
+					Project.getExperiments()[Project.getExperiments().length-1].simulatorConfigurations["hhcell"].length)
+		).toBe(true)
+	})
+	
+	it('Clone Experiment - Simulator Configuration time step checked', async () => {
+		expect(
+				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].timeStep===
+					Project.getExperiments()[Project.getExperiments().length-1].simulatorConfigurations["hhcell"].timeStep)
+		).toBe(true)
+	})
+	
+	it('Clone Experiment - Simulator Configuration service id checked', async () => {
+		expect(
+				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].simulatorId===
+					Project.getExperiments()[Project.getExperiments().length-1].simulatorConfigurations["hhcell"].simulatorId)
+		).toBe(true)
+	})
 };
 
 const testDeleteExperiment = async (page) => {
+	async () => {
+		await page.evaluate(async () => { window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();})
+		await page.waitFor(1000)
+	}
+	
+	it('Experiment deleted using persisted project', async () => {
+		expect(
+				await page.evaluate(async () =>  window.Project.getExperiments().length===3)
+		).toBe(4)
+		
+		await page.evaluate(async () => document.getElementById('infomodal-btn').click())
+	})
 };
 
 const testSaveExperiment = async (page) => {
@@ -184,6 +269,10 @@ const testDownloadExperimentResults = async (page) => {
 
 const testDownloadExperimentModel = async (page) => {
 };
+
+const testUpload2DropBoxFeature = async (page) => {
+	
+}
 
 const testSpotlight = async (page, persisted, checkComponent) => {
 	it('Spotlight opens', async () => {
@@ -258,6 +347,32 @@ const testExperimentTableRow = async (page) => {
 		await wait4selector(page, ST.EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS, { visible : true});
 	})
 };
+
+const testExperimentTableRowIcons = async (page, visible) => {	
+	async () => {
+		await click(page, ST.EXPERIMENT_TABLE_COLUMN_1);	
+	}
+	
+	it('Active button exists with correct visibility', async () => {
+		await wait4selector(page, ST.EXPERIMENT_TABLE_ACTIVE_ICON, { visible : visible});
+	})
+	
+	it('Delete button exists with correct visibility', async () => {
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DELETE_ICON, { visible : visible});
+	})
+	
+	it('Clone button exists with correct visibility', async () => {
+		await wait4selector(page, ST.EXPERIMENT_TABLE_CLONE_ICON, { visible : visible});
+	})
+	
+	it('Download results button exists with correct visibility', async () => {
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON, { visible : visible});
+	})
+	
+	it('Download model button exists with correct visibility', async () => {
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_MODEL_ICON, { visible : visible});
+	})
+}
 
 const testConsole = async (page, command, autoCompleteCommand) => {
 	it('The console panel is correctly hidden.', async () => {
