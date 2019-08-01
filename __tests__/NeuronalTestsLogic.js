@@ -559,3 +559,28 @@ export function testACNET2Project() {
     });
 
 }
+
+export function testC302NetworkProject() {
+
+    beforeAll(async () => {
+        await launchTest(Projects.C302);
+    });
+
+    describe('Initial Values', () => {
+        it('Amount of Experiments', async () => {
+            const experiments = await page.evaluate(() => window.Project.getExperiments().length);
+            expect(experiments).toEqual(2);
+        });
+
+        it('Amount of Children', async () => {
+            const experiments = await page.evaluate(() => c302.getChildren().length);
+            expect(experiments).toEqual(299);
+        });
+
+        it('Top Level Instance', async () => {
+            const experiments = await page.evaluate(() => c302!=null);
+            expect(experiments).toEqual(true);
+        });
+
+    });
+}

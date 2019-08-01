@@ -2,7 +2,8 @@
 import { getUrlFromProjectId } from './cmdline.js';
 import {
   testSingleCompononetHHProject,
-  testACNET2Project
+  testACNET2Project,
+  testC302NetworkProject
 } from './NeuronalTestsLogic'
 
 
@@ -12,8 +13,9 @@ describe('Test UI Components', () => {
     
   });
 
-  describe('Single Component HH Project', () => testSingleCompononetHHProject());
-  describe('Acnet project', () => testACNET2Project());
+  //describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  //describe('Acnet project', () => testACNET2Project());
+  describe('C302 Network project', () => testC302NetworkProject());
 
 
   afterAll(async () => {
