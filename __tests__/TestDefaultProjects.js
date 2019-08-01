@@ -1,5 +1,4 @@
 
-import { getUrlFromProjectId } from './cmdline.js';
 import {
   testSingleCompononetHHProject,
   testACNET2Project,
@@ -13,8 +12,8 @@ describe('Test UI Components', () => {
     
   });
 
-  //describe('Single Component HH Project', () => testSingleCompononetHHProject());
-  //describe('Acnet project', () => testACNET2Project());
+  describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  describe('Acnet project', () => testACNET2Project());
   describe('C302 Network project', () => testC302NetworkProject());
 
 

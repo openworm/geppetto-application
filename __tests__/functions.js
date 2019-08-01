@@ -176,7 +176,7 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   const scheduler = [
     [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 100],
     [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 100],
-    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 300]
+    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 400]
   ];
 
   await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector, timeout]) => {
@@ -226,7 +226,13 @@ export const testPlotWidgets = async (page, widget, expectedGElements) => {
 
 export const launchTest = async (projectId, timeout) => {
   await page.goto(getUrlFromProjectId(projectId));
-  await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true})
+  await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+  const pageTitle = await page.title();
+  expect(pageTitle).toEqual("geppetto");
+  await assertExists(page, ST.SIM_TOOLBAR_SELECTOR);
+  await assertExists(page, ST.CONTROLS_SELECTOR);
+  await assertExists(page, ST.FOREGROUND_TOOLBAR_SELECTOR);
+
 }
 
 

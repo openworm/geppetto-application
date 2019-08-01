@@ -5,7 +5,7 @@ import {
     assertExists,
     defaultColor,
     removeAllPlots,
-    testCameraControls, testCameraControlsWithCanvasWidget,
+    testCameraControls, testCameraControlsWithCanvasWidget, resetCameraTest,
     testInitialControlPanelValues,
     testMeshVisibility, test3DMeshColor, test3DMeshColorNotEquals, test3DMeshOpacity,
     testPlotWidgets,
@@ -283,6 +283,11 @@ export function testACNET2Project() {
     });
 
     describe('Primary Auditory Cortary', () => {
+
+        it("Load Project Spinner", async () => {
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+        });
+
         it("Initial amount of experiments for ACNE2", async () => {
             expect(
                 await page.evaluate(async () => window.Project.getExperiments().length)
@@ -404,7 +409,6 @@ export function testACNET2Project() {
         it('Close', async () => {
             await closeSpotlight(page)
         })
-
     });
 
     describe('Connected cells to Instance', () => {
@@ -566,7 +570,22 @@ export function testC302NetworkProject() {
         await launchTest(Projects.C302);
     });
 
+
     describe('Initial Values', () => {
+
+        it('Import Types Spinner', async () => {
+
+            //TODO: Possible issue here
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+            await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+        });
+
+        it('Plot 1', async () => {
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
+            await assertExists(page, ST.PLOT1_SELECTOR)
+        });
+
         it('Amount of Experiments', async () => {
             const experiments = await page.evaluate(() => window.Project.getExperiments().length);
             expect(experiments).toEqual(2);
@@ -583,4 +602,134 @@ export function testC302NetworkProject() {
         });
 
     });
+
+    describe('Resolved Connections', () => {
+        it('ADAL Connections', async () => {
+            const connections = await page.evaluate(() => c302.ADAL[0].getConnections().length);
+            expect(connections).toEqual(31);
+        });
+
+        it('AVAL Connections', async () => {
+            const connections = await page.evaluate(() => c302.AVAL[0].getConnections().length);
+            expect(connections).toEqual(170);
+        });
+
+        it('PVDRD Connections', async () => {
+            const connections = await page.evaluate(() => c302.PVDR[0].getConnections().length);
+            expect(connections).toEqual(7);
+        });
+    });
+
+    describe('Resolve All Imports', () => {
+        it('Resolve All Imports', async () => {
+            await page.evaluate(() => Model.neuroml.resolveAllImportTypes(window.callPhantom));
+            await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+        });
+
+        it('Top Variables', async () => {
+            const op = await page.evaluate( () => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2 &&
+                window.Model.getVariables()[0].getId() === 'c302' && window.Model.getVariables()[1].getId() === 'time');
+            expect(op).toBeTruthy();
+        });
+
+        it('Libraries', async () => {
+            const op = await page.evaluate( () => window.Model.getLibraries() !== undefined && window.Model.getLibraries().length === 2 );
+            expect(op).toBeTruthy();
+        });
+
+        it('Top Level Instances', async () => {
+            const op = await page.evaluate( () => window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'c302' );
+            expect(op).toBeTruthy();
+        });
+
+    });
+
+    describe('Camera Controls', () => {
+        it('Reset Camera', async () => {
+            await resetCameraTest(page, [49.25,-0.8000001907348633,733.3303486467378]);
+        });
+
+        it("Remove Plots", async () => {
+            await removeAllPlots(page);
+        });
+
+        it('Camera Controls', async () => {
+            await testCameraControls(page, [49.25,-0.8000001907348633,733.3303486467378]);
+        })
+    });
+
+    describe('Mesh', () => {
+        it('3D Mesh Colors', async () => {
+            await test3DMeshColor(page, defaultColor, ST.C302_SELECTOR);
+        });
+    });
+
+    describe('Control Panel', () => {
+        it('Initial Amount of Rows', async () => {
+            await click(page, ST.CONTROL_PANEL_BUTTON);
+            await testInitialControlPanelValues(page, 10);
+        });
+
+        it('Plot V', async () => {
+            await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
+            await page.waitForSelector(ST.C302_V_CONTROL_PANEL_BUTTON_SELECTOR, {visible: true});
+            await click(page, ST.C302_V_CONTROL_PANEL_BUTTON_SELECTOR);
+        });
+
+        it('Standard Rows', async () => {
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
+            await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
+            await page.waitFor(1000);
+            const rows = await page.evaluate( () => $(".standard-row").length );
+            expect(rows).toEqual(10);
+            await page.evaluate(async selector => {
+                $(selector).hide()
+            }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+        });
+
+        it('Spotlight', async () => {
+            await testSpotlight(page, ST.C302_V_SELECTOR, ST.PLOT2_SELECTOR, true, false);
+        });
+    });
+
+    describe('Spotlight', () => {
+        it('Spotlight', async () => {
+            await testSpotlight(page, ST.C302_V_SELECTOR, ST.PLOT2_SELECTOR, true, false);
+        });
+
+        it('Close', async () => {
+            await closeSpotlight(page)
+        })
+    });
+
+    describe('Widgets and Camera', () => {
+
+        it('Add Widget', async () => {
+            await page.evaluate(() =>
+            {
+                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([c302])});
+                Plot1.setPosition(0,300);
+            });
+        });
+
+        it('Camera', async () => {
+            await testCameraControlsWithCanvasWidget(page,[49.25,-0.8000001907348633,733.3303486467378]);
+        });
+    });
+
+    describe('Colors', () => {
+
+        it('Add Color Function', async () => {
+            const initialColorFunctions = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            await page.evaluate(() =>{
+                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
+                Project.getActiveExperiment().play({step:10});
+            });
+            const colorFunctionInstances = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
+        });
+    });
+
+
 }

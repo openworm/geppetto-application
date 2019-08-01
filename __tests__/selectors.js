@@ -85,12 +85,19 @@ export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__vis
 export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
 export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;
 
+export const C302_SELECTOR = 'c302.ADAL[0]';
+export const C302_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="c302_ADAL_0__v_plot_ctrlPanel_btn"]';
+export const C302_V_SELECTOR = 'c302.ADAL[0].v';
+
+
+
 
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';
 
 export const PROJECT_FILTER_BUTTON_SELECTOR = '#anyProjectFilterBtn';
 
 export const PLOT1_SELECTOR = 'div[id="Plot1"]';
+export const PLOT2_SELECTOR = 'div[id="Plot2"]';
 
 export const TUTORIAL_BUTTON_SELECTOR = 'button#tutorialBtn';
 
