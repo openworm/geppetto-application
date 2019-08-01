@@ -2,17 +2,18 @@ import {click, wait4selector} from "./utils";
 import {Projects} from "./projects";
 import * as ST from "./selectors";
 import {
+    assertExists,
+    defaultColor,
     removeAllPlots,
     testCameraControls, testCameraControlsWithCanvasWidget,
     testInitialControlPanelValues,
-    testMeshVisibility,
+    testMeshVisibility, test3DMeshColor,test3DMeshColorNotEquals, test3DMeshOpacity,
     testPlotWidgets,
-    test3DMeshColor,
     testVisibility,
-    assertExists,
-    testSpotlight,
-    closeSpotlight, test3DMeshColorNotEquals,
-    defaultColor, test3DMeshOpacity, testingConnectionLines
+    testSpotlight, closeSpotlight,
+    testingConnectionLines,
+    testVisualGroup
+
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
 import {launchTest} from "./functions";
@@ -464,23 +465,31 @@ export function testACNET2Project() {
     //
     // });
 
-    describe('Widgets and Camera', () => {
+    // describe('Widgets and Camera', () => {
+    //
+    //     it('Add Widget', async () => {
+    //         await page.evaluate(() =>
+    //         {
+    //             GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([acnet2])});
+    //             Plot1.setPosition(0,300); // get out of the way
+    //             acnet2.baskets_12[4].getVisualGroups()[0].show(true);
+    //         });
+    //     });
+    //
+    //     it('Camera', async () => {
+    //         await testCameraControlsWithCanvasWidget(page,[231.95608349343888,508.36555704435455,1849.839]);
+    //     });
+    // });
 
-        it('Add Widget', async () => {
-            await page.evaluate(() =>
-            {
-                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([acnet2])});
-                Plot1.setPosition(0,300); // get out of the way
-                acnet2.baskets_12[4].getVisualGroups()[0].show(true);
-            });
+    describe('Visual Group', () => {
+
+        it('Visual Group Baskets 0', async () => {
+            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR0,2,[[],[0,0.4,1],[0.6,0.8,0]]);
         });
 
-        it('Camera', async () => {
-            await testCameraControlsWithCanvasWidget(page,[231.95608349343888,508.36555704435455,1849.839]);
+        it('Visual Group Baskets 5', async () => {
+            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5,2,[[],[0,0.4,1],[0.6,0.8,0]]);
         });
-
-
     });
-
 
 }
