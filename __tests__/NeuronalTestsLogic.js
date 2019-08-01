@@ -492,57 +492,70 @@ export function testACNET2Project() {
     //     });
     // });
 
-    describe('Geometry', () => {
+    // describe('Geometry', () => {
+    //
+    //     it('Set Geometry Cylinders', async () => {
+    //         await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
+    //     });
+    //
+    //     it('Mesh Geometry', async () => {
+    //         const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+    //         expect(meshType).toEqual("Mesh");
+    //     });
+    //
+    //     it('Mesh Total', async () => {
+    //         const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+    //         expect(meshTotal).toEqual(60);
+    //     });
+    //
+    //     it('Set Geometry Lines / 3D Mesh Color', async () => {
+    //         const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
+    //         await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("lines"));
+    //         await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+    //     });
+    //
+    //     it('LineSegments Geometry', async () => {
+    //         const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+    //         expect(meshType).toEqual("LineSegments");
+    //     });
+    //
+    //     it('Mesh Total', async () => {
+    //         const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+    //         expect(meshTotal).toEqual(60);
+    //     });
+    //
+    //     it('Set Geometry Cylinders', async () => {
+    //         await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
+    //     });
+    //
+    //     it('Mesh Geometry', async () => {
+    //         const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+    //         expect(meshType).toEqual("Mesh");
+    //     });
+    //
+    //     it('3D Mesh Color', async () => {
+    //         const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
+    //         await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+    //     });
+    //
+    //     it('Mesh Total', async () => {
+    //         const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+    //         expect(meshTotal).toEqual(60);
+    //     });
+    //
+    // });
 
-        it('Set Geometry Cylinders', async () => {
-            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
+    describe('Colors', () => {
+
+        it('Add Color Function', async () => {
+            const initialColorFunctions = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            await page.evaluate(() =>{
+                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
+                Project.getActiveExperiment().play({step:10});
+            });
+            const colorFunctionInstances = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
         });
-
-        it('Mesh Geometry', async () => {
-            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
-            expect(meshType).toEqual("Mesh");
-        });
-
-        it('Mesh Total', async () => {
-            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
-            expect(meshTotal).toEqual(60);
-        });
-
-        it('Set Geometry Lines / 3D Mesh Color', async () => {
-            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
-            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("lines"));
-            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
-        });
-
-        it('LineSegments Geometry', async () => {
-            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
-            expect(meshType).toEqual("LineSegments");
-        });
-
-        it('Mesh Total', async () => {
-            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
-            expect(meshTotal).toEqual(60);
-        });
-
-        it('Set Geometry Cylinders', async () => {
-            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
-        });
-
-        it('Mesh Geometry', async () => {
-            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
-            expect(meshType).toEqual("Mesh");
-        });
-
-        it('3D Mesh Color', async () => {
-            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
-            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
-        });
-
-        it('Mesh Total', async () => {
-            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
-            expect(meshTotal).toEqual(60);
-        });
-
     });
 
 }
