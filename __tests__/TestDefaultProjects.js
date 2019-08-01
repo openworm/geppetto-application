@@ -12,7 +12,7 @@ describe('Test UI Components', () => {
     
   });
 
-  //describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  describe('Single Component HH Project', () => testSingleCompononetHHProject());
   describe('Acnet project', () => testACNET2Project());
 
 
