@@ -11,31 +11,32 @@ import {
     testVisibility,
     assertExists,
     testSpotlight,
-    closeSpotlight
+    closeSpotlight, test3DMeshColorNotEquals,
+    defaultColor, test3DMeshOpacity, testingConnectionLines
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
-import { launchTest } from "./functions";
+import {launchTest} from "./functions";
 
-export function testSingleCompononetHHProject(){
+export function testSingleCompononetHHProject() {
 
-    beforeAll(async() => {
+    beforeAll(async () => {
         await page.goto(getUrlFromProjectId(Projects.HH_CELL));
     });
 
     describe('Landing page', () => {
         it("Spinner goes away", async () => {
-            await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
+            await wait4selector(page, ST.SPINNER_SELECTOR, {hidden: true})
         });
 
         it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-            await wait4selector(page, selector, { visible: true, timeout: 10000 })
+            await wait4selector(page, selector, {visible: true, timeout: 10000})
         })
     });
 
 
     describe('Widgets', () => {
         it('Right amount of graph elements for Plot1', async () => {
-            await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true, timeout: 30000 });
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true, timeout: 30000});
             // watch out here (the labels in the plot appear a little after the plot)
             await page.waitFor(1500);
             await testPlotWidgets(page, "Plot1", 1);
@@ -87,7 +88,7 @@ export function testSingleCompononetHHProject(){
         });
 
         it('Remove data', async () => {
-            await removeAllPlots(page, );
+            await removeAllPlots(page,);
         });
 
         it('Camera controls', async () => {
@@ -123,12 +124,12 @@ export function testSingleCompononetHHProject(){
         it('Plot V', async () => {
             await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
             await click(page, ST.HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR);
-            await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true })
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true})
         });
 
         it('Remove all plots.', async () => {
             await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
-            await removeAllPlots(page, );
+            await removeAllPlots(page,);
         });
 
         it('Correct amount of rows for Global filter.', async () => {
@@ -146,7 +147,7 @@ export function testSingleCompononetHHProject(){
     describe('Spotlight', () => {
         it('Opens and shows correct butttons.', async () => {
             await click(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
-            await wait4selector(page, ST.SPOT_LIGHT_SELECTOR, { visible: true });
+            await wait4selector(page, ST.SPOT_LIGHT_SELECTOR, {visible: true});
         });
 
         it('Spotlight button exists', async () => {
@@ -156,27 +157,30 @@ export function testSingleCompononetHHProject(){
         });
 
         it('Spotlight button exists4', async () => {
-            await page.waitForSelector(ST.SPOT_LIGHT_SELECTOR, { visible: true });
+            await page.waitForSelector(ST.SPOT_LIGHT_SELECTOR, {visible: true});
         });
 
         it('Plot visible', async () => {
             await click(page, ST.PLOT_BUTTON_SELECTOR);
-            await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
         });
 
         it('Close', async () => {
             await page.evaluate(async selector => $(selector).hide(), ST.SPOT_LIGHT_SELECTOR);
             await page.evaluate(async () => {
                 const instance = eval('hhcell');
-                GEPPETTO.ComponentFactory.addWidget('CANVAS', { name: '3D Canvas', id: "Canvas2" }, function () {
-                    this.setName('Widget Canvas');this.setPosition();this.display([instance])
+                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas', id: "Canvas2"}, function () {
+                    this.setName('Widget Canvas');
+                    this.setPosition();
+                    this.display([instance])
                 });
-                Plot1.setPosition(0,300);
+                Plot1.setPosition(0, 300);
                 G.addWidget(1).then(w => {
                     w.setMessage("Hhcell popup");
                 });
                 G.addWidget(1).then(w => {
-                    w.setMessage("Hhcell popup 2").addCustomNodeHandler(function (){},'click');
+                    w.setMessage("Hhcell popup 2").addCustomNodeHandler(function () {
+                    }, 'click');
                 });
             })
         })
@@ -185,7 +189,7 @@ export function testSingleCompononetHHProject(){
 
     describe('Tutorials', () => {
         it('Click tut button', async () => {
-            if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null){
+            if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null) {
                 await click(page, ST.TUTORIAL_BUTTON_SELECTOR);
                 await page.evaluate(async () => {
                     const nextBtnSelector = $(".nextBtn");
@@ -215,8 +219,8 @@ export function testSingleCompononetHHProject(){
         it('More than one color function instance found.', async () => {
             const initialColorFunctions = await page.evaluate(async () => GEPPETTO.SceneController.getColorFunctionInstances().length);
             await page.evaluate(async () => {
-                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
-                Project.getActiveExperiment().play({ step:10 });
+                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'), false), window.voltage_color);
+                Project.getActiveExperiment().play({step: 10});
             });
             expect(
                 await page.evaluate(async () => GEPPETTO.SceneController.getColorFunctionInstances().length)
@@ -230,20 +234,20 @@ export function testSingleCompononetHHProject(){
              * TODO? / FIXME? / OK?: I thought casper test was reloading the page at this point, but it is not.
              * await page.reload();
              */
-            await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
+            await wait4selector(page, ST.SPINNER_SELECTOR, {hidden: true})
         });
 
         it('Widgets stored in View state come up', async () => {
-            await wait4selector(page, ST.CANVAS_2_DIV_SELECTOR, { visible: true });
-            await wait4selector(page, ST.PLOT_1_DIV_SELECTOR, { visible: true });
-            await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, { visible: true });
-            await wait4selector(page, ST.POPUP_2_DIV_SELECTOR, { visible: true })
+            await wait4selector(page, ST.CANVAS_2_DIV_SELECTOR, {visible: true});
+            await wait4selector(page, ST.PLOT_1_DIV_SELECTOR, {visible: true});
+            await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible: true});
+            await wait4selector(page, ST.POPUP_2_DIV_SELECTOR, {visible: true})
         });
 
         describe('Tutorials', () => {
             it('Tutorial1 step restored correctly', async () => {
-                if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null){
-                    await page.wait4selector(page, ST.TUTORIAL_1_DIV_SELECTOR, { visible: true });
+                if (await page.$(ST.TUTORIAL_BUTTON_SELECTOR) !== null) {
+                    await page.wait4selector(page, ST.TUTORIAL_1_DIV_SELECTOR, {visible: true});
                     expect(
                         await page.evaluate(async () => window.Tutorial1.state.currentStep)
                     ).toBe(2)
@@ -273,7 +277,7 @@ export function testSingleCompononetHHProject(){
 
 export function testACNET2Project() {
 
-    beforeAll(async() => {
+    beforeAll(async () => {
         await launchTest(Projects.ACNET);
     });
 
@@ -298,10 +302,10 @@ export function testACNET2Project() {
         });
 
         it("Bask and pyramidal connections after resolveAllImportTypes() call", async () => {
-            await page.evaluate(async () =>  Model.neuroml.resolveAllImportTypes(window.callPhantom));
+            await page.evaluate(async () => Model.neuroml.resolveAllImportTypes(window.callPhantom));
             expect(
-                await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length===60 &&
-                    acnet2.pyramidals_48[23].getConnections().length===22)
+                await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length === 60 &&
+                    acnet2.pyramidals_48[23].getConnections().length === 22)
             ).toBeTruthy();
         });
 
@@ -344,16 +348,16 @@ export function testACNET2Project() {
 
     describe('Camera Controls', () => {
         it('Camera controls', async () => {
-            await testCameraControls(page, [231.95608349343888,508.36555704435455,1849.839]);
+            await testCameraControls(page, [231.95608349343888, 508.36555704435455, 1849.839]);
         })
     });
 
     describe('Original Colors', () => {
         it('Original Colors', async () => {
-            await test3DMeshColor(page, [0.796078431372549,0,0], "acnet2.pyramidals_48[0]", 0);
-            await test3DMeshColor(page, [0.796078431372549,0,0],"acnet2.pyramidals_48[47]", 0);
-            await test3DMeshColor(page, [0,0.2,0.596078431372549],"acnet2.baskets_12[0]", 0);
-            await test3DMeshColor(page, [0,0.2,0.596078431372549],"acnet2.baskets_12[11]", 0);
+            await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[0]", 0);
+            await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[47]", 0);
+            await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[0]", 0);
+            await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[11]", 0);
         })
     });
 
@@ -366,19 +370,19 @@ export function testACNET2Project() {
 
     describe('Mesh', () => {
         it('Mesh Visibility', async () => {
-            await testVisibility(page, ST.ACNET2_SELECTOR, '#'+ST.ACNET2_CONTROL_PANEL_BUTTON_SELECTOR);
+            await testVisibility(page, ST.ACNET2_SELECTOR, '#' + ST.ACNET2_CONTROL_PANEL_BUTTON_SELECTOR);
         });
     });
 
     describe('Plot from Control Panel', () => {
         it('Plot V', async () => {
             await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
-            await wait4selector(page, ST.ACNET2_V_CONTROL_PANEL_BUTTON, { visible: true });
-            await click(page, '#'+ST.ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR)
+            await wait4selector(page, ST.ACNET2_V_CONTROL_PANEL_BUTTON, {visible: true});
+            await click(page, '#' + ST.ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR)
         });
 
         it('Hide Plot 1', async () => {
-            await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
+            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
             await assertExists(page, ST.PLOT1_SELECTOR);
             await page.evaluate(async selector => {
                 $(selector).hide()
@@ -392,10 +396,9 @@ export function testACNET2Project() {
     });
 
     describe('Spotlight', () => {
-        it('Test Spotlight.', async () => {
+        it('Spotlight 1', async () => {
             await testSpotlight(page, ST.ACNET2_V1_SELECTOR, ST.PLOT1_SELECTOR, true, true, ST.ACNET2_SELECTOR, ST.ACNET2_SELECTOR);
         });
-
 
         it('Close', async () => {
             await closeSpotlight(page)
@@ -403,4 +406,35 @@ export function testACNET2Project() {
 
     });
 
+    describe('Connected cells to Instance-', () => {
+
+        it('Connection Lines.', async () => {
+            await testingConnectionLines(page, 23);
+        });
+
+        it('3D Mesh Colors Not Default', async () => {
+            await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR4);
+        });
+
+        it('3D Mesh Colors Basket4', async () => {
+            await test3DMeshColor(page, [0.39215686274509803,0.5882352941176471,0.08235294117647059], ST.ACNET2_BASKET_SELECTOR4);
+        });
+
+        it('3D Mesh Colors Not Default Baskets 1', async () => {
+            await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR1);
+        });
+
+        it('3D Mesh Colors Baskets 4', async () => {
+            await test3DMeshColor(page, [1,0.35294117647058826,0.00784313725490196], ST.ACNET2_BASKET_SELECTOR1);
+        });
+
+        it('3D Mesh Opacity Baskets 4', async () => {
+            await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
+        });
+
+        it('3D Mesh Opacity Baskets 1', async () => {
+            await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
+        });
+
+    });
 }

@@ -5,6 +5,7 @@ import {getUrlFromProjectId} from "./cmdline";
 const zoomClicks = 50;
 const panClicks = 10;
 const rotateClicks = 20;
+export const defaultColor = [0.00392156862745098,0.6,0.9098039215686274];
 
 export const resetCameraTest = async (page, expectedCameraPosition) => {
   await click(page, ST.PAN_HOME_BUTTON_SELECTOR);
@@ -83,10 +84,10 @@ export const test3DMeshColor = async (page, testColor,variableName,index) => {
 }
 
 
-export const test3DMeshOpacity = async (page, opactityExpected, variableName, index = 0) => {
+export const test3DMeshOpacity = async (page, opacityExpected, variableName, index = 0) => {
   expect(
     await page.evaluate((variableName, index) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[index].material.opacity, variableName, index)
-  ).toBe(opactityExpected)
+  ).toBe(opacityExpected)
 }
 
 
@@ -108,10 +109,10 @@ export const testSelection = async (page, variableName, selectColorVarName) => {
 
   await wait4selector(page, ST.BUTTON_ONE_SELECTOR, { visible: true });
   //
-  // await click(page, ST.BUTTON_ONE_SELECTOR);
-  // await page.waitFor(500);
-  //
-  // await test3DMeshColor(page, [1, 0.8, 0], selectColorVarName, 0);
+  await click(page, ST.BUTTON_ONE_SELECTOR);
+  await page.waitFor(500);
+
+  await test3DMeshColor(page, [1, 0.8, 0], selectColorVarName, 0);
 }
 
 
