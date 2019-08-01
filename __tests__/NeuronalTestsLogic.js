@@ -7,12 +7,12 @@ import {
     removeAllPlots,
     testCameraControls, testCameraControlsWithCanvasWidget,
     testInitialControlPanelValues,
-    testMeshVisibility, test3DMeshColor,test3DMeshColorNotEquals, test3DMeshOpacity,
+    testMeshVisibility, test3DMeshColor, test3DMeshColorNotEquals, test3DMeshOpacity,
     testPlotWidgets,
     testVisibility,
     testSpotlight, closeSpotlight,
     testingConnectionLines,
-    testVisualGroup
+    testVisualGroup, getMeshColor
 
 } from "./functions";
 import {getUrlFromProjectId} from "./cmdline";
@@ -481,15 +481,68 @@ export function testACNET2Project() {
     //     });
     // });
 
-    describe('Visual Group', () => {
+    // describe('Visual Group', () => {
+    //
+    //     it('Visual Group Baskets 0', async () => {
+    //         await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR0,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+    //     });
+    //
+    //     it('Visual Group Baskets 5', async () => {
+    //         await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+    //     });
+    // });
 
-        it('Visual Group Baskets 0', async () => {
-            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR0,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+    describe('Geometry', () => {
+
+        it('Set Geometry Cylinders', async () => {
+            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
         });
 
-        it('Visual Group Baskets 5', async () => {
-            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+        it('Mesh Geometry', async () => {
+            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+            expect(meshType).toEqual("Mesh");
         });
+
+        it('Mesh Total', async () => {
+            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+            expect(meshTotal).toEqual(60);
+        });
+
+        it('Set Geometry Lines / 3D Mesh Color', async () => {
+            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
+            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("lines"));
+            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+        });
+
+        it('LineSegments Geometry', async () => {
+            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+            expect(meshType).toEqual("LineSegments");
+        });
+
+        it('Mesh Total', async () => {
+            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+            expect(meshTotal).toEqual(60);
+        });
+
+        it('Set Geometry Cylinders', async () => {
+            await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
+        });
+
+        it('Mesh Geometry', async () => {
+            const meshType = await page.evaluate((variableName) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
+            expect(meshType).toEqual("Mesh");
+        });
+
+        it('3D Mesh Color', async () => {
+            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
+            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+        });
+
+        it('Mesh Total', async () => {
+            const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
+            expect(meshTotal).toEqual(60);
+        });
+
     });
 
 }
