@@ -281,160 +281,188 @@ export function testACNET2Project() {
         await launchTest(Projects.ACNET);
     });
 
-    describe('Primary Auditory Cortary', () => {
-        it("Initial amount of experiments for ACNE2", async () => {
-            expect(
-                await page.evaluate(async () => window.Project.getExperiments().length)
-            ).toBe(2)
-        });
+    // describe('Primary Auditory Cortary', () => {
+    //     it("Initial amount of experiments for ACNE2", async () => {
+    //         expect(
+    //             await page.evaluate(async () => window.Project.getExperiments().length)
+    //         ).toBe(2)
+    //     });
+    //
+    //     it('Top level instance', async () => {
+    //         expect(
+    //             await page.evaluate(async () => eval('acnet2') != null)
+    //         ).toBeTruthy()
+    //     });
+    //
+    //     it("Instances exploded", async () => {
+    //         expect(
+    //             await page.evaluate(async () => acnet2.baskets_12[3] !== undefined &&
+    //                 acnet2.pyramidals_48[12] !== undefined)
+    //         ).toBeTruthy();
+    //     });
+    //
+    //     it("Bask and pyramidal connections after resolveAllImportTypes() call", async () => {
+    //         await page.evaluate(async () => Model.neuroml.resolveAllImportTypes(window.callPhantom));
+    //         expect(
+    //             await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length === 60 &&
+    //                 acnet2.pyramidals_48[23].getConnections().length === 22)
+    //         ).toBeTruthy();
+    //     });
+    //
+    //     it("5 Visual Groups on pyramidals", async () => {
+    //         expect(
+    //             await page.evaluate(async () => acnet2.pyramidals_48[23].getVisualGroups().length)
+    //         ).toBe(5);
+    //     });
+    //
+    //     it("2 top Variables for ACNET2", async () => {
+    //         expect(
+    //             await page.evaluate(async () => window.Model.getVariables() !== undefined &&
+    //                 window.Model.getVariables().length === 2 &&
+    //                 window.Model.getVariables()[0].getId() === 'acnet2' &&
+    //                 window.Model.getVariables()[1].getId() === 'time')
+    //         ).toBeTruthy();
+    //     });
+    //
+    //     it("2 Libraries for ACNET2", async () => {
+    //         expect(
+    //             await page.evaluate(async () => window.Model.getLibraries() !== undefined &&
+    //                 window.Model.getLibraries().length === 2)
+    //         ).toBeTruthy();
+    //     });
+    //
+    //     it("1 top level instance for ACNET2", async () => {
+    //         expect(
+    //             await page.evaluate(async () => window.Instances !== undefined &&
+    //                 window.Instances.length === 2 &&
+    //                 window.Instances[0].getId() === 'acnet2')
+    //         ).toBeTruthy();
+    //     });
+    //
+    //     it("Remove Plots", async () => {
+    //         await removeAllPlots(page);
+    //     });
+    //
+    //
+    // });
+    //
+    // describe('Camera Controls', () => {
+    //     it('Camera controls', async () => {
+    //         await testCameraControls(page, [231.95608349343888, 508.36555704435455, 1849.839]);
+    //     })
+    // });
+    //
+    // describe('Original Colors', () => {
+    //     it('Original Colors', async () => {
+    //         await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[0]", 0);
+    //         await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[47]", 0);
+    //         await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[0]", 0);
+    //         await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[11]", 0);
+    //     })
+    // });
+    //
+    // describe('Control Panel', () => {
+    //     it('The control panel opened with right amount of rows', async () => {
+    //         await click(page, ST.CONTROL_PANEL_BUTTON);
+    //         await testInitialControlPanelValues(page, 10);
+    //     })
+    // });
+    //
+    // describe('Mesh', () => {
+    //     it('Mesh Visibility', async () => {
+    //         await testVisibility(page, ST.ACNET2_SELECTOR, '#' + ST.ACNET2_CONTROL_PANEL_BUTTON_SELECTOR);
+    //     });
+    // });
+    //
+    // describe('Plot from Control Panel', () => {
+    //     it('Plot V', async () => {
+    //         await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
+    //         await wait4selector(page, ST.ACNET2_V_CONTROL_PANEL_BUTTON, {visible: true});
+    //         await click(page, '#' + ST.ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR)
+    //     });
+    //
+    //     it('Hide Plot 1', async () => {
+    //         await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
+    //         await assertExists(page, ST.PLOT1_SELECTOR);
+    //         await page.evaluate(async selector => {
+    //             $(selector).hide()
+    //         }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+    //     });
+    //
+    //     it('Remove all plots.', async () => {
+    //         await removeAllPlots(page);
+    //     });
+    //
+    // });
+    //
+    // describe('Spotlight Soma V', () => {
+    //     it('Spotlight', async () => {
+    //         await testSpotlight(page, ST.ACNET2_V1_SELECTOR, ST.PLOT1_SELECTOR, true, true, ST.ACNET2_SELECTOR, ST.ACNET2_SELECTOR);
+    //     });
+    //
+    //     it('Close', async () => {
+    //         await closeSpotlight(page)
+    //     })
+    //
+    // });
+    //
+    // describe('Connected cells to Instance', () => {
+    //
+    //     it('Connection Lines.', async () => {
+    //         await testingConnectionLines(page, 23);
+    //     });
+    //
+    //     it('3D Mesh Colors Not Default', async () => {
+    //         await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR4);
+    //     });
+    //
+    //     it('3D Mesh Colors Baskets 4', async () => {
+    //         await test3DMeshColor(page, [0.39215686274509803,0.5882352941176471,0.08235294117647059], ST.ACNET2_BASKET_SELECTOR4);
+    //     });
+    //
+    //     it('3D Mesh Colors Not Default Baskets 1', async () => {
+    //         await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR1);
+    //     });
+    //
+    //     it('3D Mesh Colors Baskets 4', async () => {
+    //         await test3DMeshColor(page, [1,0.35294117647058826,0.00784313725490196], ST.ACNET2_BASKET_SELECTOR1);
+    //     });
+    //
+    //     it('3D Mesh Opacity Baskets 4', async () => {
+    //         await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
+    //     });
+    //
+    //     it('3D Mesh Opacity Baskets 1', async () => {
+    //         await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
+    //     });
+    // });
 
-        it('Top level instance', async () => {
-            expect(
-                await page.evaluate(async () => eval('acnet2') != null)
-            ).toBeTruthy()
+    describe('Spotlight Biophys', () => {
+        it('Spotlight', async () => {
+            await testSpotlight(page, ST.ACNET2_gDensity_SELECTOR, ST.PLOT1_SELECTOR, false, false, ST.ACNET2_SELECTOR);
         });
-
-        it("Instances exploded", async () => {
-            expect(
-                await page.evaluate(async () => acnet2.baskets_12[3] !== undefined &&
-                    acnet2.pyramidals_48[12] !== undefined)
-            ).toBeTruthy();
-        });
-
-        it("Bask and pyramidal connections after resolveAllImportTypes() call", async () => {
-            await page.evaluate(async () => Model.neuroml.resolveAllImportTypes(window.callPhantom));
-            expect(
-                await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length === 60 &&
-                    acnet2.pyramidals_48[23].getConnections().length === 22)
-            ).toBeTruthy();
-        });
-
-        it("5 Visual Groups on pyramidals", async () => {
-            expect(
-                await page.evaluate(async () => acnet2.pyramidals_48[23].getVisualGroups().length)
-            ).toBe(5);
-        });
-
-        it("2 top Variables for ACNET2", async () => {
-            expect(
-                await page.evaluate(async () => window.Model.getVariables() !== undefined &&
-                    window.Model.getVariables().length === 2 &&
-                    window.Model.getVariables()[0].getId() === 'acnet2' &&
-                    window.Model.getVariables()[1].getId() === 'time')
-            ).toBeTruthy();
-        });
-
-        it("2 Libraries for ACNET2", async () => {
-            expect(
-                await page.evaluate(async () => window.Model.getLibraries() !== undefined &&
-                    window.Model.getLibraries().length === 2)
-            ).toBeTruthy();
-        });
-
-        it("1 top level instance for ACNET2", async () => {
-            expect(
-                await page.evaluate(async () => window.Instances !== undefined &&
-                    window.Instances.length === 2 &&
-                    window.Instances[0].getId() === 'acnet2')
-            ).toBeTruthy();
-        });
-
-        it("Remove Plots", async () => {
-            await removeAllPlots(page);
-        });
-
 
     });
 
-    describe('Camera Controls', () => {
-        it('Camera controls', async () => {
-            await testCameraControls(page, [231.95608349343888, 508.36555704435455, 1849.839]);
-        })
-    });
+    describe('Opacity', () => {
 
-    describe('Original Colors', () => {
-        it('Original Colors', async () => {
-            await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[0]", 0);
-            await test3DMeshColor(page, [0.796078431372549, 0, 0], "acnet2.pyramidals_48[47]", 0);
-            await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[0]", 0);
-            await test3DMeshColor(page, [0, 0.2, 0.596078431372549], "acnet2.baskets_12[11]", 0);
-        })
-    });
-
-    describe('Control Panel', () => {
-        it('The control panel opened with right amount of rows', async () => {
-            await click(page, ST.CONTROL_PANEL_BUTTON);
-            await testInitialControlPanelValues(page, 10);
-        })
-    });
-
-    describe('Mesh', () => {
-        it('Mesh Visibility', async () => {
-            await testVisibility(page, ST.ACNET2_SELECTOR, '#' + ST.ACNET2_CONTROL_PANEL_BUTTON_SELECTOR);
-        });
-    });
-
-    describe('Plot from Control Panel', () => {
-        it('Plot V', async () => {
-            await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
-            await wait4selector(page, ST.ACNET2_V_CONTROL_PANEL_BUTTON, {visible: true});
-            await click(page, '#' + ST.ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR)
+        it('Deselect', async () => {
+            await page.evaluate(() =>  acnet2.pyramidals_48[0].deselect());
         });
 
-        it('Hide Plot 1', async () => {
-            await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
-            await assertExists(page, ST.PLOT1_SELECTOR);
-            await page.evaluate(async selector => {
-                $(selector).hide()
-            }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+        it('3D Mesh Opacity 1', async () => {
+            await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR1);
         });
 
-        it('Remove all plots.', async () => {
-            await removeAllPlots(page);
+        it('3D Mesh Opacity 1', async () => {
+            await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR4);
         });
 
-    });
-
-    describe('Spotlight', () => {
-        it('Spotlight 1', async () => {
-            await testSpotlight(page, ST.ACNET2_V1_SELECTOR, ST.PLOT1_SELECTOR, true, true, ST.ACNET2_SELECTOR, ST.ACNET2_SELECTOR);
-        });
-
-        it('Close', async () => {
+        it('Close Spotlight', async () => {
             await closeSpotlight(page)
         })
 
     });
 
-    describe('Connected cells to Instance-', () => {
 
-        it('Connection Lines.', async () => {
-            await testingConnectionLines(page, 23);
-        });
-
-        it('3D Mesh Colors Not Default', async () => {
-            await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR4);
-        });
-
-        it('3D Mesh Colors Basket4', async () => {
-            await test3DMeshColor(page, [0.39215686274509803,0.5882352941176471,0.08235294117647059], ST.ACNET2_BASKET_SELECTOR4);
-        });
-
-        it('3D Mesh Colors Not Default Baskets 1', async () => {
-            await test3DMeshColorNotEquals(page, defaultColor, ST.ACNET2_BASKET_SELECTOR1);
-        });
-
-        it('3D Mesh Colors Baskets 4', async () => {
-            await test3DMeshColor(page, [1,0.35294117647058826,0.00784313725490196], ST.ACNET2_BASKET_SELECTOR1);
-        });
-
-        it('3D Mesh Opacity Baskets 4', async () => {
-            await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
-        });
-
-        it('3D Mesh Opacity Baskets 1', async () => {
-            await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
-        });
-
-    });
 }
