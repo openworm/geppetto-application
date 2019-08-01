@@ -158,7 +158,7 @@ export const testCameraControls = async (page, expectedCameraPosition) => {
 
   for (const [ repetitions, selector, timeout ] of scheduler) {
     for (const i of Array(repetitions)) {
-      page.click(selector)
+      page.click(selector);
       await page.waitFor(timeout)
     }
     await resetCameraTest(page, expectedCameraPosition);
@@ -171,22 +171,21 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array)
     }
-  }
+  };
 
   const scheduler = [
-    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR],
-    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR],
-    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR]
+    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 100],
+    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 100],
+    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 300]
   ];
 
-  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
+  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector, timeout]) => {
     
     for (let i in Array(repetitions).fill(1)) {
-      // time blows up if we wait the clicks
-      page.click(firstSelector);
-      await page.waitFor(10)
-      page.click(secondSelector);
-      await page.waitFor(10)
+      await page.click(firstSelector);
+      await page.waitFor(timeout);
+      await page.click(secondSelector);
+      await page.waitFor(timeout);
     }
     await resetCameraTest(page, expectedCameraPosition);
   })

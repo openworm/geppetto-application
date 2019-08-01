@@ -436,31 +436,49 @@ export function testACNET2Project() {
     //         await test3DMeshOpacity(page, 0.3, ST.ACNET2_BASKET_SELECTOR1);
     //     });
     // });
+    //
+    // describe('Spotlight Biophys', () => {
+    //     it('Spotlight', async () => {
+    //         await testSpotlight(page, ST.ACNET2_gDensity_SELECTOR, ST.PLOT1_SELECTOR, false, false, ST.ACNET2_SELECTOR);
+    //     });
+    //
+    // });
+    //
+    // describe('Opacity', () => {
+    //
+    //     it('Deselect', async () => {
+    //         await page.evaluate(() =>  acnet2.pyramidals_48[0].deselect());
+    //     });
+    //
+    //     it('3D Mesh Opacity 1', async () => {
+    //         await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR1);
+    //     });
+    //
+    //     it('3D Mesh Opacity 1', async () => {
+    //         await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR4);
+    //     });
+    //
+    //     it('Close Spotlight', async () => {
+    //         await closeSpotlight(page)
+    //     })
+    //
+    // });
 
-    describe('Spotlight Biophys', () => {
-        it('Spotlight', async () => {
-            await testSpotlight(page, ST.ACNET2_gDensity_SELECTOR, ST.PLOT1_SELECTOR, false, false, ST.ACNET2_SELECTOR);
+    describe('Widgets and Camera', () => {
+
+        it('Add Widget', async () => {
+            await page.evaluate(() =>
+            {
+                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([acnet2])});
+                Plot1.setPosition(0,300); // get out of the way
+                acnet2.baskets_12[4].getVisualGroups()[0].show(true);
+            });
         });
 
-    });
-
-    describe('Opacity', () => {
-
-        it('Deselect', async () => {
-            await page.evaluate(() =>  acnet2.pyramidals_48[0].deselect());
+        it('Camera', async () => {
+            await testCameraControlsWithCanvasWidget(page,[231.95608349343888,508.36555704435455,1849.839]);
         });
 
-        it('3D Mesh Opacity 1', async () => {
-            await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR1);
-        });
-
-        it('3D Mesh Opacity 1', async () => {
-            await test3DMeshOpacity(page, 1, ST.ACNET2_BASKET_SELECTOR4);
-        });
-
-        it('Close Spotlight', async () => {
-            await closeSpotlight(page)
-        })
 
     });
 
