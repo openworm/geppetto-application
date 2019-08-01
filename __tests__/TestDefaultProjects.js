@@ -8,7 +8,7 @@ import {
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
-    jest.setTimeout(30000);
+    jest.setTimeout(90000);
     
   });
 
