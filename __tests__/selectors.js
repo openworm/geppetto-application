@@ -99,29 +99,32 @@ export const ELEMENTS_IN_LANDING_PAGE = [
 
 export const GEPPETTO_LOGO = 'div#logo';
 	
-export const EXPERIMENT_TABLE = 'div#experimentsOutput';
+export const EXPERIMENT_TABLE_CONTAINER = 'div#experimentsOutput';
 export const EXPERIMENT_TABLE_SELECTOR = 'div.fa.fa-flask';
-export const EXPERIMENT_TABLE_COLUMN_1 = 'tr.experimentsTableColumn:nth-child(1)';
-export const EXPERIMENT_TABLE_EXTENDED_ROW_VARS = 'td[name=variables]'
-export const EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS = 'td[name=PARAMETERS]'
-export const EXPERIMENT_TABLE_ACTIVE_ICON = 'a.activeIcon'
-export const EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON = 'a.downloadResultsIcon'
-export const EXPERIMENT_TABLE_DOWNLOAD_MODELS_ICON = 'a.downloadModelsIcon'
-export const EXPERIMENT_TABLE_CLONE_ICON = 'a.cloneIcon'
-export const EXPERIMENT_TABLE_DELETE_ICON = 'a.deleteIcon'
+export const EXPERIMENT_TABLE_COLUMN_1_SELECTOR = 'tr.experimentsTableColumn:nth-child(1)';
+export const EXPERIMENT_TABLE_EXTENDED_ROW_VARS_SELECTOR = 'td[name=variables]'
+export const EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS_SELECTOR = 'td[name=parameters]'
+export const EXPERIMENT_TABLE_ACTIVE_ICON_SELECTOR = 'a.activeIcon'
+export const EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON_SELECTOR = 'a.downloadResultsIcon'
+export const EXPERIMENT_TABLE_DOWNLOAD_MODELS_ICON_SELECTOR = 'a.downloadModelsIcon'
+export const EXPERIMENT_TABLE_CLONE_ICON_SELECTOR = 'a.cloneIcon'
+export const EXPERIMENT_TABLE_DELETE_ICON_SELECTOR = 'a.deleteIcon'
 
 	
 export const PERSIST_BUTTON = 'button.btn.SaveButton';
 export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
 export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'
 	
-export const SPOTLIGHT_PARAMETER_INPUT = 'input.spotlight-input'
+export const SPOTLIGHT_PARAMETER_INPUT = 'icon.fa.fa-sliders'
 
 export const CONNECTIVITY_1_DIV_SELECTOR = "div#Connectivity1"
 	
 export const DASHBOAD_PROJECT_PREVIEW_SELECTOR = 'div.project-preview'
-export const DASHBOARD_DELETE_PROJECT_SELECTOR = 'a[title=\"Delete project\"]'
+export const DASHBOARD_DELETE_PROJECT_SELECTOR = 'a.i.fa-trash-o'
 export const DASHBOARD_DELETE_ICON_SELECTOR = 'i.fa-trash-o'
-export const DASHBOARD_OPEN_PROJECT = 'a[title=\"Open project\"]'
+export const DASHBOARD_OPEN_PROJECT = 'i.fa-folder-open'
 	
+export const DIALOG_MODAL_SELECTOR = '#infomodal'
+export const DIALOG_MODAL_BUTTON_SELECTOR = 'button#infomodal-btn'
+export const DIALOG_MODAL_HEADER = 'div#infomodal-header'
 	

@@ -34,41 +34,26 @@ describe('Test Persistence', () => {
 	})
 
 	describe('Test Dashboard', () => {
-		const PROJECT_IDS = [1, 2];
+		const PROJECT_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 		it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
 			wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
 		})
 	})
-
-	describe('Test First Project Before Persisted', () => {
-		const project_1 = getPersistenceProjectJSON(1);
-		it("Open Single Component HH Project",  async () => {
-			await page.goto(getUrlFromProjectUrl(project_1.url));
-		})
-		describe("Test First Project", () => {
-			async () => {
-				await testProjectBeforePersistence(page,project_1);				
-			}
-		})
-
-		it("Open Persisted Project",  async () => {
-			const persistedProjectID = await page.evaluate(async () => Project.getId())
-			await page.goto(getUrlFromProjectUrl(project_1.url));
-		})
-		describe('Test First Project After Persisted',  () => {
-			async () => {
-				await testProjectAfterPersistence(page,project_1, persistedProjectID);				
-			}
-		})
-
-		it("Open Dashboard",  async () => {
-			await page.goto(baseURL);
-		})
-		describe('Test Delete Project After Persisted', () => {
-			async () => {
-				await testDeletePersistedProject(page,project_1, persistedProjectID);				
-			}
-		})
-	})
-
 })
+describe('Test First Project Before Persisted', () => {
+
+	const project_1 = getPersistenceProjectJSON(1);
+	it("Open Single Component HH Project",  async () => {
+		await page.goto(getUrlFromProjectUrl(project_1.url));
+	})
+	testProjectBeforePersistence(page,baseURL, true, project_1);
+})
+
+//describe('Test First Project Before Persisted', () => {
+//
+//	const project_2 = getPersistenceProjectJSON(2);
+//	it("Open 2nd Project",  async () => {
+//		await page.goto(getUrlFromProjectUrl(project_2.url));
+//	})
+//	testProjectBeforePersistence(page,baseURL, false, project_2);
+//})
