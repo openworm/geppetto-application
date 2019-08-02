@@ -1,11 +1,3 @@
-export const Projects = Object.freeze({
-  HH_CELL: 1,
-  ACNET: 5,
-  C302: 6,
-  CA1: 3,
-  PVDR: 8,
-  CONNECTOME: 16,
-});
 
 const CA1_PROJECT = 'CA1 Project';
 const ACNET_PROJECT = 'ACNET Project';
@@ -17,7 +9,18 @@ const PHARYNGEAL_PROJECT = 'Pharyngeal Project';
 const C_ELEGANS_PVDR_PROJECT = 'C-Elegans PVDR Project';
 const C_ELEGANS_MUSCLE_PROJECT = 'C-Elegans Muscle Model Project';
 const C_ELEGANS_CONNECTOME_PROJECT = 'C-Elegans Connectome Project';
+const CYLINDER_PROJECT = 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/cylinder/geppetto.json';
 
+export const Projects = Object.freeze({
+  HH_CELL: 1,
+  ACNET: 5,
+  C302: 6,
+  CA1: 3,
+  PVDR: 8,
+  CONNECTOME: 16,
+  PMUSCLE: 4,
+  CYLINDER: CYLINDER_PROJECT,
+});
 
 export const getProjectNameById = id => {
   switch (id) {
@@ -50,6 +53,7 @@ export const getProjectNameById = id => {
 
   case 58:
     return PHARYNGEAL_PROJECT;
+
   
   default:
     return '';

@@ -232,7 +232,6 @@ export const launchTest = async (projectId, timeout) => {
   await assertExists(page, ST.SIM_TOOLBAR_SELECTOR);
   await assertExists(page, ST.CONTROLS_SELECTOR);
   await assertExists(page, ST.FOREGROUND_TOOLBAR_SELECTOR);
-
 }
 
 

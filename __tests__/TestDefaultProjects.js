@@ -5,11 +5,13 @@ import {
   testC302NetworkProject,
   testCa1Project,
   testPVDRNeuronProject,
-  testC302Connectome
+  testPMuscleCellProject,
+  testC302Connectome,
+  testCylindersProject
 } from './NeuronalTestsLogic'
 
 
-describe('Test UI Components', () => {
+describe('Test Default Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(200000);
 
@@ -19,9 +21,12 @@ describe('Test UI Components', () => {
   //describe('Acnet Project', () => testACNET2Project());
   //describe('C302 Network Project', () => testC302NetworkProject());
   //describe('Ca1 Project', () => testCa1Project());
-  //describe('PVDR Neuron Project', () => testPVDRNeuronProject());
 
-  describe('C302 Connectome', () => testC302Connectome());
+
+  //describe('cElegansConnectome Project', () => testC302Connectome());
+  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
+  //describe('cElegansPVDR Project', () => testPVDRNeuronProject());
+  //describe('Cylinders Project', () => testCylindersProject());
 
 
   afterAll(async () => {

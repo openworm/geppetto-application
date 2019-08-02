@@ -826,16 +826,118 @@ export function testPVDRNeuronProject() {
 }
 
 export function testC302Connectome() {
-
     beforeAll(async () => {
         await launchTest(Projects.CONNECTOME);
     });
-
 
     describe('C302 Connectome', () => {
         it('POPUP 1', async () => {
             await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible: true, timeout: 200000});
         });
     });
-
 }
+
+export function testPMuscleCellProject() {
+    beforeAll(async () => {
+        await launchTest(Projects.PMUSCLE);
+    });
+
+    describe('Initial Values', () => {
+        it('POPUP 1', async () => {
+            await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible: true, timeout: 200000});
+        });
+
+        it('Amount of Experiments', async () => {
+            const experiments = await page.evaluate(() => window.Project.getExperiments().length);
+            expect(experiments).toEqual(1);
+        });
+
+        it('Active Experiment', async () => {
+            const experiment = await page.evaluate(() => window.Project.getActiveExperiment().getId());
+            expect(experiment).toEqual(1);
+        });
+
+        it('Top Level Instance', async () => {
+            const variable = await page.evaluate(() => net1 != null);
+            expect(variable).toBeTruthy();
+        });
+
+        it('Children', async () => {
+            const children = await page.evaluate(() => net1.getChildren().length);
+            expect(children).toEqual(2);
+        });
+
+        it('Connections', async () => {
+            const connections = await page.evaluate(() => net1.getConnections().length);
+            expect(connections).toEqual(0);
+        });
+
+        it('Visual Group Capability ', async () => {
+            const visualGroups = await page.evaluate(() => !net1.neuron[0].getVisualType().hasCapability('VisualGroupCapability'));
+            expect(visualGroups).toBeTruthy()
+        });
+
+        it('Visual Capability Neuron ', async () => {
+            const visualGroups = await page.evaluate(() => net1.neuron[0].getVisualType().hasCapability('VisualCapability'));
+            expect(visualGroups).toBeTruthy()
+        });
+
+        it('Visual Capability Muscle ', async () => {
+            const visualGroups = await page.evaluate(() => net1.muscle[0].getVisualType().hasCapability('VisualCapability'));
+            expect(visualGroups).toBeTruthy()
+        });
+
+        it('Top Level Variables', async () => {
+            const variables = await page.evaluate(() => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2 &&
+                window.Model.getVariables()[0].getId() === 'net1' && window.Model.getVariables()[1].getId() === 'time');
+            expect(variables).toBeTruthy()
+        });
+
+        it('Libraries', async () => {
+            const libraries = await page.evaluate(() => window.Model.getLibraries() !== undefined && window.Model.getLibraries().length === 2);
+            expect(libraries).toBeTruthy()
+        });
+
+        it('Top Level Instances', async () => {
+            const instances = await page.evaluate(() => window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'net1');
+            expect(instances).toBeTruthy()
+        });
+    });
+}
+
+
+// TODO: Timing out on my machine
+export function testCylindersProject() {
+    beforeAll(async () => {
+        await launchTest(Projects.CYLINDER);
+    });
+
+    describe('Cylinder', () => {
+        it('Rotations', async () => {
+            await wait4selector(page, ST.LOADING_SPINNER, {hidden: true, timeout: 200000});
+
+            const evaluation = await page.evaluate(() =>
+            {
+                const reference =
+                    {"Example2.Pop_OneSeg[0]":[0, Math.PI/2, 0, "XYZ"],
+                    "Example2.Pop_OneSeg[1]":[0, Math.PI/2, 0, "XYZ"],
+                    "Example2.Pop_TwoSeg[0]":[0, 0, 0, "XYZ"]};
+                let results = [];
+
+                for (let path in reference) {
+                    let rotation = Canvas1.engine.meshes[path].rotation.toArray();
+                    let expected = reference[path];
+                    for (let i=0; i<rotation.length; ++i)
+                        results.push(rotation[i] === expected[i]);
+                }
+
+                for (let i=0; i<rotation.length; ++i)
+                    results.push(rotation[i] === expected[i]);
+                return results.every(function(x){return x;});
+            });
+
+            expect(evaluation).toBeTruthy();
+        });
+    });
+}
+
