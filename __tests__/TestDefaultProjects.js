@@ -1,6 +1,6 @@
 
 import {
-  testSingleCompononetHHProject,
+  testSingleComponentHHProject,
   testACNET2Project,
   testC302NetworkProject,
   testCa1Project,
@@ -15,7 +15,7 @@ describe('Test UI Components', () => {
 
   });
 
-  //describe('Single Component HH Project', () => testSingleCompononetHHProject());
+  //describe('Single Component HH Project', () => testSingleComponentHHProject());
   //describe('Acnet Project', () => testACNET2Project());
   //describe('C302 Network Project', () => testC302NetworkProject());
   //describe('Ca1 Project', () => testCa1Project());

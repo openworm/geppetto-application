@@ -18,7 +18,7 @@ import {
 import {getUrlFromProjectId} from "./cmdline";
 import {launchTest} from "./functions";
 
-export function testSingleCompononetHHProject() {
+export function testSingleComponentHHProject() {
 
     beforeAll(async () => {
         await page.goto(getUrlFromProjectId(Projects.HH_CELL));
