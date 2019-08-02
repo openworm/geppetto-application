@@ -108,6 +108,7 @@ export const PLOT_1_DIV_SELECTOR = 'div#Plot1';
 export const POPUP_1_DIV_SELECTOR = 'div#Popup1';
 export const POPUP_2_DIV_SELECTOR = 'div#Popup2';
 export const POPUP_1_SELECTOR = '#Popup1';
+export const LOGO = 'div#logo';
 
 export const TUTORIAL_1_DIV_SELECTOR = 'div#Tutorial1';
 

@@ -1,6 +1,8 @@
 import * as ST from './selectors'
 import {click, wait4selector} from './utils';
-import {getUrlFromProjectId} from "./cmdline";
+import {getCommandLineArg, getUrlFromProjectId} from "./cmdline";
+
+export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
 const zoomClicks = 50;
 const panClicks = 10;
@@ -241,3 +243,20 @@ export const assertExists = async(page, selector) => {
   ).toBeTruthy();
 }
 
+export function testDashboard() {
+  beforeAll(async () => {
+    await page.goto(baseURL);
+  });
+
+  describe('Test Dashboard', () => {
+    const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
+    it.each(PROJECT_IDS)('Project width id %i from core bundle is present', async id => {
+      await page.waitForSelector(`div[project-id="${id}"]`);
+    });
+
+    it('Logo', async () => {
+      await assertExists(page, ST.LOGO);
+    });
+  })
+
+}

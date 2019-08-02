@@ -578,7 +578,6 @@ export function testC302NetworkProject() {
 
         it('Import Types Spinner', async () => {
 
-            //TODO: Possible issue here
             await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
             await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
             await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
