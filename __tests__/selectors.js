@@ -89,6 +89,8 @@ export const C302_SELECTOR = 'c302.ADAL[0]';
 export const C302_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="c302_ADAL_0__v_plot_ctrlPanel_btn"]';
 export const C302_V_SELECTOR = 'c302.ADAL[0].v';
 
+export const CA1_V_SELECTOR = 'ca1.CA1_CG[0].Seg0_apical_dendrite_22_1158.v';
+
 
 
 

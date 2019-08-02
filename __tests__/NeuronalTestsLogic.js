@@ -730,6 +730,37 @@ export function testC302NetworkProject() {
             expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
         });
     });
+}
 
+export function testCa1Project() {
+
+    beforeAll(async () => {
+        await launchTest(Projects.CA1);
+    });
+
+
+    describe('Control Panel', () => {
+        it('Initial Amount of Rows', async () => {
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+            await click(page, ST.CONTROL_PANEL_BUTTON);
+            await testInitialControlPanelValues(page, 3);
+        });
+
+        it('Hide Control Panel', async () => {
+            await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
+            await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
+            await page.evaluate(async selector => {
+                $(selector).hide()
+            }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+        });
+
+        it('Spotlight', async () => {
+            await testSpotlight(page, ST.CA1_V_SELECTOR, '', false, false);
+        });
+
+        it('Close', async () => {
+            await closeSpotlight(page)
+        })
+    });
 
 }
