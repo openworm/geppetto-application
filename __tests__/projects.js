@@ -4,6 +4,7 @@ export const Projects = Object.freeze({
   C302: 6,
   CA1: 3,
   PVDR: 8,
+  CONNECTOME: 16,
 });
 
 const CA1_PROJECT = 'CA1 Project';

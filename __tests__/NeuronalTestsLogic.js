@@ -422,7 +422,7 @@ export function testACNET2Project() {
         });
 
         it('3D Mesh Colors Baskets 4', async () => {
-            await test3DMeshColor(page, [0.39215686274509803,0.5882352941176471,0.08235294117647059], ST.ACNET2_BASKET_SELECTOR4);
+            await test3DMeshColor(page, [0.39215686274509803, 0.5882352941176471, 0.08235294117647059], ST.ACNET2_BASKET_SELECTOR4);
         });
 
         it('3D Mesh Colors Not Default Baskets 1', async () => {
@@ -430,7 +430,7 @@ export function testACNET2Project() {
         });
 
         it('3D Mesh Colors Baskets 4', async () => {
-            await test3DMeshColor(page, [1,0.35294117647058826,0.00784313725490196], ST.ACNET2_BASKET_SELECTOR1);
+            await test3DMeshColor(page, [1, 0.35294117647058826, 0.00784313725490196], ST.ACNET2_BASKET_SELECTOR1);
         });
 
         it('3D Mesh Opacity Baskets 4', async () => {
@@ -452,7 +452,7 @@ export function testACNET2Project() {
     describe('Opacity', () => {
 
         it('Deselect', async () => {
-            await page.evaluate(() =>  acnet2.pyramidals_48[0].deselect());
+            await page.evaluate(() => acnet2.pyramidals_48[0].deselect());
         });
 
         it('3D Mesh Opacity 1', async () => {
@@ -472,27 +472,30 @@ export function testACNET2Project() {
     describe('Widgets and Camera', () => {
 
         it('Add Widget', async () => {
-            await page.evaluate(() =>
-            {
-                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([acnet2])});
-                Plot1.setPosition(0,300); // get out of the way
+            await page.evaluate(() => {
+                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {
+                    this.setName('Widget Canvas');
+                    this.setPosition();
+                    this.display([acnet2])
+                });
+                Plot1.setPosition(0, 300); // get out of the way
                 acnet2.baskets_12[4].getVisualGroups()[0].show(true);
             });
         });
 
         it('Camera', async () => {
-            await testCameraControlsWithCanvasWidget(page,[231.95608349343888,508.36555704435455,1849.839]);
+            await testCameraControlsWithCanvasWidget(page, [231.95608349343888, 508.36555704435455, 1849.839]);
         });
     });
 
     describe('Visual Group', () => {
 
         it('Visual Group Baskets 0', async () => {
-            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR0,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR0, 2, [[], [0, 0.4, 1], [0.6, 0.8, 0]]);
         });
 
         it('Visual Group Baskets 5', async () => {
-            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5,2,[[],[0,0.4,1],[0.6,0.8,0]]);
+            await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5, 2, [[], [0, 0.4, 1], [0.6, 0.8, 0]]);
         });
     });
 
@@ -513,9 +516,9 @@ export function testACNET2Project() {
         });
 
         it('Set Geometry Lines / 3D Mesh Color', async () => {
-            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
+            const color = await getMeshColor(page, ST.ACNET2_SELECTOR);
             await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("lines"));
-            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+            await test3DMeshColor(page, color, ST.ACNET2_SELECTOR);
         });
 
         it('LineSegments Geometry', async () => {
@@ -538,8 +541,8 @@ export function testACNET2Project() {
         });
 
         it('3D Mesh Color', async () => {
-            const color = await getMeshColor(page,ST.ACNET2_SELECTOR);
-            await test3DMeshColor(page,color,ST.ACNET2_SELECTOR);
+            const color = await getMeshColor(page, ST.ACNET2_SELECTOR);
+            await test3DMeshColor(page, color, ST.ACNET2_SELECTOR);
         });
 
         it('Mesh Total', async () => {
@@ -552,12 +555,12 @@ export function testACNET2Project() {
     describe('Colors', () => {
 
         it('Add Color Function', async () => {
-            const initialColorFunctions = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
-            await page.evaluate(() =>{
-                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
-                Project.getActiveExperiment().play({step:10});
+            const initialColorFunctions = await page.evaluate(() => GEPPETTO.SceneController.getColorFunctionInstances().length);
+            await page.evaluate(() => {
+                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'), false), window.voltage_color);
+                Project.getActiveExperiment().play({step: 10});
             });
-            const colorFunctionInstances = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            const colorFunctionInstances = await page.evaluate(() => GEPPETTO.SceneController.getColorFunctionInstances().length);
             expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
         });
     });
@@ -597,7 +600,7 @@ export function testC302NetworkProject() {
         });
 
         it('Top Level Instance', async () => {
-            const experiments = await page.evaluate(() => c302!=null);
+            const experiments = await page.evaluate(() => c302 != null);
             expect(experiments).toEqual(true);
         });
 
@@ -628,18 +631,18 @@ export function testC302NetworkProject() {
         });
 
         it('Top Variables', async () => {
-            const op = await page.evaluate( () => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2 &&
+            const op = await page.evaluate(() => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2 &&
                 window.Model.getVariables()[0].getId() === 'c302' && window.Model.getVariables()[1].getId() === 'time');
             expect(op).toBeTruthy();
         });
 
         it('Libraries', async () => {
-            const op = await page.evaluate( () => window.Model.getLibraries() !== undefined && window.Model.getLibraries().length === 2 );
+            const op = await page.evaluate(() => window.Model.getLibraries() !== undefined && window.Model.getLibraries().length === 2);
             expect(op).toBeTruthy();
         });
 
         it('Top Level Instances', async () => {
-            const op = await page.evaluate( () => window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'c302' );
+            const op = await page.evaluate(() => window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'c302');
             expect(op).toBeTruthy();
         });
 
@@ -647,7 +650,7 @@ export function testC302NetworkProject() {
 
     describe('Camera Controls', () => {
         it('Reset Camera', async () => {
-            await resetCameraTest(page, [49.25,-0.8000001907348633,733.3303486467378]);
+            await resetCameraTest(page, [49.25, -0.8000001907348633, 733.3303486467378]);
         });
 
         it("Remove Plots", async () => {
@@ -655,7 +658,7 @@ export function testC302NetworkProject() {
         });
 
         it('Camera Controls', async () => {
-            await testCameraControls(page, [49.25,-0.8000001907348633,733.3303486467378]);
+            await testCameraControls(page, [49.25, -0.8000001907348633, 733.3303486467378]);
         })
     });
 
@@ -681,7 +684,7 @@ export function testC302NetworkProject() {
             await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});
             await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
             await page.waitFor(1000);
-            const rows = await page.evaluate( () => $(".standard-row").length );
+            const rows = await page.evaluate(() => $(".standard-row").length);
             expect(rows).toEqual(10);
             await page.evaluate(async selector => {
                 $(selector).hide()
@@ -706,27 +709,30 @@ export function testC302NetworkProject() {
     describe('Widgets and Camera', () => {
 
         it('Add Widget', async () => {
-            await page.evaluate(() =>
-            {
-                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {this.setName('Widget Canvas');this.setPosition();this.display([c302])});
-                Plot1.setPosition(0,300);
+            await page.evaluate(() => {
+                GEPPETTO.ComponentFactory.addWidget('CANVAS', {name: '3D Canvas',}, function () {
+                    this.setName('Widget Canvas');
+                    this.setPosition();
+                    this.display([c302])
+                });
+                Plot1.setPosition(0, 300);
             });
         });
 
         it('Camera', async () => {
-            await testCameraControlsWithCanvasWidget(page,[49.25,-0.8000001907348633,733.3303486467378]);
+            await testCameraControlsWithCanvasWidget(page, [49.25, -0.8000001907348633, 733.3303486467378]);
         });
     });
 
     describe('Colors', () => {
 
         it('Add Color Function', async () => {
-            const initialColorFunctions = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
-            await page.evaluate(() =>{
-                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'),false), window.voltage_color);
-                Project.getActiveExperiment().play({step:10});
+            const initialColorFunctions = await page.evaluate(() => GEPPETTO.SceneController.getColorFunctionInstances().length);
+            await page.evaluate(() => {
+                GEPPETTO.SceneController.addColorFunction(GEPPETTO.ModelFactory.instances.getInstance(GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v'), false), window.voltage_color);
+                Project.getActiveExperiment().play({step: 10});
             });
-            const colorFunctionInstances = await page.evaluate(() =>GEPPETTO.SceneController.getColorFunctionInstances().length);
+            const colorFunctionInstances = await page.evaluate(() => GEPPETTO.SceneController.getColorFunctionInstances().length);
             expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
         });
     });
@@ -786,7 +792,7 @@ export function testPVDRNeuronProject() {
         });
 
         it('Top Level Instance', async () => {
-            const variable = await page.evaluate(() => pvdr!=null);
+            const variable = await page.evaluate(() => pvdr != null);
             expect(variable).toBeTruthy();
         });
 
@@ -812,10 +818,24 @@ export function testPVDRNeuronProject() {
         });
 
         it('Top Level Instances', async () => {
-            const instances = await page.evaluate(() =>window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'pvdr');
+            const instances = await page.evaluate(() => window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'pvdr');
             expect(instances).toBeTruthy()
         });
 
+    });
+}
+
+export function testC302Connectome() {
+
+    beforeAll(async () => {
+        await launchTest(Projects.CONNECTOME);
+    });
+
+
+    describe('C302 Connectome', () => {
+        it('POPUP 1', async () => {
+            await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible: true, timeout: 200000});
+        });
     });
 
 }
