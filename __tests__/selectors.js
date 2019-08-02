@@ -115,12 +115,12 @@ export const PERSIST_BUTTON = 'button.btn.SaveButton';
 export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
 export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'
 	
-export const SPOTLIGHT_PARAMETER_INPUT = 'icon.fa.fa-sliders'
+export const SPOTLIGHT_PARAMETER_INPUT = 'input.spotlight-input'
 
-export const CONNECTIVITY_1_DIV_SELECTOR = "div#Connectivity1"
+export const CONNECTIVITY_1_DIV_SELECTOR = 'div[id="Connectivity1"]'
 	
 export const DASHBOAD_PROJECT_PREVIEW_SELECTOR = 'div.project-preview'
-export const DASHBOARD_DELETE_PROJECT_SELECTOR = 'a.i.fa-trash-o'
+export const DASHBOARD_DELETE_PROJECT_SELECTOR = 'i.fa.fa-trash-o'
 export const DASHBOARD_DELETE_ICON_SELECTOR = 'i.fa-trash-o'
 export const DASHBOARD_OPEN_PROJECT = 'i.fa-folder-open'
 	

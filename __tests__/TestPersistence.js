@@ -14,7 +14,10 @@ describe('Test Persistence', () => {
 	beforeAll(async () => {
 		jest.setTimeout(60000);
 
-		console.log("persirtence ", baseURL)
+		page.on("dialog", (dialog) => {
+			dialog.accept();
+		});
+
 		await page.goto(baseURL);
 	});
 
@@ -49,11 +52,20 @@ describe('Test First Project Before Persisted', () => {
 	testProjectBeforePersistence(page,baseURL, true, project_1);
 })
 
-//describe('Test First Project Before Persisted', () => {
-//
-//	const project_2 = getPersistenceProjectJSON(2);
-//	it("Open 2nd Project",  async () => {
-//		await page.goto(getUrlFromProjectUrl(project_2.url));
-//	})
-//	testProjectBeforePersistence(page,baseURL, false, project_2);
-//})
+describe('Test First Project Before Persisted', () => {
+
+	const project_2 = getPersistenceProjectJSON(2);
+	it("Open 2nd Project",  async () => {
+		await page.goto(getUrlFromProjectUrl(project_2.url));
+	})
+	testProjectBeforePersistence(page,baseURL, false, project_2);
+})
+
+describe('Test First Project Before Persisted', () => {
+
+	const project_3 = getPersistenceProjectJSON(3);
+	it("Open 2nd Project",  async () => {
+		await page.goto(getUrlFromProjectUrl(project_3.url));
+	})
+	testProjectBeforePersistence(page,baseURL, false, project_3);
+})
