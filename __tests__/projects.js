@@ -20,6 +20,7 @@ export const Projects = Object.freeze({
   CONNECTOME: 16,
   PMUSCLE: 4,
   CYLINDER: CYLINDER_PROJECT,
+  PHARYNGEAL: 58
 });
 
 export const getProjectNameById = id => {

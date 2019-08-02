@@ -941,3 +941,17 @@ export function testCylindersProject() {
     });
 }
 
+export function testPharyngealProject() {
+    beforeAll(async () => {
+        await launchTest(Projects.PHARYNGEAL);
+    });
+
+    describe('Control Panel', () => {
+        it('The control panel opened with right amount of rows.', async () => {
+            await wait4selector(page, ST.LOADING_SPINNER, {hidden: true, timeout: 45000});
+            await click(page, ST.CONTROL_PANEL_BUTTON);
+            await testInitialControlPanelValues(page, 10);
+        })
+    });
+}
+

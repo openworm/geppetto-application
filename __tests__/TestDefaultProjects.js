@@ -7,7 +7,8 @@ import {
   testPVDRNeuronProject,
   testPMuscleCellProject,
   testC302Connectome,
-  testCylindersProject
+  testCylindersProject,
+  testPharyngealProject
 } from './NeuronalTestsLogic'
 
 
@@ -21,10 +22,11 @@ describe('Test Default Projects', () => {
   //describe('Acnet Project', () => testACNET2Project());
   //describe('C302 Network Project', () => testC302NetworkProject());
   //describe('Ca1 Project', () => testCa1Project());
+  //describe('EyeWire Project', () => testCa1Project());
 
-
+  describe('Pharyngeal Project', () => testPharyngealProject());
   //describe('cElegansConnectome Project', () => testC302Connectome());
-  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
+  //describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   //describe('cElegansPVDR Project', () => testPVDRNeuronProject());
   //describe('Cylinders Project', () => testCylindersProject());
 
