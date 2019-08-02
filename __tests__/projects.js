@@ -50,8 +50,10 @@ export const getProjectNameById = id => {
 
 
 const PERSISTENCE_PROJECT_1 = {
-		name : "TEST 1",
-		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/GEPPETTO.json',
+		name : "Hodgkin-Huxley Neuron",
+		id : 1,
+		test_name : "TEST 1",
+		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/SingleComponentHH/project.json',
 		console_tests : [ {input: 'hhcell.hhpop[0].v.getTi', expected: 'hhcell.hhpop[0].v.getTimeSeries()'}, {input: 'hhcell.isS', expected: 'hhcell.isSelected()'}],
 		canvas_widget_object_test : "hhcell",
 		parameter_test : 'Model.neuroml.pulseGen1.delay',
@@ -60,21 +62,26 @@ const PERSISTENCE_PROJECT_1 = {
 }
 
 const PERSISTENCE_PROJECT_2 = {
-		name : "TEST 2",
+		name : "c302_A_Pharyngeal",
+		id : 2,
+		test_name : "TEST 2",
 		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/pharyngeal/project.json',
 		console_tests : [ {input: 'c302_A_Pharyngeal.isS', expected: 'c302_A_Pharyngeal.isSelected()'}],
 		canvas_widget_object_test : "c302_A_Pharyngeal",
 		parameter_test : 'Model.neuroml.generic_neuron_iaf_cell.C',
-		recorded_variable_test : 'c302_A_Pharyngeal.M1[0].v'
+		recorded_variable_test : 'c302_A_Pharyngeal.M1[0].v',
+		custom_handler_event : 'click'
 }
 const PERSISTENCE_PROJECT_3 =  {
-		name : "TEST 3",
+		name : "Balanced_240cells_36926conns.net - net",
+		id : 3,
+		test_name : "TEST 3",
 		url : 'https://raw.githubusercontent.com/openworm/org.geppetto.samples/development/UsedInUnitTests/balanced/project.json',
-		console_tests : [{input: 'Balanced_240cells_36926conns.popExc[0].getVa', expected: 'Balanced_240cells_36926conns.popExc[0].getVariable()'},
-			{input: 'Balanced_240cells_36926conns.isS', expected: 'Balanced_240cells_36926conns.isSelected()'}],
+		console_tests : [{input: 'Balanced_240cells_36926conns.isS', expected: 'Balanced_240cells_36926conns.isSelected()'}],
 		canvas_widget_object_test : "Balanced_240cells_36926conns",
 		parameter_test : 'Model.neuroml.Balanced_240cells_36926conns.temperature',
-		recorded_variable_test : 'Balanced_240cells_36926conns.popExc[0].biophys.membraneProperties.Na_all.Na.g'
+		recorded_variable_test : 'Balanced_240cells_36926conns.popExc[0].biophys.membraneProperties.Na_all.Na.g',
+		custom_handler_event : 'click'
 }
 
 export const getPersistenceProjectJSON = id => {

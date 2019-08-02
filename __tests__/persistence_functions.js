@@ -1,50 +1,35 @@
 import * as ST from './selectors'
 import { click, wait4selector } from './utils';
-import { getUrlFromProjectId } from './cmdline.js';
+import { getCommandLineArg, getUrlFromProjectUrl , getUrlFromProjectId} from './cmdline.js';
 
-var persistedProjectID = 0;
-
+import { getPersistenceProjectJSON } from './projects';
 /**
  * Series of tests that get performed on project before it gets persisted. Widgets/components also get created so they can be saved
  * when project gets persisted, and then test their existence later when project gets persisted. Once tests and creation of wigets/components
  * is done, the project gets persisted.
  */
-export const testProjectBeforePersistence= (page, baseURL, expect_popup, projectJSON) => {
+export const testProject= (page, base_url, expect_popup, project_id) => {
+	const project_json = getPersistenceProjectJSON(project_id);
+	const test_name = project_json.test_name + " : "
+	describe('Opening Project ' + project_id, () => {
+		it("Performing " + project_json.test_name + " on project: "+ project_json.name,  async () => {
+			await page.goto(getUrlFromProjectUrl(project_json.url));
+		})
+	})
 	//Wait for landing page to finish loading with all expected components
-	describe('Landing page', () => {
-		it("Spinner goes away", async () => {
-			await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
-		})
-		it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-			await wait4selector(page, selector, { visible: true, timeout: 60000 })
-		})
-		
-		if(expect_popup){
-			
-			console.log("close error messags")
-			it("Non persisted project message pop up appears", async () => {
-				await wait4selector(page, ST.DIALOG_MODAL_SELECTOR, { visible : true, timeout: 30000 })
-			})
-
-			it("Non persisted project message pop up is closed", async () => {
-				await click(page, ST.DIALOG_MODAL_BUTTON_SELECTOR);
-				await wait4selector(page, ST.DIALOG_MODAL_SELECTOR, { visible: false, timeout: 30000 })
-				console.log("error message went away")
-				await page.waitFor(5000);
-			})
-		}
+	describe(test_name + 'Test Landing Page',  () => {
+		testLandingPage(page,expect_popup);	
 	})
 
 	//Test Console. Makes sure it toggles, and that autocomplete works with commands for specific project
-	describe('Test Commands in Console', () => {
-		console.log("Perform console tests")
-			for (var i =0; i< projectJSON.console_tests.length; i++) {
-				testConsole(page,projectJSON.console_tests[i].input,projectJSON.console_tests[i].expected );
-			}
+	describe(test_name + 'Test Commands in Console', () => {
+		for (var i =0; i< project_json.console_tests.length; i++) {
+			testConsole(page,project_json.console_tests[i].input,project_json.console_tests[i].expected );
+		}
 	})
 
 	//Test experiment table, that it toggles and rows are there with expected initial components
-	describe('Test Initial Contents in Experiment Table', () => {
+	describe(test_name + 'Test Initial Contents in Experiment Table', () => {
 		testExperimentTable(page);
 		testExperimentTableRow(page)
 		testExperimentTableRowIcons(page, false, false,  false)
@@ -59,27 +44,27 @@ export const testProjectBeforePersistence= (page, baseURL, expect_popup, project
 	 * The next series events open a few widgets/components on a project before it gets persisted. The widgets/components are created so that when the project gets persisted, 
 	 * they get saved with the persisted project, and then we can test the existence of these widgets/components on the persisted project.
 	 */
-	describe('Add wigets/components to project before persisting', () => {
+	describe(test_name + 'Add wigets/components to project before persisting', () => {
 		//Opens up tutorial widget, no tests performed other than visibility, opening it to make sure they get saved once project is persisted
 		//Creates Canvas , Popup and connectivity widget, not testing any feature, opening them to make sure they get saved once project is persisted
 		it("Add canvas widget ", async () => {
-			await addCanvasWidget(page,projectJSON.canvas_widget_object_test);
+			await addCanvasWidget(page,project_json.canvas_widget_object_test);
 		})
 		it("Add connectivity widget ", async () => {
 			await addConnectivityWidget(page);
 		})
 		it("Add popup widget ", async () => {
-			await addPopupWidget(page,projectJSON.custom_handler_event);
+			await addPopupWidget(page,project_json.custom_handler_event);
 		})
 	})
 	//Tests recorded variables and parameters don't work through spotlight component before project is persisted
-	describe('Test Spotlight Before Project is Persisted', () => {
-		testSpotlight(page, false,  projectJSON.recorded_variable_test, ST.WATCH_BUTTON_SELECTOR);
-		testSpotlight(page, false, projectJSON.parameter_test, ST.SPOTLIGHT_PARAMETER_INPUT);
+	describe(test_name + 'Test Spotlight Before Project is Persisted', () => {
+		testSpotlight(page, false,  project_json.recorded_variable_test, ST.WATCH_BUTTON_SELECTOR);
+		testSpotlight(page, false, project_json.parameter_test, ST.SPOTLIGHT_PARAMETER_INPUT);
 	})
 
 	//Persist project and test persist button functionality
-	describe('Test Persistence Button', () => {
+	describe(test_name + 'Test Persistence Button', () => {
 		it("Persistence button is present and enabled", async () => {
 			await wait4selector(page, ST.PERSIST_BUTTON, {visible : true})
 			await page.evaluate(async () => { $("#Buttonbar1").hide()})
@@ -94,35 +79,31 @@ export const testProjectBeforePersistence= (page, baseURL, expect_popup, project
 			await page.waitFor(5000)
 		})
 	})
-	
-	describe('Reload persisted project', () => {
+
+	describe(test_name + 'Test Persisted Project', () => {
 		it("Open Persisted Project",  async () => {
-			let persistedProjectID = await page.evaluate(async () => Project.getId())
-			console.log("persisted id ", persistedProjectID)
-			await page.goto(getUrlFromProjectId(persistedProjectID));
+			project_json.id = await page.evaluate(async () => Project.getId())
+			console.log("persisted id ", project_json.id)
+			await page.goto(getUrlFromProjectId(project_json.id));
 		})
-	})
-	describe('Test First Project After Persisted',  () => {
-		console.log("after persistence")
-		testProjectAfterPersistence(page,projectJSON, expect_popup);	
+		testPersistedProject(page,project_json, expect_popup);	
 	})
 
-	describe('Test Delete Project After Persisted', () => {
+	describe(test_name + 'Test Delete Persisted Project', () => {
 		it("Open Dashboard",  async () => {
-			persistedProjectID = await page.evaluate(async () => Project.getId())
-			await page.goto(baseURL);
+			console.log("pid ", project_json.id)
+			await page.goto(base_url);
 		})
-		//testDeletePersistedProject(page, persistedProjectID);
 		it('Dashboard Loaded', async () => {
 			await wait4selector(page, ST.DASHBOAD_PROJECT_PREVIEW_SELECTOR, {visible : true, timeout : 20000})
 		})
 		it('Waited for scrolldown projects to appear in dashboard', async () => {
-			console.log("delete id ", persistedProjectID)
+			console.log("delete id ", project_json.id)
 			await page.evaluate(async () => { $("#projects").scrollTop($("#projects")[0].scrollHeight+1000);})
-			await click(page, 'div[project-id=\"'+persistedProjectID+'\"]');
+			await click(page, 'div[project-id=\"'+project_json.id+'\"]');
 			await page.waitFor(1000);
 		})
-		it('waited for delete icon to delete project', async () => {
+		it('Waited for delete icon to delete project', async () => {
 			await wait4selector(page, ST.DASHBOARD_DELETE_ICON_SELECTOR, {visible : true})
 		})
 		it('Correctly deleted persisted project using the dashboard', async () => {
@@ -135,46 +116,34 @@ export const testProjectBeforePersistence= (page, baseURL, expect_popup, project
 /**
  * Tests that a project got persisted. Tests the existence of a few widgets/components that were saved when the project got persisted.
  */
-export const testProjectAfterPersistence = async (page,projectJSON, expect_popup) => {
-	it("Spinner goes away", async () => {
-		await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
-	})
-	it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
-		await wait4selector(page, selector, { visible: true, timeout: 60000 })
+export const testPersistedProject = async (page,project_json, expect_popup) => {
+
+	describe('Test Landing Page',  () => {
+		testLandingPage(page,expect_popup);	
 	})
 	
-	if(expect_popup){
-		it("Non persisted project message pop up appears", async () => {
-			await wait4selector(page, ST.DIALOG_MODAL_SELECTOR, { visible : true, timeout: 30000 })
-		})
-
-		it("Non persisted project message pop up is closed", async () => {
-			await click(page, ST.DIALOG_MODAL_BUTTON_SELECTOR);
-			await wait4selector(page, ST.DIALOG_MODAL_SELECTOR, { hidden: true, timeout: 30000 })
-			await page.waitFor(2000);
-		})
-	}
-
 	//Test the existence of Popup widget on persisted project, if project got persisted the widget should exist
 	describe('Test Popup1 is opened after project is persisted', () => {
 		it('Popup1 is correctly open on reload', async () => {
-			await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible : true, timeout : 10000})
+			await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible : true, timeout : 30000})
 		})
 		it('Popup1 custom handlers restored correctly', async () => {
 			expect(
 					await page.evaluate(async () => Popup1.customHandlers[0]['event'])
-			).toBe(projectJSON.custom_handler_event)
+			).toBe(project_json.custom_handler_event)
+		})
+
+		//Test the existence of Connectivity widget on persisted project, if project got persisted the widget should exist
+		it('Connectivity1 is correctly open on reload', async () => {
+			await wait4selector(page, ST.CONNECTIVITY_1_DIV_SELECTOR, {visible : true, timeout : 30000})
 		})
 	})
-	//Test the existence of Connectivity widget on persisted project, if project got persisted the widget should exist
-	it('Connectivity1 is correctly open on reload', async () => {
-		await wait4selector(page, ST.CONNECTIVITY_1_DIV_SELECTOR, {visible : true, timeout : 10000})
-	})
+
 
 	//Test the existence of Canvas widget on persisted project, if project got persisted the widget should exist
 	describe('Test Canvas2 widget after project is persisted', () => {
 		it('Canvas2 is correctly open on reload', async () => {
-			await wait4selector(page, ST.CANVAS_2_SELECTOR, {visible : true, timeout : 10000})
+			await wait4selector(page, ST.CANVAS_2_SELECTOR, {visible : true, timeout : 30000})
 		})
 		it('Canvas2 has mesh set correctly', async () => {
 			expect(
@@ -184,9 +153,9 @@ export const testProjectAfterPersistence = async (page,projectJSON, expect_popup
 	})
 
 	describe('Test Spotlight After Project is Persisted', () => {
-		testSpotlight(page, true,  projectJSON.parameter_test, ST.SPOTLIGHT_PARAMETER_INPUT);
+		testSpotlight(page, true,  project_json.parameter_test, ST.SPOTLIGHT_PARAMETER_INPUT);
 	})
-	
+
 	describe('Test Experiment Table', () => {
 		testExperimentTable(page);
 		testExperimentTableRow(page)
@@ -199,29 +168,13 @@ export const testProjectAfterPersistence = async (page,projectJSON, expect_popup
 	})
 };
 
-/**
- * Deletes persisted project using the dashboard
- */
-export const testDeletePersistedProject = async (page, projectID) => {
-	//Test the existence of Popup widget on persisted project, if project got persisted the widget should exist
-	describe('Delete persisted project', () => {
-		it('Dashboard Loaded', async () => {
-			await wait4selector(page, ST.DASHBOAD_PROJECT_PREVIEW_SELECTOR)
-		})
-		it('Waited for scrolldown projects to appear in dashboard', async () => {
-			await page.evaluate(async () => { $("#projects").scrollTop($("#projects")[0].scrollHeight+1000);})
-			await click(page, 'div[project-id=\"'+projectID+'\"]');
-			await page.waitFor(1000);
-		})
-		it('waited for delete icon to delete project', async () => {
-			await wait4selector(page, ST.DASHBOARD_DELETE_ICON_SELECTOR, {visible : true})
-		})
-		it('Correctly deleted persisted project using the dashboard', async () => {
-			await click(page, ST.DASHBOARD_DELETE_ICON_SELECTOR);
-			window.confirm = jest.fn(() => true) // always click 'yes'
-			expect(window.confirm).toBeCalled() // or whatev
-			await wait4selector(page, ST.DASHBOARD_OPEN_PROJECT, {hidden : true, timeout : 30000})
-		})
+const testLandingPage = async (page,expect_popup) => {
+	it("Spinner goes away", async () => {
+		await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
+	})
+
+	it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
+		await wait4selector(page, selector, { visible: true, timeout: 60000 })
 	})
 }
 
@@ -231,7 +184,7 @@ const testCreateExperiment = async (page) => {
 		await page.evaluate(async () => { window.Project.newExperiment();})
 		await page.waitFor(1000)
 	}
-	
+
 	it('New experiment created using persisted project', async () => {
 		expect(
 				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
@@ -244,27 +197,27 @@ const testCloneExperiment = async (page) => {
 		window.Project.getExperiments()[0].clone();
 		await page.waitFor(1000)
 	}
-	
+
 	it('Experiment cloned using persisted project', async () => {
 		expect(
 				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
 		).toBe(4)
 	})
-	
+
 	it('"Clone Experiment - Simulator Configuration duration checked', async () => {
 		expect(
 				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].length ===
 					Project.getExperiments()[Project.getExperiments().length-1].simulatorConfigurations["hhcell"].length)
 		).toBe(true)
 	})
-	
+
 	it('Clone Experiment - Simulator Configuration time step checked', async () => {
 		expect(
 				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].timeStep===
 					Project.getExperiments()[Project.getExperiments().length-1].simulatorConfigurations["hhcell"].timeStep)
 		).toBe(true)
 	})
-	
+
 	it('Clone Experiment - Simulator Configuration service id checked', async () => {
 		expect(
 				await page.evaluate(async () =>  Project.getExperiments()[0].simulatorConfigurations["hhcell"].simulatorId===
@@ -278,12 +231,12 @@ const testDeleteExperiment = async (page) => {
 		await page.evaluate(async () => { window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();})
 		await page.waitFor(1000)
 	}
-	
+
 	it('Experiment deleted using persisted project', async () => {
 		expect(
 				await page.evaluate(async () =>  window.Project.getExperiments().length===3)
 		).toBe(4)
-		
+
 		await page.evaluate(async () => document.getElementById('infomodal-btn').click())
 	})
 };
@@ -301,7 +254,7 @@ const testDownloadExperimentModel = async (page) => {
 };
 
 const testUpload2DropBoxFeature = async (page) => {
-	
+
 }
 
 const testSpotlight = async (page,persisted,  variableName, checkComponent) => {
@@ -338,7 +291,7 @@ const testSpotlight = async (page,persisted,  variableName, checkComponent) => {
 			})
 		}
 	}
-	
+
 	it('Spotlight goes away', async () => {
 		await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
 		await page.keyboard.press("Escape")
@@ -350,17 +303,17 @@ const testExperimentTable = async (page) => {
 	it('The experiments table button is present.', async () => {
 		await wait4selector(page, ST.EXPERIMENT_TABLE_SELECTOR, { visible : false, timeout : 20000});
 	})
-	
+
 	it('The expriments table is correctly visible.', async () => {
 		await click(page, ST.EXPERIMENT_TABLE_SELECTOR);	
 		await wait4selector(page, ST.EXPERIMENT_TABLE_CONTAINER, { visible : true, timeout : 20000});
 	})
-	
+
 	it('The experiments table is correctly hidden.', async () => {
 		await click(page, ST.EXPERIMENT_TABLE_SELECTOR);	
 		await wait4selector(page, ST.EXPERIMENT_TABLE_CONTAINER, { visible : false, timeout : 20000});
 	})
-	
+
 };
 
 const testExperimentTableRow = async (page) => {
@@ -368,12 +321,12 @@ const testExperimentTableRow = async (page) => {
 		await click(page, ST.EXPERIMENT_TABLE_SELECTOR);	
 		await wait4selector(page, ST.EXPERIMENT_TABLE_CONTAINER, { visible : true, timeout : 20000});
 	})
-	
+
 	it('Experiment table column expanded and variables content exists', async () => {
 		await click(page, ST.EXPERIMENT_TABLE_COLUMN_1_SELECTOR);	
 		await wait4selector(page, ST.EXPERIMENT_TABLE_EXTENDED_ROW_VARS_SELECTOR, { visible : true, timeout : 20000});
 	})
-	
+
 	it('Experiment table column expanded and parameters content exists', async () => {
 		await wait4selector(page, ST.EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS_SELECTOR, { visible : true, timeout : 20000});
 	})
@@ -383,25 +336,25 @@ const testExperimentTableRowIcons = async (page, activeButtonVisibility, downloa
 	async () => {
 		await click(page, ST.EXPERIMENT_TABLE_COLUMN_1_SELECTOR);	
 	}
-	
+
 	it('Active button exists with correct visibility', async () => {
-		await wait4selector(page, ST.EXPERIMENT_TABLE_ACTIVE_ICON_SELECTOR, { visible : activeButtonVisibility});
+		await wait4selector(page, ST.EXPERIMENT_TABLE_ACTIVE_ICON_SELECTOR, { visible : activeButtonVisibility, timeout : 20000});
 	})
-	
+
 	it('Delete button exists with correct visibility', async () => {
-		await wait4selector(page, ST.EXPERIMENT_TABLE_DELETE_ICON_SELECTOR, { visible : visible});
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DELETE_ICON_SELECTOR, { visible : visible, timeout : 20000});
 	})
-	
+
 	it('Clone button exists with correct visibility', async () => {
-		await wait4selector(page, ST.EXPERIMENT_TABLE_CLONE_ICON_SELECTOR, { visible : visible});
+		await wait4selector(page, ST.EXPERIMENT_TABLE_CLONE_ICON_SELECTOR, { visible : visible, timeout : 20000});
 	})
-	
+
 	it('Download results button exists with correct visibility', async () => {
-		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON_SELECTOR, { visible : downloadResultsButtonVisibility});
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON_SELECTOR, { visible : downloadResultsButtonVisibility, timeout : 20000});
 	})
-	
+
 	it('Download model button exists with correct visibility', async () => {
-		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_MODELS_ICON_SELECTOR, { visible : true});
+		await wait4selector(page, ST.EXPERIMENT_TABLE_DOWNLOAD_MODELS_ICON_SELECTOR, { visible : true, timeout : 20000});
 	})
 }
 
@@ -411,7 +364,7 @@ const testConsole = async (page, command, autoCompleteCommand) => {
 	})
 	it('The console panel is correctly visible.', async () => {
 		console.log("Open console")
-		await click(page, ST.CONSOLE_SELECTOR);
+		await page.evaluate(async () => { $(".fa-terminal")[0].click();})
 		await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true , timeout : 40000});
 	})
 

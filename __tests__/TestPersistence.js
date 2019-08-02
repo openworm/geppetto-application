@@ -4,8 +4,7 @@ const { TimeoutError } = require('puppeteer/Errors');
 import { getCommandLineArg, getUrlFromProjectUrl } from './cmdline.js';
 import { wait4selector, click } from './utils';
 
-import { testProjectAfterPersistence, testProjectBeforePersistence } from './persistence_functions';
-import { getPersistenceProjectJSON } from './projects';
+import { testProject } from './persistence_functions';
 import * as ST from './selectors';
 
 const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend/');
@@ -18,11 +17,14 @@ describe('Test Persistence', () => {
 			dialog.accept();
 		});
 
-		await page.goto(baseURL);
 	});
 
 	/**Tests Dashboard is present with all default projects**/
 	describe('Test Dashboard and Login-In', () => {
+		it("Load Dashboard", async () => {
+			await page.goto(baseURL);
+		})
+		
 		it("Waiting for Geppetto Logo to appear on Landing Page", async () => {
 			await wait4selector(page, ST.GEPPETTO_LOGO, { hidden: true , timeout: 60000})
 		})
@@ -44,28 +46,13 @@ describe('Test Persistence', () => {
 	})
 })
 describe('Test First Project Before Persisted', () => {
-
-	const project_1 = getPersistenceProjectJSON(1);
-	it("Open Single Component HH Project",  async () => {
-		await page.goto(getUrlFromProjectUrl(project_1.url));
-	})
-	testProjectBeforePersistence(page,baseURL, true, project_1);
+	testProject(page,baseURL, true, 1);
 })
 
 describe('Test First Project Before Persisted', () => {
-
-	const project_2 = getPersistenceProjectJSON(2);
-	it("Open 2nd Project",  async () => {
-		await page.goto(getUrlFromProjectUrl(project_2.url));
-	})
-	testProjectBeforePersistence(page,baseURL, false, project_2);
+	testProject(page,baseURL, false, 2);
 })
 
 describe('Test First Project Before Persisted', () => {
-
-	const project_3 = getPersistenceProjectJSON(3);
-	it("Open 2nd Project",  async () => {
-		await page.goto(getUrlFromProjectUrl(project_3.url));
-	})
-	testProjectBeforePersistence(page,baseURL, false, project_3);
+	testProject(page,baseURL, false, 3);
 })
