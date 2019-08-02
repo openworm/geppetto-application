@@ -955,3 +955,16 @@ export function testPharyngealProject() {
     });
 }
 
+export function testEyeWireProject() {
+    beforeAll(async () => {
+        await launchTest(Projects.EYEWIRE);
+    });
+
+    describe('EyeWire', () => {
+        it('Load.', async () => {
+            await wait4selector(page, ST.LOADING_SPINNER, {hidden: true, timeout: 45000});
+
+        })
+    });
+}
+
