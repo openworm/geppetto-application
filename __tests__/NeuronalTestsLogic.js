@@ -764,3 +764,58 @@ export function testCa1Project() {
     });
 
 }
+
+export function testPVDRNeuronProject() {
+
+    beforeAll(async () => {
+        await launchTest(Projects.PVDR);
+    });
+
+
+    describe('Initial Values', () => {
+
+        it('Amount of Experiments', async () => {
+            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+            const experiments = await page.evaluate(() => window.Project.getExperiments().length);
+            expect(experiments).toEqual(1);
+        });
+
+        it('Active Experiment', async () => {
+            const experiment = await page.evaluate(() => window.Project.getActiveExperiment().getId());
+            expect(experiment).toEqual(1);
+        });
+
+        it('Top Level Instance', async () => {
+            const variable = await page.evaluate(() => pvdr!=null);
+            expect(variable).toBeTruthy();
+        });
+
+        it('Connections', async () => {
+            const connections = await page.evaluate(() => pvdr.getConnections().length);
+            expect(connections).toEqual(0);
+        });
+
+        it('Visual Groups', async () => {
+            const visualGroups = await page.evaluate(() => pvdr.getVisualGroups().length);
+            expect(visualGroups).toEqual(1);
+        });
+
+        it('Top Level Variables', async () => {
+            const variables = await page.evaluate(() => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2 &&
+                window.Model.getVariables()[0].getId() === 'pvdr' && window.Model.getVariables()[1].getId() === 'time');
+            expect(variables).toBeTruthy()
+        });
+
+        it('Libraries', async () => {
+            const libraries = await page.evaluate(() => window.Model.getLibraries() !== undefined && window.Model.getLibraries().length === 2);
+            expect(libraries).toBeTruthy()
+        });
+
+        it('Top Level Instances', async () => {
+            const instances = await page.evaluate(() =>window.Instances !== undefined && window.Instances.length === 2 && window.Instances[0].getId() === 'pvdr');
+            expect(instances).toBeTruthy()
+        });
+
+    });
+
+}

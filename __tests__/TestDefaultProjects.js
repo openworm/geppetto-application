@@ -2,7 +2,8 @@
 import {
   testSingleCompononetHHProject,
   testACNET2Project,
-  testC302NetworkProject, testCa1Project
+  testC302NetworkProject, testCa1Project,
+  testPVDRNeuronProject
 } from './NeuronalTestsLogic'
 
 
@@ -13,9 +14,10 @@ describe('Test UI Components', () => {
   });
 
   //describe('Single Component HH Project', () => testSingleCompononetHHProject());
-  //describe('Acnet project', () => testACNET2Project());
-  //describe('C302 Network project', () => testC302NetworkProject());
-  describe('Ca1 project', () => testCa1Project());
+  //describe('Acnet Project', () => testACNET2Project());
+  //describe('C302 Network Project', () => testC302NetworkProject());
+  //describe('Ca1 Project', () => testCa1Project());
+  describe('PVDR Neuron Project', () => testPVDRNeuronProject());
 
 
   afterAll(async () => {
