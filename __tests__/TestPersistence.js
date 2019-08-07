@@ -11,8 +11,6 @@ const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.f
 
 describe('Test Persistence', () => {
 	beforeAll(async () => {
-		jest.setTimeout(60000);
-
 		page.on("dialog", (dialog) => {
 			dialog.accept();
 		});
