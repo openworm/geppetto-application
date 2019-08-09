@@ -13,7 +13,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 	const test_name = project_json.test_name + " : "
 	describe(project_json.test_name + " - "+ project_json.name, () => {
 		beforeAll(async () => {		
-			jest.setTimeout(30000);
+			jest.setTimeout(60000);
 			await page.goto(getUrlFromProjectUrl(project_json.url));
 		});
 
@@ -30,7 +30,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 
 		describe(test_name + 'Test Console Widget',  () => {
 			it('The console panel is correctly visible.', async () => {
-				await page.waitFor(15000);
+				await page.waitFor(project_json.initial_timeout * 1000);
 				await page.evaluate(async () => { $(".fa-terminal")[0].click();})
 				await wait4selector(page, ST.DRAWER_SELECTOR, { visible: true , timeout : 40000});
 			})
@@ -79,13 +79,13 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 
 		describe(test_name + 'Test Persistence Button Functionality',  () => {
 			it("Persistence button is present and enabled", async () => {
-				await wait4selector(page, ST.PERSIST_BUTTON, {visible : true})
+				await wait4selector(page, ST.PERSIST_BUTTON, {visible : true, timeout : 100000})
 				await page.evaluate(async () => { $("#Buttonbar1").hide()})
 				await page.waitFor(1000)
 			})
 			it('Persist button is disabled, click went through', async () => {
 				await click(page, ST.PERSIST_BUTTON);
-				await wait4selector(page, 'i.fa-spin', {visible : true})
+				await wait4selector(page, 'i.fa-spin', {visible : true, timeout : 100000})
 			})
 			it('Project persisted, persist button stopped spinning', async () => {
 				await wait4selector(page, 'i.fa-spin', {hidden : true, timeout : 100000})
@@ -155,29 +155,24 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 	})
 };
 
-const testCreateExperiment = async (page) => {
-	async () => {
+export const testCreateExperiment = async (page, expected_experiments) => {
+	it('New experiment created using persisted project', async () => {
 		await page.evaluate(async () => { window.Project.newExperiment();})
 		await page.waitFor(1000)
-	}
 
-	it('New experiment created using persisted project', async () => {
 		expect(
-				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
-		).toBe(4)
+				await page.evaluate(async () =>  window.Project.getExperiments().length)
+		).toBe(expected_experiments)
 	})
 };
 
-const testCloneExperiment = async (page) => {
-	async () => {
-		window.Project.getExperiments()[0].clone();
-		await page.waitFor(1000)
-	}
-
+export const testCloneExperiment = async (page, expected_experiments) => {
 	it('Experiment cloned using persisted project', async () => {
+		await page.evaluate(async () =>  window.Project.getExperiments()[0].clone())
+		await page.waitFor(1000)
 		expect(
-				await page.evaluate(async () =>  window.Project.getExperiments().length===4)
-		).toBe(4)
+				await page.evaluate(async () =>  window.Project.getExperiments().length)
+		).toBe(expected_experiments)
 	})
 
 	it('"Clone Experiment - Simulator Configuration duration checked', async () => {
@@ -202,42 +197,83 @@ const testCloneExperiment = async (page) => {
 	})
 };
 
-const testDeleteExperiment = async (page) => {
-	async () => {
-		await page.evaluate(async () => { window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();})
+export const testDeleteExperiment = async (page, expected_experiments) => {
+	it('Experiment was deleted successfully, according to confirmation popup', async() =>{
+		await page.evaluate(async () => { 
+			window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();
+		})
 		await page.waitFor(1000)
-	}
+		await page.waitForFunction('document.querySelector(".modal-body").innerText.endsWith("was deleted successfully")');
+	})
 
-	it('Experiment deleted using persisted project', async () => {
+	it('Experiment was deleted, tested with command', async () => {
 		expect(
-				await page.evaluate(async () =>  window.Project.getExperiments().length===3)
-		).toBe(4)
+				await page.evaluate(async () =>  window.Project.getExperiments().length)
+		).toBe(expected_experiments)
 
 		await page.evaluate(async () => document.getElementById('infomodal-btn').click())
 	})
 };
 
-const testSaveExperiment = async (page) => {
+export const testSaveExperimentProperties = async (page,properties, expected_experiments) => {
+	expect(
+			await page.evaluate(async () =>  window.Project.getExperiments().length)
+	).toBe(expected_experiments)
+
+	expect(
+			await page.evaluate(async () =>  window.Project.getExperiments()[(window.Project.getExperiments().length-1)].getName())
+	).toBe(properties.name)
 };
 
-const testSaveProject = async (page) => {
+export const testSaveProjectProperties = async (page, properties, expected_experiments) => {
+	expect(
+			await page.evaluate(async () =>  window.Project.getExperiments().length)
+	).toBe(expected_experiments)
+
+	expect(
+			await page.evaluate(async (expected_name) =>  window.Project.getName())
+	).toBe(properties.name)
 };
 
 const testDownloadExperimentResults = async (page) => {
+	await page.evaluate(async () => { 
+		var login = GEPPETTO.UserController.isLoggedIn();
+		var writePermission = GEPPETTO.UserController.hasPermission(GEPPETTO.Resources.WRITE_PROJECT);
+		var projectPersisted = window.Project.persisted;
+		if(writePermission && projectPersisted && login){
+			window.Project.getActiveExperiment().downloadResults('hhcell', 'GEPPETTO_RECORDING');
+		}
+	})
+	await page.waitFor(1000)
 };
 
 const testDownloadExperimentModel = async (page) => {
+	await page.evaluate(async () => { 
+		var login = GEPPETTO.UserController.isLoggedIn();
+		var writePermission = GEPPETTO.UserController.hasPermission(GEPPETTO.Resources.WRITE_PROJECT);
+		var projectPersisted = window.Project.persisted;
+		if(writePermission && projectPersisted && login){
+			window.Project.downloadModel('hhcell');
+		}
+	})
+	await page.waitFor(1000)
 };
 
 const testUpload2DropBoxFeature = async (page) => {
-
+	await page.evaluate(async () => { 
+		var login = GEPPETTO.UserController.isLoggedIn();
+		var writePermission = GEPPETTO.UserController.hasPermission(GEPPETTO.Resources.WRITE_PROJECT);
+		var projectPersisted = window.Project.persisted;
+		return writePermission && projectPersisted && login;
+	})
+	await page.waitFor(1000)
 }
 
 const testSpotlight = async (page,persisted,  variableName, checkComponent) => {
 	it('Spotlight button present', async () => {
 		await wait4selector(page, ST.SPOT_LIGHT_BUTTON_SELECTOR, { visible: true , timeout : 20000});
 	})
-	
+
 	it('Opens and shows correct buttons.', async () => {
 		await click(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
 		await page.waitFor(1000);
@@ -381,7 +417,7 @@ const addPopupWidget = async (page, customHandler) => {
 				}else{
 					Popup1.addCustomNodeHandler(function(){},customHandlerEvent); 
 				}
-				
+
 				return true;
 			}, customHandler)
 	).toBe(true)

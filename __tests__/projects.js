@@ -59,7 +59,8 @@ const PERSISTENCE_PROJECT_1 = {
 		parameter_test : 'Model.neuroml.pulseGen1.delay',
 		recorded_variable_test : 'hhcell.hhpop[0].v',
 		custom_handler_event : 'click',
-		test_widgets: true
+		test_widgets: true,
+		initial_timeout : 10 //seconds
 }
 
 const PERSISTENCE_PROJECT_2 = {
@@ -71,7 +72,8 @@ const PERSISTENCE_PROJECT_2 = {
 		canvas_widget_object_test : "c302_A_Pharyngeal",
 		parameter_test : 'Model.neuroml.generic_neuron_iaf_cell.C',
 		recorded_variable_test : 'c302_A_Pharyngeal.M1[0].v',
-		test_widgets: false
+		test_widgets: false,
+		initial_timeout : 15 //seconds
 }
 const PERSISTENCE_PROJECT_3 =  {
 		name : "Balanced_240cells_36926conns.net - net",
@@ -83,7 +85,8 @@ const PERSISTENCE_PROJECT_3 =  {
 		parameter_test : 'Model.neuroml.Balanced_240cells_36926conns.temperature',
 		recorded_variable_test : 'Balanced_240cells_36926conns.popExc[0].biophys.membraneProperties.Na_all.Na.g',
 		custom_handler_event : 'click',
-		test_widgets: true
+		test_widgets: true,
+		initial_timeout : 25 //seconds
 }
 
 export const getPersistenceProjectJSON = id => {
