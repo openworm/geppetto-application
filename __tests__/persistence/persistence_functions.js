@@ -1,8 +1,8 @@
-import * as ST from './selectors'
-import { click, wait4selector } from './utils';
-import { getCommandLineArg, getUrlFromProjectUrl , getUrlFromProjectId} from './cmdline.js';
+import * as ST from './../selectors'
+import { click, wait4selector } from './../utils';
+import { getCommandLineArg, getUrlFromProjectUrl , getUrlFromProjectId} from './../cmdline.js';
 
-import { getPersistenceProjectJSON } from './projects';
+import { getPersistenceProjectJSON } from './../projects';
 /**
  * Series of tests that get performed on project before it gets persisted. Widgets/components also get created so they can be saved
  * when project gets persisted, and then test their existence later when project gets persisted. Once tests and creation of wigets/components

@@ -1,11 +1,11 @@
 const puppeteer = require('puppeteer');
 const { TimeoutError } = require('puppeteer/Errors');
 
-import { getCommandLineArg, getUrlFromProjectUrl, getUrlFromProjectId} from './cmdline.js';
-import { wait4selector, click } from './utils';
+import { getCommandLineArg, getUrlFromProjectUrl, getUrlFromProjectId} from './../cmdline.js';
+import { wait4selector, click } from './../utils';
 
 import { testProject, testCreateExperiment, testCloneExperiment, testDeleteExperiment, testSaveProjectProperties, testSaveExperimentProperties } from './persistence_functions';
-import * as ST from './selectors';
+import * as ST from './../selectors';
 
 const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend/');
 
@@ -52,17 +52,39 @@ describe('Test Second Project', () => {
 	testProject(page,baseURL, false, 2);
 })
 
-describe('Test First Project', () => {
+describe('Test Third Project', () => {
 	testProject(page,baseURL, false, 3);
 })
 
 describe('Test Persistence Features', () => {
 	beforeAll(async () => {		
 		jest.setTimeout(30000);
-		await page.goto(getUrlFromProjectId(1));
+		//await page.goto(getUrlFromProjectId(1));
 	});
 
 	describe('Test Persistence Features on  Persisted Project with ID 1',  () => {
+		describe('Test Dashboard and Login-In', () => {
+			it("Load Dashboard", async () => {
+				await page.goto(baseURL);
+			})
+
+			it("Waiting for Geppetto Logo to appear on Landing Page", async () => {
+				await wait4selector(page, ST.GEPPETTO_LOGO, { hidden: true , timeout: 60000})
+			})
+
+			it("Loging out", async () => {
+				await page.goto(baseURL + "/logout");
+			})
+
+			it("Login in as 'guest1' user", async () => {
+				await page.goto(baseURL + "/login?username=guest1&password=guest");
+			})
+			
+			it("Login in as 'guest1' user", async () => {
+				await page.goto(getUrlFromProjectId(1));
+			})
+		})
+		
 		describe('Test Landing Page Components',  () => {
 			it("Spinner goes away", async () => {
 				await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
