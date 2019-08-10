@@ -5,10 +5,10 @@ import { getCommandLineArg, getUrlFromProjectUrl , getUrlFromProjectId} from './
 import { getPersistenceProjectJSON } from './../projects';
 /**
  * Series of tests that get performed on project before it gets persisted. Widgets/components also get created so they can be saved
- * when project gets persisted, and then test their existence later when project gets persisted. Once tests and creation of wigets/components
- * is done, the project gets persisted.
+ * when project gets persisted, and then test their existence after persisted.
  */
 export const testProject= (page, base_url, expect_popup, project_id) => {
+	//retrieve project json using id 
 	const project_json = getPersistenceProjectJSON(project_id);
 	const test_name = project_json.test_name + " : "
 	describe(project_json.test_name + " - "+ project_json.name, () => {
@@ -28,6 +28,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			})
 		});
 
+		//Test console widget exists and is able to autocomplete command
 		describe(test_name + 'Test Console Widget',  () => {
 			it('The console panel is correctly visible.', async () => {
 				await page.waitFor(project_json.initial_timeout * 1000);
@@ -57,12 +58,13 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			})
 		})
 
-		//Tests recorded variables and parameters don't work through spotlight component before project is persisted
+		//Tests setting recorded variables and parameters don't work through spotlight component before project is persisted
 		describe(test_name + 'Test Spotlight Component Before Project is Persisted', () => {
 			testSpotlight(page, false,  project_json.recorded_variable_test, ST.WATCH_BUTTON_SELECTOR);
 			testSpotlight(page, false, project_json.parameter_test, ST.SPOTLIGHT_PARAMETER_INPUT);
 		})
 
+		//Add widgets to project, so they can be saved as part of project when it's persisted
 		if(project_json.test_widgets){
 			describe(test_name + 'Add widgets',  () => {
 				it("Add canvas widget ", async () => {
@@ -77,6 +79,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			})
 		}
 
+		//Test persistence button works for persisting a project
 		describe(test_name + 'Test Persistence Button Functionality',  () => {
 			it("Persistence button is present and enabled", async () => {
 				await wait4selector(page, ST.PERSIST_BUTTON, {visible : true, timeout : 100000})
@@ -92,6 +95,8 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			})
 		});
 
+		//Reload page using the ID of the new persisted project, and test the widgets we create/saved are there. 
+		// Also tests spotlight and experiment table, testing components that are expected to appear when project is persisted
 		describe(test_name + 'Test Persisted project',  () => {
 			it("Open Persisted Project",  async () => {
 				project_json.id = await page.evaluate(async () => Project.getId())
@@ -106,6 +111,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 				await wait4selector(page, selector, { visible: true, timeout: 60000 })
 			})
 
+			//Test the widgets we created prior to persisting project were created on reload
 			if(project_json.test_widgets){
 				it('Popup1 is correctly open on reload', async () => {
 					await wait4selector(page, ST.POPUP_1_DIV_SELECTOR, {visible : true, timeout : 30000})
@@ -115,7 +121,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 							await page.evaluate(async () => Popup1.customHandlers[0]['event'])
 					).toBe(project_json.custom_handler_event)
 				})
-				//Test the existence of Connectivity widget on persisted project, if project got persisted the widget should exist
+
 				it('Connectivity1 is correctly open on reload', async () => {
 					await wait4selector(page, ST.CONNECTIVITY_1_DIV_SELECTOR, {visible : true, timeout : 30000})
 				})
@@ -131,6 +137,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			}
 		})
 
+		//Deletes persisted project using the dashboard and tests delete functionality
 		describe(test_name + 'Test delete project using dashboard',  () => {
 			it("Open Dashboard",  async () => {
 				await page.goto(base_url);

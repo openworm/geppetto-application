@@ -44,6 +44,9 @@ describe('Test Persistence', () => {
 	})
 })
 
+/**
+ * Test first project 
+ */
 describe('Test First Project', () => {
 	testProject(page,baseURL, true, 1);
 })
@@ -59,32 +62,10 @@ describe('Test Third Project', () => {
 describe('Test Persistence Features', () => {
 	beforeAll(async () => {		
 		jest.setTimeout(30000);
-		//await page.goto(getUrlFromProjectId(1));
+		await page.goto(getUrlFromProjectId(1));
 	});
 
 	describe('Test Persistence Features on  Persisted Project with ID 1',  () => {
-		describe('Test Dashboard and Login-In', () => {
-			it("Load Dashboard", async () => {
-				await page.goto(baseURL);
-			})
-
-			it("Waiting for Geppetto Logo to appear on Landing Page", async () => {
-				await wait4selector(page, ST.GEPPETTO_LOGO, { hidden: true , timeout: 60000})
-			})
-
-			it("Loging out", async () => {
-				await page.goto(baseURL + "/logout");
-			})
-
-			it("Login in as 'guest1' user", async () => {
-				await page.goto(baseURL + "/login?username=guest1&password=guest");
-			})
-			
-			it("Login in as 'guest1' user", async () => {
-				await page.goto(getUrlFromProjectId(1));
-			})
-		})
-		
 		describe('Test Landing Page Components',  () => {
 			it("Spinner goes away", async () => {
 				await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout: 60000})
@@ -97,7 +78,7 @@ describe('Test Persistence Features', () => {
 
 		describe('Test Set Experiment Active',  () => {
 			it('Initial amount of experiments for hhcell checked', async () => {
-				await page.waitFor(5000);
+				await page.waitFor(150000);
 				expect(
 						await page.evaluate(async () => window.Project.getExperiments().length)
 				).toBe(3)
