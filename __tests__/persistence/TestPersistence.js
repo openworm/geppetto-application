@@ -61,7 +61,7 @@ describe('Test Third Project', () => {
 
 describe('Test Persistence Features', () => {
 	beforeAll(async () => {		
-		jest.setTimeout(30000);
+		jest.setTimeout(100000);
 		await page.goto(getUrlFromProjectId(1));
 	});
 
@@ -77,14 +77,9 @@ describe('Test Persistence Features', () => {
 		});
 
 		describe('Test Set Experiment Active',  () => {
-			it('Initial amount of experiments for hhcell checked', async () => {
-				await page.waitFor(150000);
-				expect(
-						await page.evaluate(async () => window.Project.getExperiments().length)
-				).toBe(3)
-			})
 
 			it('Set Experiment active', async () => {
+				await page.waitFor(20000);
 				await page.evaluate(async () => window.Project.getExperiments()[1].setActive())
 				await page.waitFor(1000);
 			})
