@@ -1,6 +1,9 @@
 import * as ST from './selectors'
 import { click, wait4selector } from './utils';
 
+import {getCommandLineArg} from "./cmdline";
+export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
+
 const zoomClicks = 50;
 const panClicks = 10;
 const rotateClicks = 20;
