@@ -576,12 +576,12 @@ export function testC302NetworkProject() {
 
     describe('Initial Values', () => {
 
-        it('Import Types Spinner', async () => {
-
-            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
-            await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
-            await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
-        });
+        // it('Import Types Spinner', async () => {
+        //
+        //     await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+        //     await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+        //     await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
+        // });
 
         it('Plot 1', async () => {
             await wait4selector(page, ST.PLOT1_SELECTOR, {visible: true});

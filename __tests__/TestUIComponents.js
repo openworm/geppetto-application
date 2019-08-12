@@ -7,12 +7,11 @@ import { wait4selector, click } from './utils';
 import * as ST from './selectors';
 
 const COLLAPSE_WIDGET_HEIGHT = 35;
-import { baseURL } from './functions'
+const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(200000);
-
     await page.goto(baseURL);
   });
 
