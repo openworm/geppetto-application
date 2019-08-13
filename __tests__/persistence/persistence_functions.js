@@ -255,7 +255,7 @@ const testDownloadExperimentResults = async (page) => {
 	await page.waitFor(1000)
 };
 
-/Download experiment model, but how to test it works? No solution in jest
+//Download experiment model, but how to test it works? No solution in jest
 const testDownloadExperimentModel = async (page) => {
 	await page.evaluate(async () => { 
 		var login = GEPPETTO.UserController.isLoggedIn();
