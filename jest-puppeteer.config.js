@@ -1,1 +1,1 @@
-module.exports = { launch: { headless: true }, }
+module.exports = { launch: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }, }

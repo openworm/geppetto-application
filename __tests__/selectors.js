@@ -29,11 +29,12 @@ export const WATCH_BUTTON_VISIBLE_MESSAGE = 'Watch button correctly hidden';
 export const PAN_HOME_BUTTON_SELECTOR = '#panHomeBtn';
 export const SPOT_LIGHT_BUTTON_SELECTOR = '#spotlightBtn';
 export const SPOT_LIGHT_SEARCH_INPUT_SELECTOR = 'input#typeahead';
+export const SPOT_LIGHT_DIV= 'div#spotlight';
 
 export const CONTROL_PANEL_SELECTOR = 'div#controlpanel';
 export const CONTROL_PANEL_MESSAGE = "The control panel is correctly open.";
 export const CONTROL_PANEL_BUTTON = '#controlPanelBtn';
-export const CONTROL_PANEL_CONTAINER_SELECTOR = '#controlpanel'
+export const CONTROL_PANEL_CONTAINER_SELECTOR = '#controlpanel';
 
 export const SEARCH_ICON_SELECTOR = 'i.fa.search';
 export const SEARCH_ICON_MESSAGE = 'Attempting to open spotlight';
@@ -63,34 +64,57 @@ export const DIALOG_SELECTOR = 'div.dialog';
 
 export const BUTTON_ONE_SELECTOR = 'button#buttonOne';
 
-export const POPUP = ['Popups' , 1, 'Popup1', { width: 490, height: 394 }]
-export const PLOT = ['Plots' , 0, 'Plot1', { width: 350, height: 300 }]
-export const TREE = ['Trees' , 3, "TreeVisualiserDAT1", { width: 350, height: 260 }]
-export const VAR_LIST = ['Variables', 5, "VarVis1", { width: 350, height: 120 }]
+export const POPUP = ['Popups' , 1, 'Popup1', { width: 490, height: 394 }];
+export const PLOT = ['Plots' , 0, 'Plot1', { width: 350, height: 300 }];
+export const TREE = ['Trees' , 3, "TreeVisualiserDAT1", { width: 350, height: 260 }];
+export const VAR_LIST = ['Variables', 5, "VarVis1", { width: 350, height: 120 }];
 
-export const WIDGET_LIST = [ POPUP, PLOT, TREE, VAR_LIST ]
+export const WIDGET_LIST = [ POPUP, PLOT, TREE, VAR_LIST ];
 
 export const HHCELL_SELECTOR = 'hhcell.hhpop[0]';
 export const HHCELL_V_SELECTOR = 'hhcell.hhpop[0].v';
 export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility_ctrlPanel_btn';
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
+export const ACNET2_SELECTOR = 'acnet2.pyramidals_48[0]';
+export const ACNET2_BASKET_SELECTOR0 = '"acnet2.baskets_12[0]"';
+export const ACNET2_BASKET_SELECTOR1 = 'acnet2.baskets_12[1]';
+export const ACNET2_BASKET_SELECTOR4 = 'acnet2.baskets_12[4]';
+export const ACNET2_BASKET_SELECTOR5 = '"acnet2.baskets_12[5]"';
+export const ACNET2_V1_SELECTOR = 'acnet2.pyramidals_48[1].soma_0.v';
+export const ACNET2_gDensity_SELECTOR = '"acnet2.pyramidals_48[0].biophys.membraneProperties.Ca_pyr_soma_group.gDensity';
+export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__visibility_ctrlPanel_btn";
+export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
+export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;
+
+export const C302_SELECTOR = 'c302.ADAL[0]';
+export const C302_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="c302_ADAL_0__v_plot_ctrlPanel_btn"]';
+export const C302_V_SELECTOR = 'c302.ADAL[0].v';
+
+export const CA1_V_SELECTOR = 'ca1.CA1_CG[0].Seg0_apical_dendrite_22_1158.v';
+
+
+
+
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';
 
 export const PROJECT_FILTER_BUTTON_SELECTOR = '#anyProjectFilterBtn';
 
 export const PLOT1_SELECTOR = 'div[id="Plot1"]';
+export const PLOT2_SELECTOR = 'div[id="Plot2"]';
 
-export const TUTORIAL_BUTTON_SELECTOR = 'button#tutorialBtn'
+export const TUTORIAL_BUTTON_SELECTOR = 'button#tutorialBtn';
 
-export const CANVAS_2_DIV_SELECTOR = 'div#Canvas2'
-export const PLOT_1_DIV_SELECTOR = 'div#Plot1'
-export const POPUP_1_DIV_SELECTOR = 'div#Popup1'
-export const POPUP_2_DIV_SELECTOR = 'div#Popup2'
-export const POPUP_1_SELECTOR = '#Popup1'
+export const CANVAS_2_DIV_SELECTOR = 'div#Canvas2';
+export const PLOT_1_DIV_SELECTOR = 'div#Plot1';
+export const POPUP_1_DIV_SELECTOR = 'div#Popup1';
+export const POPUP_2_DIV_SELECTOR = 'div#Popup2';
+export const POPUP_1_SELECTOR = '#Popup1';
+export const LOGO = 'div#logo';
 
-export const TUTORIAL_1_DIV_SELECTOR = 'div#Tutorial1'
+export const TUTORIAL_1_DIV_SELECTOR = 'div#Tutorial1';
 
+export const LOADING_SPINNER = 'div[id="loading-spinner"]';
 
 export const ELEMENTS_IN_LANDING_PAGE = [
   [ SIM_TOOLBAR_MESSAGE, SIM_TOOLBAR_SELECTOR ],
@@ -128,4 +152,3 @@ export const DASHBOARD_OPEN_PROJECT = 'i.fa-folder-open'
 export const DIALOG_MODAL_SELECTOR = '#infomodal'
 export const DIALOG_MODAL_BUTTON_SELECTOR = '#infomodal-btn'
 export const DIALOG_MODAL_HEADER = 'div#infomodal-header'
-	

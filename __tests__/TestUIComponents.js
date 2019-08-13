@@ -12,7 +12,6 @@ import { baseURL } from './functions'
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(200000);
-    
     await page.goto(baseURL);
   });
 

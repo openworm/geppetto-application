@@ -1,5 +1,6 @@
 import * as ST from './selectors'
-import { click, wait4selector } from './utils';
+import {click, wait4selector} from './utils';
+import {getUrlFromProjectId} from "./cmdline";
 
 import {getCommandLineArg} from "./cmdline";
 export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
@@ -7,6 +8,7 @@ export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.gep
 const zoomClicks = 50;
 const panClicks = 10;
 const rotateClicks = 20;
+export const defaultColor = [0.00392156862745098,0.6,0.9098039215686274];
 
 export const resetCameraTest = async (page, expectedCameraPosition) => {
   await click(page, ST.PAN_HOME_BUTTON_SELECTOR);
@@ -85,10 +87,10 @@ export const test3DMeshColor = async (page, testColor,variableName,index) => {
 }
 
 
-export const test3DMeshOpacity = async (page, opactityExpected, variableName, index = 0) => {
+export const test3DMeshOpacity = async (page, opacityExpected, variableName, index = 0) => {
   expect(
     await page.evaluate((variableName, index) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[index].material.opacity, variableName, index)
-  ).toBe(opactityExpected)
+  ).toBe(opacityExpected)
 }
 
 
@@ -106,10 +108,10 @@ export const testSelection = async (page, variableName, selectColorVarName) => {
    
   await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
   await page.keyboard.type(variableName);
-  await page.keyboard.press(String.fromCharCode(13))
-  
+  await page.keyboard.press(String.fromCharCode(13));
+
   await wait4selector(page, ST.BUTTON_ONE_SELECTOR, { visible: true });
-  
+  //
   await click(page, ST.BUTTON_ONE_SELECTOR);
   await page.waitFor(500);
 
@@ -122,21 +124,22 @@ export const closeSpotlight = async page => {
 }
 
 
-export const testSpotlight = async (page, variableName,plotName,expectButton,testSelect, selectionName, selectColorVarName) => {  
-  await click(page, ST.SEARCH_ICON_SELECTOR);
+export const testSpotlight = async (page, variableName,plotName,expectButton,testSelect, selectionName, selectColorVarName) => {
+  await assertExists(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
+  await click(page, ST.SPOT_LIGHT_BUTTON_SELECTOR);
 
-  await wait4selector(page, ST.SEARCH_ICON_SELECTOR, { visible: true });
+  await wait4selector(page, ST.SPOT_LIGHT_DIV, { visible: true });
 
   await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
   await page.keyboard.type(variableName);
-  await page.keyboard.press(String.fromCharCode(13))
-  
-  await page.waitForSelector(ST.SEARCH_ICON_SELECTOR, { visible: true });
-
+  await page.keyboard.press('Enter');
+  await page.waitForSelector(ST.SPOT_LIGHT_DIV, { visible: true });
   if (expectButton) {
     await wait4selector(page, ST.PLOT_BUTTON_SELECTOR, { visible: true });
     await page.click("#plot");
     await wait4selector(page, plotName, { visible: true });
+    await page.focus(ST.SPOT_LIGHT_SEARCH_INPUT_SELECTOR);
+    await page.keyboard.press('Escape');
 
   } else {
     await page.waitFor(1000);
@@ -151,15 +154,15 @@ export const testSpotlight = async (page, variableName,plotName,expectButton,tes
 
 export const testCameraControls = async (page, expectedCameraPosition) => {
   const scheduler = [
-    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR],
-    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR],
-    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR]
+    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR, 200],
+    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR, 200],
+    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR, 450]
   ];
 
-  for (const [ repetitions, selector ] of scheduler) {
+  for (const [ repetitions, selector, timeout ] of scheduler) {
     for (const i of Array(repetitions)) {
-      await page.click(selector)
-      await page.waitFor(20)
+      page.click(selector);
+      await page.waitFor(timeout)
     }
     await resetCameraTest(page, expectedCameraPosition);
   }
@@ -171,22 +174,21 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array)
     }
-  }
+  };
 
   const scheduler = [
-    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR],
-    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR],
-    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR]
+    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 100],
+    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 100],
+    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 400]
   ];
 
-  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
+  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector, timeout]) => {
     
     for (let i in Array(repetitions).fill(1)) {
-      // time blows up if we wait the clicks
       await page.click(firstSelector);
-      await page.waitFor(10)
+      await page.waitFor(timeout);
       await page.click(secondSelector);
-      await page.waitFor(10)
+      await page.waitFor(timeout);
     }
     await resetCameraTest(page, expectedCameraPosition);
   })
@@ -223,3 +225,39 @@ export const testPlotWidgets = async (page, widget, expectedGElements) => {
     await page.evaluate(async selector => $(selector)[0].getElementsByClassName("legendtoggle").length, `#${widget}`)
   ).toBe(expectedGElements)
 }
+
+
+export const launchTest = async (projectId, timeout) => {
+  await page.goto(getUrlFromProjectId(projectId));
+  await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+  const pageTitle = await page.title();
+  expect(pageTitle).toEqual("geppetto");
+  await assertExists(page, ST.SIM_TOOLBAR_SELECTOR);
+  await assertExists(page, ST.CONTROLS_SELECTOR);
+  await assertExists(page, ST.FOREGROUND_TOOLBAR_SELECTOR);
+}
+
+
+export const assertExists = async(page, selector) => {
+  expect(
+      await page.evaluate(async selector => { return $(selector) !== null}, selector)
+  ).toBeTruthy();
+}
+
+// export function testDashboard() {
+//   beforeAll(async () => {
+//     await page.goto(baseURL);
+//   });
+//
+//   describe('Test Dashboard', () => {
+//     const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
+//     it.each(PROJECT_IDS)('Project width id %i from core bundle is present', async id => {
+//       await page.waitForSelector(`div[project-id="${id}"]`);
+//     });
+//
+//     it('Logo', async () => {
+//       await assertExists(page, ST.LOGO);
+//     });
+//   })
+//
+// }
