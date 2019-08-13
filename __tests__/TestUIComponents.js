@@ -1,14 +1,13 @@
 const puppeteer = require('puppeteer');
 const { TimeoutError } = require('puppeteer/Errors');
 
-import { getCommandLineArg, getUrlFromProjectId } from './cmdline.js';
+import { getUrlFromProjectId } from './cmdline.js';
 import { wait4selector, click } from './utils';
 
 import * as ST from './selectors';
 
 const COLLAPSE_WIDGET_HEIGHT = 35;
-const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
-
+import { baseURL } from './functions'
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
