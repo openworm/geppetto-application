@@ -38,6 +38,7 @@ describe('Test Persistence', () => {
 
 	describe('Test Dashboard', () => {
 		const PROJECT_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		//Tests all default projecsta are on the dashboard
 		it.each(PROJECT_IDS)('Project width id %i from persistence are present', async id => {
 			wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
 		})
@@ -45,23 +46,33 @@ describe('Test Persistence', () => {
 })
 
 /**
- * Test first project 
+ * Test loading first project, and then persisting it. 
  */
 describe('Test First Project', () => {
 	testProject(page,baseURL, true, 1);
 })
 
+/**
+ * Test loading second project, and then persisting it. 
+ */
 describe('Test Second Project', () => {
 	testProject(page,baseURL, false, 2);
 })
 
+/**
+ * Test loading third project, and then persisting it. 
+ */
 describe('Test Third Project', () => {
 	testProject(page,baseURL, false, 3);
 })
 
+/**
+ * Test persistence features: creating, cloning and deleting experiments, saving project and experiment.
+ */
 describe('Test Persistence Features', () => {
 	beforeAll(async () => {		
 		jest.setTimeout(100000);
+		//Load persisted project with ID 1
 		await page.goto(getUrlFromProjectId(1));
 	});
 
@@ -77,7 +88,6 @@ describe('Test Persistence Features', () => {
 		});
 
 		describe('Test Set Experiment Active',  () => {
-
 			it('Set Experiment active', async () => {
 				await page.waitFor(20000);
 				await page.evaluate(async () => window.Project.getExperiments()[1].setActive())
@@ -102,19 +112,31 @@ describe('Test Persistence Features', () => {
 			})
 		});
 
+		//Series of calls to test creation, cloning and deleting experiments
 		describe('Test Create ,Clone and Delete Experiments',  () => {
 			testCreateExperiment(page, 4);
 			testDeleteExperiment(page, 3);
+
 			testCreateExperiment(page, 4);
 			testDeleteExperiment(page, 3);
+
 			testCloneExperiment(page, 4);
 			testDeleteExperiment(page, 3);
+
 			testCloneExperiment(page, 4);
 			testDeleteExperiment(page, 3);
+
 			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCloneExperiment(page, 4);
 			testDeleteExperiment(page, 3);
 		});
 
+		//Save project and experiment properties
 		describe('Test Saving Project and Experiment Properties',  () => {			
 			const experiment_properties = {"name": "Experiment Test",
 					"conversionServiceId" : "testService",
@@ -145,21 +167,24 @@ describe('Test Persistence Features', () => {
 			})
 
 			it('Initial amount of experiments for hhcell checked', async () => {
-				await page.waitFor(5000);
+				await page.waitFor(20000);
 				expect(
 						await page.evaluate(async () => window.Project.getExperiments().length)
 				).toBe(3)
 			})
 
 			it('Set Experiment active', async () => {
+				await page.waitFor(20000);
 				await page.evaluate(async () => window.Project.getExperiments()[1].setActive())
 				await page.waitFor(1000);
 			})
 
+			//Test project properties were saved
 			it('Test Save Project Properties', async () => {
 				testSaveProjectProperties(page, project_properties, 3)
 			})
 
+			//Test experiment got saved
 			it('Test Save Experiment Properties', async () => {
 				testSaveExperimentProperties(page, experiment_properties, 3)
 			})
