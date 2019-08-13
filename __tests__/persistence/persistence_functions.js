@@ -242,6 +242,7 @@ export const testSaveProjectProperties = async (page, properties, expected_exper
 	).toBe(properties.name)
 };
 
+//Download experiment results, but how to test it works? No solution in jest
 const testDownloadExperimentResults = async (page) => {
 	await page.evaluate(async () => { 
 		var login = GEPPETTO.UserController.isLoggedIn();
@@ -254,6 +255,7 @@ const testDownloadExperimentResults = async (page) => {
 	await page.waitFor(1000)
 };
 
+/Download experiment model, but how to test it works? No solution in jest
 const testDownloadExperimentModel = async (page) => {
 	await page.evaluate(async () => { 
 		var login = GEPPETTO.UserController.isLoggedIn();

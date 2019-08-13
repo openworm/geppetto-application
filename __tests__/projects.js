@@ -48,7 +48,18 @@ export const getProjectNameById = id => {
   }
 };
 
-
+/**JSON containing project to load for persistence.
+  * name : Project name, 
+  * id : ID to retrieve JSON
+  * test_name : Test name identifier
+  * console_test : tests autocomplete in conosole
+  * canvas_widget_object_test : object to render in canvas widget
+  * parameter_test : Parameter used to test in spotlight
+  * recorded_variable_set : Use for testing recording variables
+  * custom_handler_event : handler added to popup widget
+  * test_widgets : Adds widgets to project before persisting
+  * initial_timeout : How much time to wait on project load before kicking off tests
+  */
 const PERSISTENCE_PROJECT_1 = {
 		name : "Hodgkin-Huxley Neuron",
 		id : 1,
