@@ -4,4 +4,3 @@ build/*
 META-INF/*
 **/tests/casperjs/**/*.js
 **/*min.js
-!node_modules/*
