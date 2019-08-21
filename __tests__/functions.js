@@ -1,6 +1,6 @@
 import * as ST from './selectors'
-import {click, wait4selector} from './utils';
-import {getUrlFromProjectId} from "./cmdline";
+import { click, wait4selector } from './utils';
+import { getUrlFromProjectId } from "./cmdline";
 
 const zoomClicks = 50;
 const panClicks = 10;
@@ -226,7 +226,7 @@ export const testPlotWidgets = async (page, widget, expectedGElements) => {
 
 export const launchTest = async (projectId, timeout) => {
   await page.goto(getUrlFromProjectId(projectId));
-  await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
+  await page.waitForSelector(ST.LOADING_SPINNER, { visible: true });
   const pageTitle = await page.title();
   expect(pageTitle).toEqual("geppetto");
   await assertExists(page, ST.SIM_TOOLBAR_SELECTOR);
@@ -235,26 +235,28 @@ export const launchTest = async (projectId, timeout) => {
 }
 
 
-export const assertExists = async(page, selector) => {
+export const assertExists = async (page, selector) => {
   expect(
-      await page.evaluate(async selector => { return $(selector) !== null}, selector)
+    await page.evaluate(async selector => $(selector) !== null, selector)
   ).toBeTruthy();
 }
 
-// export function testDashboard() {
-//   beforeAll(async () => {
-//     await page.goto(baseURL);
-//   });
-//
-//   describe('Test Dashboard', () => {
-//     const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
-//     it.each(PROJECT_IDS)('Project width id %i from core bundle is present', async id => {
-//       await page.waitForSelector(`div[project-id="${id}"]`);
-//     });
-//
-//     it('Logo', async () => {
-//       await assertExists(page, ST.LOGO);
-//     });
-//   })
-//
-// }
+/*
+ * export function testDashboard() {
+ *   beforeAll(async () => {
+ *     await page.goto(baseURL);
+ *   });
+ *
+ *   describe('Test Dashboard', () => {
+ *     const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
+ *     it.each(PROJECT_IDS)('Project width id %i from core bundle is present', async id => {
+ *       await page.waitForSelector(`div[project-id="${id}"]`);
+ *     });
+ *
+ *     it('Logo', async () => {
+ *       await assertExists(page, ST.LOGO);
+ *     });
+ *   })
+ *
+ * }
+ */

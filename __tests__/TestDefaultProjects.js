@@ -7,11 +7,11 @@ import {
   testPVDRNeuronProject,
   testPMuscleCellProject,
   testC302Connectome,
-  //testCylindersProject,
+  // testCylindersProject,
   testPharyngealProject,
   testEyeWireProject
 } from './NeuronalTestsLogic'
-//import {testDashboard} from "./functions";
+// import {testDashboard} from "./functions";
 
 
 describe('Test Default Projects', () => {
@@ -20,7 +20,7 @@ describe('Test Default Projects', () => {
 
   });
 
-  //describe('Test Dashboard', () => testDashboard());
+  // describe('Test Dashboard', () => testDashboard());
   describe('Single Component HH Project', () => testSingleComponentHHProject());
   describe('Acnet Project', () => testACNET2Project());
   describe('C302 Network Project', () => testC302NetworkProject());
