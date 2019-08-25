@@ -2,9 +2,6 @@ import * as ST from './selectors'
 import { click, wait4selector } from './utils';
 import { getUrlFromProjectId } from "./cmdline";
 
-import {getCommandLineArg} from "./cmdline";
-export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
-
 const zoomClicks = 50;
 const panClicks = 10;
 const rotateClicks = 20;
@@ -19,16 +16,16 @@ export const resetCameraTest = async (page, expectedCameraPosition) => {
 export const resetCameraTestWithCanvasWidget = async (page, expectedCameraPosition) => {
   await click(page, ST.PAN_HOME_BUTTON_SELECTOR);
   await page.evaluate(async selector => {
-   await  $(selector).find(".position-toolbar").find(".pan-home").click();
+    $(selector).find(".position-toolbar").find(".pan-home").click();
   }, ST.CANVAS_2_SELECTOR);
 
-  await testCameraPosition(page, expectedCameraPosition);
+  testCameraPosition(page, expectedCameraPosition);
 };
 
 
 export const testInitialControlPanelValues = async (page, values) => {
   await wait4selector(page, ST.CONTROL_PANEL_SELECTOR, { visible: true })
-  const rows = await page.evaluate(async selector => await $(selector).length, ST.STANDARD_ROW_SELECTOR);
+  const rows = await page.evaluate(async selector => $(selector).length, ST.STANDARD_ROW_SELECTOR);
   expect(rows).toEqual(values);
 }
 
@@ -61,14 +58,14 @@ export const testVisibility = async (page, variableName, buttonSelector) => {
 
 export const testMeshVisibility = async (page, visible,variableName) => {
   expect(
-    await page.evaluate(async variableName => await Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].visible, variableName)
+    await page.evaluate(async variableName => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].visible, variableName)
   ).toBe(visible)
 
 }
 
 
 export const testCameraPosition = async (page, expectedCamPosition) => {
-  const camPosition = await page.evaluate(async () => await Canvas1.engine.camera.position.toArray());
+  const camPosition = await page.evaluate(async () => Canvas1.engine.camera.position.toArray());
 
   camPosition.forEach((value, index) => {
     expect(value).toBeCloseTo(expectedCamPosition[index], 0)
@@ -77,7 +74,7 @@ export const testCameraPosition = async (page, expectedCamPosition) => {
 
 
 export const getMeshColor = async (page, variableName, index = 0) => 
-  await page.evaluate(async (variableName, index) => await
+  await page.evaluate(async (variableName, index) => 
     Canvas1.engine.getRealMeshesForInstancePath(variableName)[index].material.color.toArray(), variableName, index)
 
 
@@ -120,7 +117,7 @@ export const testSelection = async (page, variableName, selectColorVarName) => {
 
 
 export const closeSpotlight = async page => {
-  await page.evaluate(async selector => await $(selector).hide(), ST.SPOT_LIGHT_SELECTOR)
+  await page.evaluate(async selector => $(selector).hide(), ST.SPOT_LIGHT_SELECTOR)
 }
 
 
@@ -200,8 +197,8 @@ export const testVisualGroup = (page, variableName, expectedMeshes,expectedColor
   
   Array(expectedMeshes).forEach(async (el, index) => {
     const color = await page.evaluate( (variableName, index) => Canvas1.engine.getRealMeshesForInstancePath(variableName)[index + 1].material.color.toArray(), variableName, index)
-    await test3DMeshColorNotEquals(page, color, variableName);
-    await test3DMeshColor(page, expectedColors[index], variableName, index + 1);
+    test3DMeshColorNotEquals(page, color, variableName);
+    test3DMeshColor(page, expectedColors[index], variableName, index + 1);
   })
 }
 
@@ -263,21 +260,3 @@ export const assertExists = async (page, selector) => {
  *
  * }
  */
-
-// export function testDashboard() {
-//   beforeAll(async () => {
-//     await page.goto(baseURL);
-//   });
-//
-//   describe('Test Dashboard', () => {
-//     const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
-//     it.each(PROJECT_IDS)('Project width id %i from core bundle is present', async id => {
-//       await page.waitForSelector(`div[project-id="${id}"]`);
-//     });
-//
-//     it('Logo', async () => {
-//       await assertExists(page, ST.LOGO);
-//     });
-//   })
-//
-// }
