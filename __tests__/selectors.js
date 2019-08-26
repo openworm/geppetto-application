@@ -75,12 +75,12 @@ export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
 export const ACNET2_SELECTOR = 'acnet2.pyramidals_48[0]';
-export const ACNET2_BASKET_SELECTOR0 = '"acnet2.baskets_12[0]"';
+export const ACNET2_BASKET_SELECTOR0 = 'acnet2.baskets_12[0]';
 export const ACNET2_BASKET_SELECTOR1 = 'acnet2.baskets_12[1]';
 export const ACNET2_BASKET_SELECTOR4 = 'acnet2.baskets_12[4]';
-export const ACNET2_BASKET_SELECTOR5 = '"acnet2.baskets_12[5]"';
+export const ACNET2_BASKET_SELECTOR5 = 'acnet2.baskets_12[5]';
 export const ACNET2_V1_SELECTOR = 'acnet2.pyramidals_48[1].soma_0.v';
-export const ACNET2_gDensity_SELECTOR = '"acnet2.pyramidals_48[0].biophys.membraneProperties.Ca_pyr_soma_group.gDensity';
+export const ACNET2_gDensity_SELECTOR = 'acnet2.pyramidals_48[0].biophys.membraneProperties.Ca_pyr_soma_group.gDensity';
 export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__visibility_ctrlPanel_btn";
 export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
 export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;

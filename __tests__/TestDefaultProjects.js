@@ -20,10 +20,10 @@ describe('Test Default Projects', () => {
 
   });
 
-  describe('Test Dashboard', () => testDashboard());
-  describe('Single Component HH Project', () => testSingleComponentHHProject());
+  // describe('Test Dashboard', () => testDashboard());
+  // describe('Single Component HH Project', () => testSingleComponentHHProject());
   describe('Acnet Project', () => testACNET2Project());
-  describe('C302 Network Project', () => testC302NetworkProject());
+  //describe('C302 Network Project', () => testC302NetworkProject());
   // describe('Ca1 Project', () => testCa1Project());
   // describe('EyeWire Project', () => testEyeWireProject());
   // describe('Pharyngeal Project', () => testPharyngealProject());
