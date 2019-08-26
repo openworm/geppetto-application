@@ -16,7 +16,7 @@ import {testDashboard} from "./functions";
 
 describe('Test Default Projects', () => {
   beforeAll(async () => {
-    jest.setTimeout(200000);
+    jest.setTimeout(500000);
 
   });
 

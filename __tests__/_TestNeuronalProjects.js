@@ -13,7 +13,7 @@ import { testDashboard } from "./functions";
 
 describe('Test Neuronal Projects', () => {
   beforeAll(async () => {
-    jest.setTimeout(200000);
+    jest.setTimeout(300000);
 
   });
 
