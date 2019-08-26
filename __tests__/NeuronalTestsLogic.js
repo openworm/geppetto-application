@@ -12,7 +12,7 @@ import {
   testVisibility,
   testSpotlight, closeSpotlight,
   testingConnectionLines,
-  testVisualGroup, getMeshColor
+  testVisualGroup, getMeshColor, isVisible
 
 } from "./functions";
 import { getUrlFromProjectId } from "./cmdline";
@@ -576,14 +576,13 @@ export function testC302NetworkProject () {
 
   describe('Initial Values', () => {
 
-    /*
-     * it('Import Types Spinner', async () => {
-     *
-     *     await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
-     *     await page.waitForSelector(ST.LOADING_SPINNER, {visible: true});
-     *     await page.waitForSelector(ST.LOADING_SPINNER, {hidden: true});
-     * });
-     */
+    it('Loading Spinner', async () => {
+      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 200000 });
+      await page.waitFor(5000);
+      if (await isVisible(page, ST.LOADING_SPINNER)){
+        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 200000 });
+      }
+    });
 
     it('Plot 1', async () => {
       await wait4selector(page, ST.PLOT1_SELECTOR, { visible: true });
@@ -633,7 +632,7 @@ export function testC302NetworkProject () {
 
     it('Top Variables', async () => {
       const op = await page.evaluate(() => window.Model.getVariables() !== undefined && window.Model.getVariables().length === 2
-                && window.Model.getVariables()[0].getId() === 'c302' && window.Model.getVariables()[1].getId() === 'time');
+                      && window.Model.getVariables()[0].getId() === 'c302' && window.Model.getVariables()[1].getId() === 'time');
       expect(op).toBeTruthy();
     });
 
@@ -907,47 +906,17 @@ export function testPMuscleCellProject () {
 }
 
 
-/*
- * // FIXME: load project from url instead of id
- * export function testCylindersProject () {
- *   beforeAll(async () => {
- *     await launchTest(Projects.CYLINDER);
- *   });
- *
- *   describe('Cylinder', () => {
- *     it('Rotations', async () => {
- *       await wait4selector(page, ST.LOADING_SPINNER, { hidden: true, timeout: 200000 });
- *
- *       const evaluation = await page.evaluate(() => {
- *         const reference
- *                     = {
- *                       "Example2.Pop_OneSeg[0]":[0, Math.PI / 2, 0, "XYZ"],
- *                       "Example2.Pop_OneSeg[1]":[0, Math.PI / 2, 0, "XYZ"],
- *                       "Example2.Pop_TwoSeg[0]":[0, 0, 0, "XYZ"]
- *                     };
- *         let results = [];
- *
- *         for (let path in reference) {
- *           let rotation = Canvas1.engine.meshes[path].rotation.toArray();
- *           let expected = reference[path];
- *           for (let i = 0; i < rotation.length; ++i) {
- *             results.push(rotation[i] === expected[i]);
- *           }
- *         }
- *
- *         for (let i = 0; i < rotation.length; ++i) {
- *           results.push(rotation[i] === expected[i]);
- *         }
- *         return results.every(function (x){
- *           return x;
- *         });
- *       });
- *
- *       expect(evaluation).toBeTruthy();
- *     });
- *   });
- * }
- */
+export function testCylindersProject () {
+  beforeAll(async () => {
+    await launchTest(null, Projects.CYLINDER);
+  });
+
+  describe('Cylinder', () => {
+    it('Rotations.', async () => {
+      await wait4selector(page, ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
+    })
+  });
+}
 
 export function testPharyngealProject () {
   beforeAll(async () => {
@@ -971,7 +940,6 @@ export function testEyeWireProject () {
   describe('EyeWire', () => {
     it('Load.', async () => {
       await wait4selector(page, ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
-
     })
   });
 }
