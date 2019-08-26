@@ -151,9 +151,9 @@ export const testSpotlight = async (page, variableName,plotName,expectButton,tes
 
 export const testCameraControls = async (page, expectedCameraPosition) => {
   const scheduler = [
-    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR, 1000],
-    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR, 1000],
-    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR, 2500]
+    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR, 1500],
+    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR, 1500],
+    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR, 3000]
   ];
 
   for (const [ repetitions, selector, timeout ] of scheduler) {
@@ -174,9 +174,9 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   };
 
   const scheduler = [
-    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 1000],
-    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 1000],
-    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 2500]
+    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 1500],
+    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 1500],
+    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 3000]
   ];
 
   await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector, timeout]) => {
