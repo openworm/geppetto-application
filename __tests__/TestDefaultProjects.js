@@ -30,5 +30,5 @@ describe('Test Default Projects', () => {
   describe('cElegansConnectome Project', () => testC302Connectome());
   describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
-  describe('Cylinders Project', () => testCylindersProject());
+  //describe('Cylinders Project', () => testCylindersProject());
 });
