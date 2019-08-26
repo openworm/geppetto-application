@@ -213,7 +213,7 @@ export function testSingleComponentHHProject () {
   describe('Camera Controls on main Canvas and Canvas widget', () => {
     it('Canvas widget has hhcell', async () => {
       await testCameraControlsWithCanvasWidget(page, [0, 0, 30.90193733102435])
-    }, 240000)
+    }, 200000)
   });
 
   describe('Color Function', () => {
@@ -355,7 +355,7 @@ export function testACNET2Project () {
   describe('Camera Controls', () => {
     it('Camera controls', async () => {
       await testCameraControls(page, [231.95608349343888, 508.36555704435455, 1849.839]);
-    }, 240000)
+    }, 200000)
   });
 
   describe('Original Colors', () => {
