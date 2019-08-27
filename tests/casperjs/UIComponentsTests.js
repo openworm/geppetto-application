@@ -367,7 +367,7 @@ function testMaximizeWidget(test, widgetIdentifier,originalWidth, originalHeight
 			},widgetIdentifier);
 
 			var expectedWidth = casper.evaluate(function(widgetIdentifier) {
-				return $(window).width()-0.2;
+				return $(window).width();
 			},widgetIdentifier);
 
 			test.assertEquals(popupWidth, expectedWidth, widgetIdentifier+" maximize width correct");
