@@ -63,18 +63,18 @@ module.exports = function (env){
     entry: entries,
     
     optimization: {
-        splitChunks: {
-          cacheGroups: {
-              commons: {
-                  name: 'common',                   
-                  minChunks: 2, // Minimum # of chunks which need to contain a module before it's moved into the commons chunk.
-                  chunks: 'initial', //initial, async or all
-                  reuseExistingChunk: true, //use existing chunk if available instead of creating new one
-                  enforce: true //form this chunk irrespective of the size of the chunk
-              }
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            name: 'common',                   
+            minChunks: 2, // Minimum # of chunks which need to contain a module before it's moved into the commons chunk.
+            chunks: 'initial', // initial, async or all
+            reuseExistingChunk: true, // use existing chunk if available instead of creating new one
+            enforce: true // form this chunk irrespective of the size of the chunk
           }
         }
-      },
+      }
+    },
       
     output: {
       path: path.resolve(__dirname, 'build'),
