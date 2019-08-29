@@ -15,8 +15,26 @@
     "prestart": "eslint --ignore-pattern 'node_modules/*' --ignore-pattern 'geppetto-client/node_modules' . --color ; eslint ./node_modules/@geppettoengine/geppetto-client/js/**/*.js --color",
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "@geppettoengine/geppetto-client": "file:geppetto-client",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^3.0.0",
+    "exports-loader": "^0.6.3",
+    "html-webpack-plugin": "^3.2.0",
+    "ignore-loader": "^0.1.2",
+    "imports-loader": "^0.7.1",
+    "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "style-loader": "^0.13.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5"
+  },
+  "devDependencies": {
     "@babel/preset-stage-2": "^7.0.0",
     "@types/jasmine": "^2.8.8",
     "@types/material-ui": "^0.21.5",
