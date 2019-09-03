@@ -31,8 +31,6 @@ describe('Test Default Projects', () => {
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
 
   //describe('Cylinders Project', () => testCylindersProject());
-  afterAll(async () => {
-    await page.close()
-  });
+
 
 });

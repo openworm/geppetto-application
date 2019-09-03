@@ -25,7 +25,5 @@ describe('Test Neuronal Projects', () => {
   describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   describe('cElegansConnectome Project', () => testC302Connectome());
 
-  afterAll(async () => {
-    await page.close()
-  });
+
 });
