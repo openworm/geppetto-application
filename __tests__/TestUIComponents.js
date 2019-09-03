@@ -285,4 +285,8 @@ describe('Test UI Components', () => {
       })
     })
   })
+
+  afterAll(async () => {
+    await page.close()
+  });
 })

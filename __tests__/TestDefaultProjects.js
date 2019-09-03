@@ -17,7 +17,6 @@ import {testDashboard} from "./functions";
 describe('Test Default Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(600000);
-
   });
 
   describe('Test Dashboard', () => testDashboard());
@@ -32,4 +31,8 @@ describe('Test Default Projects', () => {
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
 
   //describe('Cylinders Project', () => testCylindersProject());
+  afterAll(async () => {
+    await page.close()
+  });
+
 });
