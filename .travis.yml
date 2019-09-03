@@ -12,6 +12,8 @@ env:
     - LANDING_PAGE: "http://localhost:8080/org.geppetto.frontend"
 services:
   - docker
+before_install:
+  - npm cache clean --force
 install:
   - npm install jest@24.8.0 puppeteer@1.17.0 jest-puppeteer@3.9.0 babel-preset-env@1.6.0 url-join@4.0.0
 script:
