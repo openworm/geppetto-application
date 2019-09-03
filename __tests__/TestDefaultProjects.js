@@ -17,6 +17,8 @@ import {testDashboard} from "./functions";
 describe('Test Default Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(600000);
+    await jestPuppeteer.resetPage()
+
   });
 
   describe('Test Dashboard', () => testDashboard());

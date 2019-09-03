@@ -14,6 +14,8 @@ import { testDashboard } from "./functions";
 describe('Test Neuronal Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(600000);
+    await jestPuppeteer.resetPage()
+
   });
 
   describe('Test Dashboard', () => testDashboard());
