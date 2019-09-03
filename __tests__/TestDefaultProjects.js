@@ -18,9 +18,7 @@ describe('Test Default Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(600000);
     await jestPuppeteer.resetPage()
-
   });
-
   describe('Test Dashboard', () => testDashboard());
   describe('Single Component HH Project', () => testSingleComponentHHProject());
   describe('Acnet Project', () => testACNET2Project());
