@@ -13,7 +13,6 @@ env:
 services:
   - docker
 before_install:
-  - npm cache clean
   - npm i npm@latest -g
   - npm audit
 install:
