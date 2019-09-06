@@ -29,7 +29,7 @@ describe('Test UI Components', () => {
 
   describe('Test Geppetto without scope', () => {
     it('Open the page', async () => {
-      await page.goto(getUrlFromProjectId());
+      await page.goto(getUrlFromProjectId(1));
     })
 
 
