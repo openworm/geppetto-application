@@ -285,6 +285,4 @@ describe('Test UI Components', () => {
       })
     })
   })
-
-
 })
