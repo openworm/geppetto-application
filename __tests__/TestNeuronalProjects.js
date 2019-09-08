@@ -14,13 +14,14 @@ import { testDashboard } from "./functions";
 describe('Test Neuronal Projects', () => {
   beforeAll(async () => {
     jest.setTimeout(600000);
+    await jestPuppeteer.resetBrowser()
   });
 
   describe('Test Dashboard', () => testDashboard());
   describe('Single Component HH Project', () => testSingleComponentHHProject());
-  // describe('Acnet Project', () => testACNET2Project());
-  // describe('C302 Network Project', () => testC302NetworkProject());
-  // describe('Ca1 Project', () => testCa1Project());
+  describe('Acnet Project', () => testACNET2Project());
+  describe('C302 Network Project', () => testC302NetworkProject());
+  describe('Ca1 Project', () => testCa1Project());
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
   describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   describe('cElegansConnectome Project', () => testC302Connectome());
