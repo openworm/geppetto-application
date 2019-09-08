@@ -248,7 +248,7 @@ export const assertExists = async (page, selector) => {
 
 export function testDashboard () {
   beforeAll(async () => {
-    await jestPuppeteer.resetPage();
+    await jestPuppeteer.resetBrowser();
     await page.goto(baseURL);
   });
 

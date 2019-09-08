@@ -15,9 +15,6 @@ describe('Test UI Components', () => {
     await page.goto(baseURL);
   });
 
-  beforeEach(async () => {
-    await jestPuppeteer.resetPage()
-  })
   
   describe('Test Dashboard', () => {
     const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
