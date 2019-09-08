@@ -22,7 +22,7 @@ describe('Test Neuronal Projects', () => {
   describe('C302 Network Project', () => testC302NetworkProject());
   describe('Ca1 Project', () => testCa1Project());
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
-  // describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
+  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   // describe('cElegansConnectome Project', () => testC302Connectome());
 
 });
