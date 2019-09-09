@@ -13,6 +13,7 @@ import { testDashboard } from "./functions";
 
 describe('Test Neuronal Projects', () => {
   beforeAll(async () => {
+    await jestPuppeteer.resetBrowser();
     jest.setTimeout(600000);
   });
 

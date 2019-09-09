@@ -21,7 +21,6 @@ import { launchTest } from "./functions";
 export function testSingleComponentHHProject () {
 
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await page.goto(getUrlFromProjectId(Projects.HH_CELL));
   });
 
@@ -280,7 +279,6 @@ export function testSingleComponentHHProject () {
 export function testACNET2Project () {
 
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.ACNET);
   });
 
@@ -572,7 +570,6 @@ export function testACNET2Project () {
 export function testC302NetworkProject () {
 
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.C302);
   });
 
@@ -744,7 +741,6 @@ export function testC302NetworkProject () {
 export function testCa1Project () {
 
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.CA1);
   });
 
@@ -778,7 +774,6 @@ export function testCa1Project () {
 export function testPVDRNeuronProject () {
 
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.PVDR);
   });
 
@@ -832,7 +827,6 @@ export function testPVDRNeuronProject () {
 
 export function testC302Connectome () {
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.CONNECTOME);
   });
 
@@ -845,7 +839,6 @@ export function testC302Connectome () {
 
 export function testPMuscleCellProject () {
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.PMUSCLE);
   });
 
@@ -927,7 +920,6 @@ export function testCylindersProject () {
 
 export function testPharyngealProject () {
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.PHARYNGEAL);
   });
 
@@ -942,7 +934,6 @@ export function testPharyngealProject () {
 
 export function testEyeWireProject () {
   beforeAll(async () => {
-    await jestPuppeteer.resetBrowser();
     await launchTest(Projects.EYEWIRE);
   });
 
