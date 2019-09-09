@@ -151,16 +151,17 @@ export const testSpotlight = async (page, variableName,plotName,expectButton,tes
 
 export const testCameraControls = async (page, expectedCameraPosition) => {
   const scheduler = [
-    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR, 100],
-    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR, 250],
-    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR, 400]
+    [zoomClicks, ST.ZOOM_BUTTON_SELECTOR],
+    [panClicks, ST.PAN_RIGHT_BUTTON_SELECTOR],
+    [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR]
   ]
+  const timeout = 1000;
 
-  for (const [ repetitions, selector, timeout ] of scheduler) {
+  for (const [ repetitions, selector ] of scheduler) {
     for (const i of Array(repetitions)) {
-      page.click(selector);
-      await page.waitFor(timeout)
+      await page.click(selector);
     }
+    await page.waitFor(timeout);
     await resetCameraTest(page, expectedCameraPosition);
   }
 }
@@ -174,18 +175,20 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   };
 
   const scheduler = [
-    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR, 100],
-    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR, 250],
-    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR, 400]
+    [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR],
+    [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR],
+    [rotateClicks * 2, ST.ROTATE_RIGHT_BUTTON_SELECTOR, ST.ROTATE_RIGHT_BUTTON_CANVAS_2_SELECTOR]
   ];
 
-  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector, timeout]) => {
+  const timeout = 1000;
+
+  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
     
     for (let i in Array(repetitions).fill(1)) {
-      page.click(firstSelector);
-      page.click(secondSelector);
-      await page.waitFor(timeout);
+      await page.click(firstSelector);
+      await page.click(secondSelector);
     }
+    await page.waitFor(timeout);
     await resetCameraTest(page, expectedCameraPosition);
   })
 
