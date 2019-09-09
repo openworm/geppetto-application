@@ -156,10 +156,12 @@ export const testCameraControls = async (page, expectedCameraPosition) => {
     [rotateClicks, ST.ROTATE_RIGHT_BUTTON_SELECTOR]
   ]
   const timeout = 1000;
+  const inBtwTimeout = 20;
 
   for (const [ repetitions, selector ] of scheduler) {
     for (const i of Array(repetitions)) {
-      await page.click(selector);
+      page.click(selector);
+      await page.waitFor(inBtwTimeout)
     }
     await page.waitFor(timeout);
     await resetCameraTest(page, expectedCameraPosition);
@@ -181,12 +183,15 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   ];
 
   const timeout = 1000;
+  const inBtwTimeout = 20;
 
   await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
     
     for (let i in Array(repetitions).fill(1)) {
-      await page.click(firstSelector);
-      await page.click(secondSelector);
+      page.click(firstSelector);
+      await page.waitFor(inBtwTimeout);
+      page.click(secondSelector);
+      await page.waitFor(inBtwTimeout);
     }
     await page.waitFor(timeout);
     await resetCameraTest(page, expectedCameraPosition);
