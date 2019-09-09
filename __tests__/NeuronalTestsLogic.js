@@ -483,9 +483,9 @@ export function testACNET2Project () {
       });
     });
 
-    it('Camera', async () => {
-      await testCameraControlsWithCanvasWidget(page, [231.95608349343888, 508.36555704435455, 1849.839]);
-    });
+    // it('Camera', async () => {
+    //   await testCameraControlsWithCanvasWidget(page, [231.95608349343888, 508.36555704435455, 1849.839]);
+    // });
   });
 
   describe('Visual Group', () => {
@@ -496,12 +496,13 @@ export function testACNET2Project () {
 
     it('Visual Group Baskets 5', async () => {
       await testVisualGroup(page, ST.ACNET2_BASKET_SELECTOR5, 2, [[], [0, 0.4, 1], [0.6, 0.8, 0]]);
+
     });
   });
 
   describe('Geometry', () => {
 
-    it('Set Geometry Cylinders', async () => {
+    it('Set Geometry Cylinders ACNET2', async () => {
       await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("cylinders"));
     });
 
@@ -513,22 +514,26 @@ export function testACNET2Project () {
     it('Mesh Total', async () => {
       const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
       expect(meshTotal).toEqual(60);
+
     });
 
     it('Set Geometry Lines / 3D Mesh Color', async () => {
       const color = await getMeshColor(page, ST.ACNET2_SELECTOR);
       await page.evaluate(() => acnet2.pyramidals_48[0].setGeometryType("lines"));
       await test3DMeshColor(page, color, ST.ACNET2_SELECTOR);
+
     });
 
     it('LineSegments Geometry', async () => {
       const meshType = await page.evaluate(variableName => Canvas1.engine.getRealMeshesForInstancePath(variableName)[0].type, ST.ACNET2_SELECTOR);
       expect(meshType).toEqual("LineSegments");
+
     });
 
     it('Mesh Total ACNET2', async () => {
       const meshTotal = await page.evaluate(() => Object.keys(Canvas1.engine.meshes).length);
       expect(meshTotal).toEqual(60);
+
     });
 
     it('Set Geometry Cylinders ACNET2', async () => {
@@ -562,6 +567,7 @@ export function testACNET2Project () {
       });
       const colorFunctionInstances = await page.evaluate(() => GEPPETTO.SceneController.getColorFunctionInstances().length);
       expect(initialColorFunctions).not.toEqual(colorFunctionInstances);
+
     });
   });
 
@@ -577,10 +583,10 @@ export function testC302NetworkProject () {
   describe('Initial Values', () => {
 
     it('Loading Spinner', async () => {
-      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 200000 });
+      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true});
       await page.waitFor(5000);
       if (await isVisible(page, ST.LOADING_SPINNER)){
-        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 200000 });
+        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true });
       }
     });
 
