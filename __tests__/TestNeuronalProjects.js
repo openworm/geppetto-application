@@ -18,12 +18,12 @@ describe('Test Neuronal Projects', () => {
 
 
   describe('Test Dashboard', () => testDashboard());
-  describe('Single Component HH Project', () => testSingleComponentHHProject());
-  describe('Acnet Project', () => testACNET2Project());
-  describe('C302 Network Project', () => testC302NetworkProject());
-  describe('Ca1 Project', () => testCa1Project());
-  describe('cElegansPVDR Project', () => testPVDRNeuronProject());
-  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
-  describe('cElegansConnectome Project', () => testC302Connectome());
+//  describe('Single Component HH Project', () => testSingleComponentHHProject());
+//  describe('Acnet Project', () => testACNET2Project());
+//  describe('C302 Network Project', () => testC302NetworkProject());
+//  describe('Ca1 Project', () => testCa1Project());
+//  describe('cElegansPVDR Project', () => testPVDRNeuronProject());
+//  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
+//  describe('cElegansConnectome Project', () => testC302Connectome());
 
 });
