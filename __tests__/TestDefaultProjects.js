@@ -31,5 +31,6 @@ describe('Test Default Projects', () => {
   describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
   describe('cElegansPVDR Project', () => testPVDRNeuronProject());
 
-  //describe('Cylinders Project', () => testCylindersProject());
+  // TODO: Uncomment after https://github.com/openworm/geppetto-client/pull/94
+  // describe('Cylinders Project', () => testCylindersProject());
 });

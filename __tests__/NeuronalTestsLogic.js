@@ -918,9 +918,29 @@ export function testCylindersProject () {
   });
 
   describe('Cylinder', () => {
-    it('Rotations.', async () => {
-      await page.waitFor(10000)
-    })
+    it('Rotations', async () => {
+      await wait4selector(page, ST.LOADING_SPINNER, {hidden: true, timeout: 200000});
+
+      const evaluation = await page.evaluate(() =>
+      {
+        const reference =
+            {"Example2.Pop_OneSeg[0]":[0, Math.PI/2, 0, "XYZ"],
+              "Example2.Pop_OneSeg[1]":[0, Math.PI/2, 0, "XYZ"],
+              "Example2.Pop_TwoSeg[0]":[0, 0, 0, "XYZ"]};
+        let results = [];
+
+        for (let path in reference) {
+          let rotation = Canvas1.engine.meshes[path].rotation.toArray();
+          let expected = reference[path];
+          for (let i=0; i<rotation.length; ++i)
+            results.push(rotation[i] === expected[i]);
+        }
+
+        return results.every(function(x){return x;});
+      });
+
+      expect(evaluation).toBeTruthy();
+    });
   });
 }
 
@@ -931,7 +951,11 @@ export function testPharyngealProject () {
 
   describe('Control Panel PHARYNGEAL', () => {
     it('The control panel opened with right amount of rows.', async () => {
-      await wait4selector(page, ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
+      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000});
+      await page.waitFor(30000);
+      if (await isVisible(page, ST.LOADING_SPINNER)){
+        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
+      }
       await click(page, ST.CONTROL_PANEL_BUTTON);
       await testInitialControlPanelValues(page, 10);
     })
