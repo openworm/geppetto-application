@@ -584,10 +584,7 @@ export function testC302NetworkProject () {
 
     it('Loading Spinner', async () => {
       await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true});
-      await page.waitFor(5000);
-      if (await isVisible(page, ST.LOADING_SPINNER)){
-        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true });
-      }
+      await page.waitFor(30000);
     });
 
     it('Plot 1', async () => {
