@@ -180,12 +180,12 @@ describe('Test UI Components', () => {
         it('Maximized dimensions are correct.', async () => {
           const widgetDimensions = await page.evaluate( async widgetName => {
             const parent = eval(widgetName).$el.parent()
-            return { width: (parent.width()).toFixed(1), height: (parent.height()).toFixed(1) }
+            return { width: Math.round(parent.width()), height: Math.round(parent.height()) }
           }, widgetName)
 
           const widgetExpectedDimensions = await page.evaluate( async () => ({ 
-            width: ($(window).width()).toFixed(1), 
-            height: ($(window).height() - 5.2).toFixed(1) 
+            width: Math.round($(window).width()-.2), 
+            height: Math.round($(window).height() - 5.2) 
           }))
 
           expect(widgetDimensions).toEqual(widgetExpectedDimensions);
