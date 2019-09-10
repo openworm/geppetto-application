@@ -1,22 +1,20 @@
 const puppeteer = require('puppeteer');
 const { TimeoutError } = require('puppeteer/Errors');
 
-import { getUrlFromProjectId } from './cmdline.js';
+import { getCommandLineArg, getUrlFromProjectId } from './cmdline.js';
 import { wait4selector, click } from './utils';
 
 import * as ST from './selectors';
 
 const COLLAPSE_WIDGET_HEIGHT = 35;
-import { baseURL } from './functions'
+const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(200000);
+    console.log(baseURL);
     await page.goto(baseURL);
   });
-
-  afterAll(async () => {
-  })
 
   
   describe('Test Dashboard', () => {
@@ -29,7 +27,7 @@ describe('Test UI Components', () => {
 
   describe('Test Geppetto without scope', () => {
     it('Open the page', async () => {
-      await page.goto(getUrlFromProjectId(1));
+      await page.goto(getUrlFromProjectId());
     })
 
 
@@ -182,12 +180,12 @@ describe('Test UI Components', () => {
         it('Maximized dimensions are correct.', async () => {
           const widgetDimensions = await page.evaluate( async widgetName => {
             const parent = eval(widgetName).$el.parent()
-            return { width: parent.width(), height: parent.height() }
+            return { width: (parent.width()).toFixed(1), height: (parent.height()).toFixed(1) }
           }, widgetName)
 
           const widgetExpectedDimensions = await page.evaluate( async () => ({ 
-            width: $(window).width() - 0.2, 
-            height: $(window).height() - 5.2 
+            width: ($(window).width()).toFixed(1), 
+            height: ($(window).height() - 5.2).toFixed(1) 
           }))
 
           expect(widgetDimensions).toEqual(widgetExpectedDimensions);

@@ -29,7 +29,7 @@ export const WATCH_BUTTON_VISIBLE_MESSAGE = 'Watch button correctly hidden';
 export const PAN_HOME_BUTTON_SELECTOR = '#panHomeBtn';
 export const SPOT_LIGHT_BUTTON_SELECTOR = '#spotlightBtn';
 export const SPOT_LIGHT_SEARCH_INPUT_SELECTOR = 'input#typeahead';
-export const SPOT_LIGHT_DIV= 'div#spotlight';
+export const SPOT_LIGHT_DIV = 'div#spotlight';
 
 export const CONTROL_PANEL_SELECTOR = 'div#controlpanel';
 export const CONTROL_PANEL_MESSAGE = "The control panel is correctly open.";
@@ -77,12 +77,12 @@ export const HHCELL_CONTROL_PANEL_BUTTON_SELECTOR = '#hhcell_hhpop_0__visibility
 export const HHCELL_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="hhcell_hhpop_0__v_plot_ctrlPanel_btn"]';
 
 export const ACNET2_SELECTOR = 'acnet2.pyramidals_48[0]';
-export const ACNET2_BASKET_SELECTOR0 = '"acnet2.baskets_12[0]"';
+export const ACNET2_BASKET_SELECTOR0 = 'acnet2.baskets_12[0]';
 export const ACNET2_BASKET_SELECTOR1 = 'acnet2.baskets_12[1]';
 export const ACNET2_BASKET_SELECTOR4 = 'acnet2.baskets_12[4]';
-export const ACNET2_BASKET_SELECTOR5 = '"acnet2.baskets_12[5]"';
+export const ACNET2_BASKET_SELECTOR5 = 'acnet2.baskets_12[5]';
 export const ACNET2_V1_SELECTOR = 'acnet2.pyramidals_48[1].soma_0.v';
-export const ACNET2_gDensity_SELECTOR = '"acnet2.pyramidals_48[0].biophys.membraneProperties.Ca_pyr_soma_group.gDensity';
+export const ACNET2_gDensity_SELECTOR = 'acnet2.pyramidals_48[0].biophys.membraneProperties.Ca_pyr_soma_group.gDensity';
 export const ACNET2_CONTROL_PANEL_BUTTON_SELECTOR = "acnet2_pyramidals_48_0__visibility_ctrlPanel_btn";
 export const ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR = 'acnet2_pyramidals_48_0__soma_0_v_plot_ctrlPanel_btn';
 export const ACNET2_V_CONTROL_PANEL_BUTTON = `button[id="${ACNET2_V_CONTROL_PANEL_BUTTON_SELECTOR}"]`;
@@ -92,8 +92,6 @@ export const C302_V_CONTROL_PANEL_BUTTON_SELECTOR = 'button[id="c302_ADAL_0__v_p
 export const C302_V_SELECTOR = 'c302.ADAL[0].v';
 
 export const CA1_V_SELECTOR = 'ca1.CA1_CG[0].Seg0_apical_dendrite_22_1158.v';
-
-
 
 
 export const STATE_VARIABLE_FILTER_BUTTON_SELECTOR = '#stateVariablesFilterBtn';

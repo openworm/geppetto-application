@@ -11,13 +11,12 @@ export const getCommandLineArg = (param, defaultValue) => {
   }
 }
 
-const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
+export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
 const getFullPath = (relativePath = 'geppetto?') => urljoin(baseURL, relativePath);
 
-export const  getUrlFromProjectId = (id = undefined) => urljoin(baseURL, 'geppetto?') + (id ? `load_project_from_id=${id}` : '');
+export const getUrlFromProjectId = (id = undefined) => urljoin(baseURL, 'geppetto?') + (id ? `load_project_from_id=${id}` : '');
+export const getUrlFromProjectURL = (url = undefined) => urljoin(baseURL, 'geppetto?') + (url ? `load_project_from_url=${url}` : '');
 export const getProjectUrlFromId = id => getFullPath(`geppetto?load_project_from_id=${id}`);
-
-export const getUrlFromProjectUrl = (url = undefined) => urljoin(baseURL, 'geppetto?') + (url ? `load_project_from_url=${url}` : '');
 
 export const getEmptySceneUrl = () => getFullPath();
