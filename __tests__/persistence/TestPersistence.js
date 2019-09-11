@@ -1,6 +1,3 @@
-const puppeteer = require('puppeteer');
-const { TimeoutError } = require('puppeteer/Errors');
-
 import { getCommandLineArg, getUrlFromProjectUrl, getUrlFromProjectId} from './../cmdline.js';
 import { wait4selector, click } from './../utils';
 
