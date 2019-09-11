@@ -1,7 +1,7 @@
 module.exports = {
   presets: [
     [
-      '@babel/preset-env',
+      'jest-puppeteer-preset',
       { targets: { node: 'current' } },
     ],
   ],
