@@ -151,26 +151,54 @@ describe('Test Persistence Features', () => {
 
 		//Series of calls to test creation, cloning and deleting experiments
 		describe('Test Create ,Clone and Delete Experiments',  () => {
-			testCreateExperiment(page, 4);
-			testDeleteExperiment(page, 3);
+			describe('Test Create Experiments',  () => {
+				testCreateExperiment(page, 4);
+			})
+			describe('Test Delete Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
+			
+			describe('Test Create Experiments',  () => {
+				testCreateExperiment(page, 4);
+			})
+			describe('Test Delete Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
+			
+			describe('Test Clone Experiments',  () => {
+				testCloneExperiment(page, 4);
+			})
+			describe('Test Delete Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
 
-			testCreateExperiment(page, 4);
-			testDeleteExperiment(page, 3);
-
-			testCloneExperiment(page, 4);
-			testDeleteExperiment(page, 3);
-
-			testCloneExperiment(page, 4);
-			testDeleteExperiment(page, 3);
-
-			testCreateExperiment(page, 4);
-			testDeleteExperiment(page, 3);
-
-			testCreateExperiment(page, 4);
-			testDeleteExperiment(page, 3);
-
-			testCloneExperiment(page, 4);
-			testDeleteExperiment(page, 3);
+			describe('Test Clone Experiments',  () => {
+				testCloneExperiment(page, 4);
+			})
+			describe('Test Delete Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
+			
+			describe('Test Create  Experiments',  () => {
+				testCreateExperiment(page, 4);
+			})
+			describe('Test Create ,Clone and Delete Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
+			
+			describe('Test Create Delete Experiments',  () => {
+				testCreateExperiment(page, 4);
+			})
+			describe('Test Delete Created Experiments',  () => {
+				testDeleteExperiment(page, 3);
+			})
+			
+			describe('Test Clone Experiments',  () => {
+				testCloneExperiment(page, 4);
+			})
+			describe('Test Delete Cloned Experiment',  () => {
+				testDeleteExperiment(page, 3);
+			})
 		});
 
 		//Save project and experiment properties
