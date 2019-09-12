@@ -37,6 +37,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 			})
 
 			it('The console input area autocomplete works with command: ' + project_json.console_test.expected, async () => {
+				await page.waitFor(5000);
 				await testConsoleInputArea(page,project_json.console_test.input, project_json.console_test.expected)
 			})
 
