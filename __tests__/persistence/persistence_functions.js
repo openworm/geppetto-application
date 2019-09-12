@@ -166,7 +166,7 @@ export const testProject= (page, base_url, expect_popup, project_id) => {
 export const testCreateExperiment = async (page, expected_experiments) => {
 	it('New experiment created using persisted project', async () => {
 		await page.evaluate(async () => { window.Project.newExperiment();})
-		await page.waitFor(1000)
+		await page.waitFor(10000)
 
 		expect(
 				await page.evaluate(async () =>  window.Project.getExperiments().length)
@@ -177,7 +177,7 @@ export const testCreateExperiment = async (page, expected_experiments) => {
 export const testCloneExperiment = async (page, expected_experiments) => {
 	it('Experiment cloned using persisted project', async () => {
 		await page.evaluate(async () =>  window.Project.getExperiments()[0].clone())
-		await page.waitFor(1000)
+		await page.waitFor(10000)
 		expect(
 				await page.evaluate(async () =>  window.Project.getExperiments().length)
 		).toBe(expected_experiments)
@@ -207,10 +207,10 @@ export const testCloneExperiment = async (page, expected_experiments) => {
 
 export const testDeleteExperiment = async (page, expected_experiments) => {
 	it('Experiment was deleted successfully, according to confirmation popup', async() =>{
+		await page.waitFor(5000)
 		await page.evaluate(async () => { 
 			window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();
 		})
-		await page.waitFor(5000)
 		await page.waitForFunction('document.querySelector(".modal-body").innerText.endsWith("was deleted successfully")');
 	})
 
