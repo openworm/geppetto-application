@@ -211,6 +211,7 @@ export const testDeleteExperiment = async (page, expected_experiments) => {
 		await page.evaluate(async () => { 
 			window.Project.getExperiments()[(window.Project.getExperiments().length-1)].deleteExperiment();
 		})
+		await page.waitFor(3000)
 		await page.waitForFunction('document.querySelector(".modal-body").innerText.endsWith("was deleted successfully")');
 	})
 

@@ -128,7 +128,7 @@ describe('Test Persistence Features', () => {
 			it('Set Experiment active', async () => {
 				await page.waitFor(20000);
 				await page.evaluate(async () => window.Project.getExperiments()[1].setActive())
-				await page.waitFor(5000);
+				await page.waitFor(1000);
 			})
 
 			it("Spinner goes away", async () => {
@@ -151,68 +151,26 @@ describe('Test Persistence Features', () => {
 
 		//Series of calls to test creation, cloning and deleting experiments
 		describe('Test Create ,Clone and Delete Experiments',  () => {
-			describe('Test 1: Create Experiment',  () => {
-				console.log("test create experiment 1");
-				testCreateExperiment(page, 4);
-			})
-			describe('Test 1: Delete Experiment',  () => {
-				console.log("test delete experiment 1");
-				testDeleteExperiment(page, 3);
-			})
-			
-			describe('Test 2: Create Experiment',  () => {
-				console.log("test create experiment 2");
-				testCreateExperiment(page, 4);
-			})
-			describe('Test 2: Delete Experiment',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 2");
-			})
-			
-			describe('Test 3: Clone Experiment',  () => {
-				console.log("test clone experiment 1");
-				testCloneExperiment(page, 4);
-			})
-			describe('Test 3: Delete Experiment',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 3");
-			})
+			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
 
-			describe('Test 4: Clone Experiment',  () => {
-				console.log("test clone experiment 2");
-				testCloneExperiment(page, 4);
-			})
-			describe('Test 4: Delete Experiments',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 4");
-			})
-			
-			describe('Test 5: Create Experiment',  () => {
-				testCreateExperiment(page, 4);
-				console.log("test create experiment 3");
-			})
-			describe('Test 5: Delete Experiment',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 5");
-			})
-			
-			describe('Test 6: Create Experiment',  () => {
-				testCreateExperiment(page, 4);
-				console.log("test create experiment 4");
-			})
-			describe('Test 6: Delete Experiment',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 6");
-			})
-			
-			describe('Test 7: Clone Experiment',  () => {
-				testCloneExperiment(page, 4);
-				console.log("test clone experiment 3");
-			})
-			describe('Test 7: Delete Experiment',  () => {
-				testDeleteExperiment(page, 3);
-				console.log("test delete experiment 7");
-			})
+			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCloneExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCloneExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCreateExperiment(page, 4);
+			testDeleteExperiment(page, 3);
+
+			testCloneExperiment(page, 4);
+			testDeleteExperiment(page, 3);
 		});
 
 		//Save project and experiment properties
