@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
 /*
  *var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
  * <%=htmlWebpackPlugin.options.GEPPETTO_CONFIGURATION._webapp_folder%>
@@ -87,6 +88,7 @@ module.exports = function (env){
        *     analyzerMode: 'static'
        * }),
        */
+      new CompressionPlugin(),
       new CopyWebpackPlugin(availableExtensions),
       new HtmlWebpackPlugin({
         filename: 'geppetto.vm',

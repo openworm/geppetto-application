@@ -5,15 +5,10 @@
   "repository": "http://git.geppetto.org",
   "license": "MIT",
   "scripts": {
-    "prebuild": "eslint . --color",
     "build": "webpack -p --progress",
-    "prebuild-dev": "eslint . --color",
     "build-dev": "webpack --devtool eval",
-    "prebuild-dev-noTest": "eslint . --color",
     "build-dev-noTest": "webpack --devtool source-map --env.noTest=true",
-    "prebuild-dev-noTest:watch": "eslint . --color",
     "build-dev-noTest:watch": "webpack --devtool source-map --env.noTest=true --progress --watch",
-    "prestart": "eslint . --color",
     "start": "node --max_old_space_size=2048 node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress  --config webpack.config.dev.js"
   },
   "dependencies": {
@@ -46,6 +41,7 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.15.0",
+    "compression-webpack-plugin": "^3.0.0",
     "eslint": "^6.0.1",
     "jasmine": "^3.2.0",
     "json-loader": "^0.5.4",

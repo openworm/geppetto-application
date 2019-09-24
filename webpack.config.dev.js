@@ -4,6 +4,7 @@ extended.devServer = {
   progress : true,
   port : 8081,
   inline : true,
+  compress: true,
 
   proxy : [ {
     path : '/',
