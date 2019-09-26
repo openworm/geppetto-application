@@ -86,21 +86,21 @@ describe('Test Persistence', () => {
  * Test loading first project, and then persisting it. 
  */
 describe('Test First Project', () => {
-	testProject(page,baseURL, true, 1);
+	testProject(page,baseURL, true, PERSISTENCE_PROJECT_1);
 })
 
 /**
  * Test loading second project, and then persisting it. 
  */
 describe('Test Second Project', () => {
-	testProject(page,baseURL, false, 2);
+	testProject(page,baseURL, false, PERSISTENCE_PROJECT_2);
 })
 
 /**
  * Test loading third project, and then persisting it. 
  */
 describe('Test Third Project', () => {
-	testProject(page,baseURL, false, 3);
+	testProject(page,baseURL, false, PERSISTENCE_PROJECT_3);
 })
 
 /**

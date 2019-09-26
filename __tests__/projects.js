@@ -61,3 +61,17 @@ export const getProjectNameById = id => {
     return '';
   }
 };
+
+export const getPersistenceProjectJSON = id => {
+	switch (id) {
+	case 1:
+		return PERSISTENCE_PROJECT_1;
+	case 2:
+		return PERSISTENCE_PROJECT_2;
+	case 3:
+		return PERSISTENCE_PROJECT_3;
+
+	default:
+		return '';
+	}
+};
