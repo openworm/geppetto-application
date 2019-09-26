@@ -7,9 +7,8 @@ import { getPersistenceProjectJSON } from './../projects';
  * Series of tests that get performed on project before it gets persisted. Widgets/components also get created so they can be saved
  * when project gets persisted, and then test their existence after persisted.
  */
-export const testProject= (page, base_url, expect_popup, project_id) => {
+export const testProject= (page, base_url, expect_popup, project_json) => {
 	//retrieve project json using id 
-	const project_json = getPersistenceProjectJSON(project_id);
 	const test_name = project_json.test_name + " : "
 	describe(project_json.test_name + " - "+ project_json.name, () => {
 		beforeAll(async () => {		
