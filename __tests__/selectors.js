@@ -49,8 +49,6 @@ export const DRAWER_MAXIMIZE_ICON_SELECTOR = '.maxIcons';
 export const DRAWER_CLOSE_ICON_SELECTOR = '.closeIcons';
 export const DRAWER_CONTAINER_SELECTOR = '.drawer,.react-draggable';
 export const DRAWER_CMD_INPUT_SELECTOR = '#commandInputArea';
-export const TABBER_ANCHOR = 'span[class*="tabber"]'
-export const SELECTED_TAB = ".selectedTab"
 
 export const HELP_BUTTON_SELECTOR = '#genericHelpBtn';
 export const HELP_MODAL_SELECTOR = '#help-modal';
@@ -119,34 +117,3 @@ export const ELEMENTS_IN_LANDING_PAGE = [
   [ CONTROLS_MESSAGE, CONTROLS_SELECTOR],
   [ FOREGROUND_MESSAGE, FOREGROUND_TOOLBAR_SELECTOR]
 ];
-
-export const GEPPETTO_LOGO = 'div#logo';
-	
-export const EXPERIMENT_TABLE_CONTAINER = 'div#experimentsOutput';
-export const EXPERIMENT_TABLE_SELECTOR = 'div.fa.fa-flask';
-export const EXPERIMENT_TABLE_COLUMN_1_SELECTOR = 'tr.experimentsTableColumn:nth-child(1)';
-export const EXPERIMENT_TABLE_EXTENDED_ROW_VARS_SELECTOR = 'td[name=variables]'
-export const EXPERIMENT_TABLE_EXTENDED_ROW_PARAMS_SELECTOR = 'td[name=parameters]'
-export const EXPERIMENT_TABLE_ACTIVE_ICON_SELECTOR = 'a.activeIcon'
-export const EXPERIMENT_TABLE_DOWNLOAD_RESULTS_ICON_SELECTOR = 'a.downloadResultsIcon'
-export const EXPERIMENT_TABLE_DOWNLOAD_MODELS_ICON_SELECTOR = 'a.downloadModelsIcon'
-export const EXPERIMENT_TABLE_CLONE_ICON_SELECTOR = 'a.cloneIcon'
-export const EXPERIMENT_TABLE_DELETE_ICON_SELECTOR = 'a.deleteIcon'
-
-	
-export const PERSIST_BUTTON = 'button.btn.SaveButton';
-export const PERSIST_BUTTON_DISABLED = 'button.btn.SaveButton[disabled]';
-export const PERSIST_BUTTON_ACTIVE = 'button.btn.SaveButton > i.fa-spin'
-	
-export const SPOTLIGHT_PARAMETER_INPUT = 'input.spotlight-input'
-
-export const CONNECTIVITY_1_DIV_SELECTOR = 'div[id="Connectivity1"]'
-	
-export const DASHBOAD_PROJECT_PREVIEW_SELECTOR = 'div.project-preview'
-export const DASHBOARD_DELETE_PROJECT_SELECTOR = 'i.fa.fa-trash-o'
-export const DASHBOARD_DELETE_ICON_SELECTOR = 'i.fa-trash-o'
-export const DASHBOARD_OPEN_PROJECT = 'i.fa-folder-open'
-	
-export const DIALOG_MODAL_SELECTOR = '#infomodal'
-export const DIALOG_MODAL_BUTTON_SELECTOR = '#infomodal-btn'
-export const DIALOG_MODAL_HEADER = 'div#infomodal-header'

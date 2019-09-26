@@ -11,8 +11,9 @@ export const wait4selector = async (page, selector, settings = {}) => {
     let behaviour = "to exists."
     if (options.visible || options.hidden) {
       behaviour = options.visible ? "to be visible." : "to disappear."
+      //console.log(`ERROR: timeout waiting for selector   --->   ${selector}    ${behaviour}`)
     }
-    // console.log(`ERROR: timeout waiting for selector   --->   ${selector}    ${behaviour}`)
+
   }
   expect(success).toBeDefined()
 }

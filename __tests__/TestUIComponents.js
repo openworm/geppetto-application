@@ -12,7 +12,7 @@ const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.f
 describe('Test UI Components', () => {
   beforeAll(async () => {
     jest.setTimeout(200000);
-    console.log(baseURL);
+    await jestPuppeteer.resetBrowser();
     await page.goto(baseURL);
   });
 
@@ -184,8 +184,8 @@ describe('Test UI Components', () => {
           }, widgetName)
 
           const widgetExpectedDimensions = await page.evaluate( async () => ({ 
-            width: Math.round($(window).width()-.2), 
-            height: Math.round($(window).height() - 5.2) 
+            width: Math.round($(window).width()-.2),
+            height: Math.round($(window).height() - 5.2)
           }))
 
           expect(widgetDimensions).toEqual(widgetExpectedDimensions);
