@@ -753,7 +753,11 @@ export function testCa1Project () {
 
   describe('Control Panel CA1', () => {
     it('Initial Amount of Rows', async () => {
-      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true });
+      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000});
+      await page.waitFor(30000);
+      if (await isVisible(page, ST.LOADING_SPINNER)){
+        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
+      }
       await click(page, ST.CONTROL_PANEL_BUTTON);
       await testInitialControlPanelValues(page, 3);
     });
