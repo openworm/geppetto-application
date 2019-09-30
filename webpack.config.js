@@ -30,7 +30,7 @@ if ( isWin ) {
   cssThemesPath = cssThemesPath.replace(/\\/g, "/"); 
 }
 console.log('URL CSS themes path ', cssThemesPath)
-  
+
 const availableExtensions = [
   { from: path.resolve(__dirname, geppetto_client_path, "static/*"), to: 'static', flatten: true },
 ];
@@ -52,12 +52,13 @@ module.exports = function (env){
       geppettoConfig.embedded = JSON.parse(env.embedded);
     }
     if (env.embedderURL){
-      geppettoConfig.embedderURL = JSON.parse(env.embedderURL);
+      geppettoConfig.embedderURL = env.embedderURL;
     }
   }
-  
+
   console.log('Geppetto configuration \n');
   console.log(JSON.stringify(geppettoConfig, null, 2), '\n');
+  
   var entries = {
     main: path.resolve(__dirname, "Main.js"),
     admin: path.resolve(__dirname, geppetto_client_path, "js/pages/admin/admin.js"),
@@ -178,7 +179,7 @@ module.exports = function (env){
         },
         {
           test: /\.less$/,
-          loader: 'style-loader!css-loader!less-loader?{"modifyVars":{"url":"\'' + cssThemesPath + '\'"}}'
+          loader: 'style-loader!css-loader!less-loader?{"modifyVars":{"url":"\'' + path.resolve(__dirname, geppettoConfig.themes) + '\'"}}'
         },
         {
           test: /\.html$/,
