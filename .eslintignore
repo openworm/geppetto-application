@@ -3,6 +3,6 @@ node/*
 build/*
 META-INF/*
 **/tests/casperjs/**/*.js
-**/__tests__/**/*.js
+**/tests/jest-puppeteer/**/*.js
 **/*min.js
 geppetto-client/js/pages/dashboard/js/libs/jasmine/jasmineAdapter.js
