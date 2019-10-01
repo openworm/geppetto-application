@@ -39,56 +39,56 @@ describe('Test Geppetto Model', () => {
             it('Initial amount of experiments for hhcell checked.', async () => {
                 expect(
                     await page.evaluate(async () => window.Project.getExperiments().length)
-                ).resolves.toBe(2)
+                ).toBe(2)
             })
 
             it('Top level instance present.', async () => {
                 expect(
                     await page.evaluate(async () => eval('acnet2') != null)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Model is not undefined', async () => {
                 expect(
                     await page.evaluate(async () => window.Model != undefined)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('2 Variables as expected', async () => {
                 expect(
                     await page.evaluate(async () => window.Model.getVariables().length == 2)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('2 Libraries as expected', async () => {
                 expect(
                     await page.evaluate(async () => window.Model.getLibraries().length == 2)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Instances are not undefined', async () => {
                 expect(
                     await page.evaluate(async () => window.Instances != undefined)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('2 top level instance as expected', async () => {
                 expect(
                     await page.evaluate(async () => window.Instances.length == 2)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Shortcuts created as expected. Tested with acnet and acnet.baskets_12', async () => {
                 expect(
                     await page.evaluate(async () => window.acnet2 != undefined && window.acnet2.baskets_12 != undefined)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Visual types exploded into instances as expected. Tested with acnet2.pyramidals_48 and acnet2.baskets_12', async () => {
                 expect(
                     await page.evaluate(async () =>  window.acnet2.pyramidals_48.getChildren().length === 48 &&
                         window.acnet2.baskets_12.getChildren().length === 12)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Ref string resolved to Type as expected. Tested with referencef : //@libraries.1/@types.5', async () => {
@@ -97,7 +97,7 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.resolve('//@libraries.1/@types.5').getId() == window.Model.getLibraries()[1].getTypes()[5].getId() &&
                         GEPPETTO.ModelFactory.resolve('//@libraries.1/@types.5').getMetaType() == window.Model.getLibraries()[1].getTypes()[5].getMetaType()
                     )
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Type in the model resolved as expected. Tested with acnet2.baskets_12[0]', async () => {
@@ -105,7 +105,7 @@ describe('Test Geppetto Model', () => {
                     await page.evaluate(async () =>  acnet2.baskets_12[0].getTypes().length == 1 &&
                         acnet2.baskets_12[0].getTypes()[0].getId() ==  'bask' &&
                         acnet2.baskets_12[0].getTypes()[0].getMetaType() == 'CompositeType')
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Visual groups created as expected. Tested with acnet2.baskets_12[0]', async () => {
@@ -116,7 +116,7 @@ describe('Test Geppetto Model', () => {
                             acnet2.baskets_12[0].getTypes()[0].getVisualType().getVisualGroups()[1].getId() == 'Kdr_bask') &&
                         (acnet2.baskets_12[0].getTypes()[0].getVisualType().getVisualGroups()[2].getId() == 'Na_bask' ||
                             acnet2.baskets_12[0].getTypes()[0].getVisualType().getVisualGroups()[2].getId() == 'Na_bask'))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('getAllInstanceOf returning instances as expected for Type and Type path. Tested with acnet2.baskets_12[0]', async () => {
@@ -125,7 +125,7 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getType().getPath()).length == 12 &&
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getType())[0].getId() == "baskets_12[0]" &&
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getType())[0].getMetaType() == "ArrayElementInstance")
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('getAllInstanceOf returning instances as expected for Variable and Variable path. Tested with acnet2.baskets_12[0]', async () => {
@@ -134,7 +134,7 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getVariable().getPath()).length == 1 &&
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getVariable())[0].getId() == "baskets_12" &&
                         GEPPETTO.ModelFactory.getAllInstancesOf(acnet2.baskets_12[0].getVariable())[0].getMetaType() == "ArrayInstance")
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('All potential instance paths exploded as expected', async () => {
@@ -144,7 +144,7 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.allPathsIndexing[0].metaType == 'CompositeType' &&
                         GEPPETTO.ModelFactory.allPathsIndexing[9741 - 1].path == "acnet2.SmallNet_bask_bask.GABA_syn_inh.GABA_syn_inh" &&
                         GEPPETTO.ModelFactory.allPathsIndexing[9741 - 1].metaType == 'StateVariableType')
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('getAllPotentialInstancesEndingWith .v returning expected paths', async () => {
@@ -153,13 +153,13 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v')[0] == 'acnet2.pyramidals_48[0].soma_0.v' &&
                         GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v')[333] == 'acnet2.pyramidals_48[45].basal0_6.v' &&
                         GEPPETTO.ModelFactory.getAllPotentialInstancesEndingWith('.v')[456 - 1] == 'acnet2.baskets_12[11].dend_1.v')
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Instances.getInstance creates and fetches instance as expected. Tested with acnet2.baskets_12[3]', async () => {
                 expect(
                     await page.evaluate(async () =>  window.Instances.getInstance('acnet2.baskets_12[3]').getInstancePath() == 'acnet2.baskets_12[3]')
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Instances.getInstance creates and fetches instance as expected. Tested with acnet2.baskets_12[3].soma_0.v', async () => {
@@ -167,13 +167,13 @@ describe('Test Geppetto Model', () => {
                     await page.evaluate(async () =>
                         window.Instances.getInstance('acnet2.baskets_12[3].soma_0.v').getInstancePath() == 'acnet2.baskets_12[3].soma_0.v'
                     )
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Trying to fetch something that does not exist in the model throws exception', async () => {
                 expect(
                     await page.evaluate(async () =>  window.Instances.getInstance('acnet2.baskets_12[3].sticaxxi')==undefined)
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
         })
 
@@ -181,25 +181,25 @@ describe('Test Geppetto Model', () => {
             it('Visual capability injected to instances of visual types. Tested with acnet2.baskets_12[0]', async () => {
                 expect(
                     await page.evaluate(async () =>  window.acnet2.baskets_12[0].hasCapability(GEPPETTO.Resources.VISUAL_CAPABILITY))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Visual capability injected to types with visual types. Tested with acnet2.baskets_12[0]', async () => {
                 expect(
                     await page.evaluate(async () =>  window.acnet2.baskets_12[0].getType().hasCapability(GEPPETTO.Resources.VISUAL_CAPABILITY))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Parameter capability injected to parameter instances. Tested with Model.neuroml.network_ACnet2.temperature', async () => {
                 expect(
                     await page.evaluate(async () =>  window.Model.neuroml.network_ACnet2.temperature.hasCapability(GEPPETTO.Resources.PARAMETER_CAPABILITY))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Visual group capability injected to instances of visual types with visual groups. Tested with acnet2.pyramidals_48[0]', async () => {
                 expect(
                     await page.evaluate(async () =>  window.acnet2.pyramidals_48[0].hasCapability(GEPPETTO.Resources.VISUAL_GROUP_CAPABILITY))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Connection capability injected to variables of ConnectionType.', async () => {
@@ -208,13 +208,13 @@ describe('Test Geppetto Model', () => {
                         GEPPETTO.ModelFactory.getAllVariablesOfMetaType(GEPPETTO.ModelFactory.getAllTypesOfMetaType(GEPPETTO.Resources.COMPOSITE_TYPE_NODE),
                             'ConnectionType')[0].hasCapability(GEPPETTO.Resources.CONNECTION_CAPABILITY)
                     )
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
 
             it('Connection capability injected to instances of connection types. Tested with acnet2.pyramidals_48[0]', async () => {
                 expect(
                     await page.evaluate(async () =>  window.acnet2.pyramidals_48[0].getConnections()[0].hasCapability(GEPPETTO.Resources.CONNECTION_CAPABILITY))
-                ).resolves.toBeTruthy()
+                ).toBeTruthy()
             })
         })
     })
