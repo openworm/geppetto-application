@@ -23,14 +23,6 @@ console.log("\nThe public path (used by the main bundle when including split bun
 var isProduction = process.argv.indexOf('-p') >= 0;
 console.log("\n Building for a " + ((isProduction) ? "production" : "development") + " environment")
 
-// These lines needed to revert direction of slashes in URL/path for CSS Themes in Windows machines
-var isWin = process.platform === "win32";
-console.log("\n Building in Windows Machine : ", isWin)
-var cssThemesPath = path.resolve(__dirname, geppettoConfig.themes)
-if ( isWin ) {
-  cssThemesPath = cssThemesPath.replace(/\\/g, "/"); 
-}
-
 const availableExtensions = [
   { from: path.resolve(__dirname, geppetto_client_path, "static/*"), to: 'static', flatten: true },
 ];
