@@ -6,3 +6,4 @@ META-INF/*
 **/tests/jest-puppeteer/**/*.js
 **/*min.js
 geppetto-client/js/pages/dashboard/js/libs/jasmine/jasmineAdapter.js
+geppetto-client/node_modules/griddle-0.6-fork/*
