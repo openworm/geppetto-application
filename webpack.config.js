@@ -179,7 +179,7 @@ module.exports = function (env){
         },
         {
           test: /\.less$/,
-          loader: 'style-loader!css-loader!less-loader?{"modifyVars":{"url":"\'' + path.resolve(__dirname, geppettoConfig.themes) + '\'"}}'
+          loader: 'style-loader!css-loader!less-loader?{"modifyVars":{"url":"\'' + cssThemesPath + '\'"}}'
         },
         {
           test: /\.html$/,
