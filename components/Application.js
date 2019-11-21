@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Logo from 'geppetto-client/js/components/interface/logo/Logo';
-import Share from 'geppetto-client/js/components/interface/share/Share';
+import Share from './interface/share/Share';
 import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
 import SpotLight from 'geppetto-client/js/components/interface/spotlight/spotlight';
-import LinkButton from 'geppetto-client/js/components/interface/linkButton/LinkButton';
+import LinkButton from './interface/linkButton/LinkButton';
 import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedDrawer';
 import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
 import SimulationControls from './interface/simulationControls/ExperimentControls';
