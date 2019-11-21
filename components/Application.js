@@ -6,10 +6,10 @@ import SpotLight from 'geppetto-client/js/components/interface/spotlight/spotlig
 import LinkButton from 'geppetto-client/js/components/interface/linkButton/LinkButton';
 import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedDrawer';
 import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
-import SimulationControls from 'geppetto-client/js/components/interface/simulationControls/ExperimentControls';
-import ForegroundControls from 'geppetto-client/js/components/interface/foregroundControls/ForegroundControls';
+import SimulationControls from './interface/simulationControls/ExperimentControls';
+import ForegroundControls from './interface/foregroundControls/ForegroundControls';
 
-const Home = require('geppetto-client/js/components/interface/home/HomeButton');
+const Home = require('./interface/home/HomeButton');
 const Console = require('geppetto-client/js/components/interface/console/Console');
 const SaveControl = require('geppetto-client/js/components/interface/save/SaveControl');
 const ExperimentsTable = require('geppetto-client/js/components/interface/experimentsTable/ExperimentsTable');
