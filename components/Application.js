@@ -8,6 +8,10 @@ import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedD
 import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
 import SimulationControls from 'geppetto-client/js/components/interface/simulationControls/ExperimentControls';
 import ForegroundControls from 'geppetto-client/js/components/interface/foregroundControls/ForegroundControls';
+import TestContainer from './sub/TestContainer';
+import Test2 from './sub/Test2';
+import Test3 from './sub/Test3';
+import InjectUserReducer from './sub/InjectUserReducer';
 
 const Home = require('geppetto-client/js/components/interface/home/HomeButton');
 const Console = require('geppetto-client/js/components/interface/console/Console');
@@ -81,7 +85,10 @@ export default class Application extends Component {
 
     return (
       <div id='controls' style={{ height: '100%', width: '100%' }}>
-
+        <TestContainer />
+        <Test2 />
+        <Test3 />
+        <InjectUserReducer />
         <Logo
           logo='gpt-gpt_logo'
           id="geppettologo" />
