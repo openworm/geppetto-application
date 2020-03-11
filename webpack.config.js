@@ -15,7 +15,7 @@ try {
   // Failed to load config file
   console.error('\nFailed to load Geppetto Configuration')
 }
-var geppetto_client_path = 'node_modules/@geppettoengine/geppetto-client'
+var geppetto_client_path = 'node_modules/@geppettoengine/geppetto-client/geppetto-client'
 
 var publicPath = path.join("/", geppettoConfig.contextPath, "geppetto/build/");
 console.log("\nThe public path (used by the main bundle when including split bundles) is: " + publicPath);
@@ -149,7 +149,7 @@ module.exports = function (env){
       rules: [
         {
           test: /\.(js|jsx)$/,
-          exclude: [/ami.min.js/, /node_modules\/(?!(@geppettoengine\/geppetto-client)\/).*/], 
+          exclude: [/ami.min.js/, /node_modules\/(?!(@geppettoengine\/geppetto-client\/geppetto-client)\/).*/],
           loader: 'babel-loader',
           query: { presets: [['@babel/preset-env', { "modules": false }], '@babel/preset-react'] }
         },
