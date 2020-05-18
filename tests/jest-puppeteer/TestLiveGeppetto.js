@@ -9,7 +9,7 @@ import {
 
 import * as ST from './selectors';
 
-const baseURL = getCommandLineArg('--url', 'http://live.geppetto.org');
+const baseURL = process.env.url ||  'http://live.geppetto.org';
 
 describe('Test live.geppetto.org', () => {
     beforeAll(async () => {

@@ -4,7 +4,7 @@ import { wait4selector, click } from './../utils';
 import { testProject, testCreateExperiment, testCloneExperiment, testDeleteExperiment, testSaveProjectProperties, testSaveExperimentProperties } from './persistence_functions';
 import * as ST from './../selectors';
 
-const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend/');
+const baseURL = process.env.url ||  'http://localhost:8080/org.geppetto.frontend';
 
 const PERSISTENCE_PROJECT_1 = {
 		name : "Hodgkin-Huxley Neuron",
@@ -83,21 +83,21 @@ describe('Test Persistence', () => {
 })
 
 /**
- * Test loading first project, and then persisting it. 
+ * Test loading first project, and then persisting it.
  */
 describe('Test First Project', () => {
 	testProject(page,baseURL, true, PERSISTENCE_PROJECT_1);
 })
 
 /**
- * Test loading second project, and then persisting it. 
+ * Test loading second project, and then persisting it.
  */
 describe('Test Second Project', () => {
 	testProject(page,baseURL, false, PERSISTENCE_PROJECT_2);
 })
 
 /**
- * Test loading third project, and then persisting it. 
+ * Test loading third project, and then persisting it.
  */
 describe('Test Third Project', () => {
 	testProject(page,baseURL, false, PERSISTENCE_PROJECT_3);
@@ -107,7 +107,7 @@ describe('Test Third Project', () => {
  * Test persistence features: creating, cloning and deleting experiments, saving project and experiment.
  */
 describe('Test Persistence Features', () => {
-	beforeAll(async () => {		
+	beforeAll(async () => {
 		jest.setTimeout(100000);
 		//Load persisted project with ID 1
 		await page.goto(getUrlFromProjectId(1));
@@ -174,7 +174,7 @@ describe('Test Persistence Features', () => {
 		});
 
 		//Save project and experiment properties
-		describe('Test Saving Project and Experiment Properties',  () => {			
+		describe('Test Saving Project and Experiment Properties',  () => {
 			const experiment_properties = {"name": "Experiment Test",
 					"conversionServiceId" : "testService",
 					"simulatorId" : "testSimulator",
@@ -184,7 +184,7 @@ describe('Test Persistence Features', () => {
 
 			const project_properties = {"name": "New Project Name"};
 			it('Save Project and Experiment', async () => {
-				await page.evaluate(async (project_properties, experiment_properties) => { 
+				await page.evaluate(async (project_properties, experiment_properties) => {
 					window.Project.getExperiments()[(window.Project.getExperiments().length-1)].saveExperimentProperties(experiment_properties);
 					window.Project.saveProjectProperties(project_properties);
 				}, project_properties, experiment_properties)
