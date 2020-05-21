@@ -15,7 +15,7 @@ try {
   // Failed to load config file
   console.error('\nFailed to load Geppetto Configuration')
 }
-var geppetto_client_path = 'node_modules/@geppettoengine/geppetto-client/geppetto-client'
+var geppetto_client_path = 'node_modules/@geppettoengine/geppetto-client'
 
 var publicPath = path.join("/", geppettoConfig.contextPath, "geppetto/build/");
 console.log("\nThe public path (used by the main bundle when including split bundles) is: " + publicPath);

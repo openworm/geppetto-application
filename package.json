@@ -21,7 +21,7 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "@geppettoengine/geppetto-client": "file:geppetto-client",
+    "@geppettoengine/geppetto-client": "file:./geppetto-client/geppetto-client",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^3.0.0",

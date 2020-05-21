@@ -1,6 +1,6 @@
 module.exports = {
   extends: [
-    "./node_modules/@geppettoengine/geppetto-client/geppetto-client/.eslintrc.js",
+    "./geppetto-client/geppetto-client/.eslintrc.js",
     "plugin:jest/recommended"
   ],
   plugins: ["jest"],
