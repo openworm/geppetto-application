@@ -26,7 +26,7 @@ export function testSingleComponentHHProject () {
 
   describe('Landing page', () => {
     it("Spinner goes away", async () => {
-      await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
+      await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true, timeout : 5000 })
     });
 
     it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
@@ -307,13 +307,19 @@ export function testACNET2Project () {
       ).toBeTruthy();
     });
 
-    it("Bask and pyramidal connections after resolveAllImportTypes() call", async () => {
+    it("Bask connections after resolveAllImportTypes() call", async () => {
       await page.evaluate(async () => Model.neuroml.resolveAllImportTypes(window.callPhantom));
+      await page.waitFor(60000);
       expect(
-        await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length === 60
-                    && acnet2.pyramidals_48[23].getConnections().length === 22)
+        await page.evaluate(async () => acnet2.baskets_12[9].getConnections().length === 60)
       ).toBeTruthy();
     });
+    
+    it("Pyramidal connections after resolveAllImportTypes() call", async () => {
+        expect(
+          await page.evaluate(async () => acnet2.pyramidals_48[23].getConnections().length === 22)
+        ).toBeTruthy();
+      });
 
     it("5 Visual Groups on pyramidals", async () => {
       expect(
@@ -752,12 +758,11 @@ export function testCa1Project () {
 
 
   describe('Control Panel CA1', () => {
-    it('Initial Amount of Rows', async () => {
-      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000});
-      await page.waitFor(30000);
-      if (await isVisible(page, ST.LOADING_SPINNER)){
-        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
-      }
+	it('Loading Spinner Gone', async () => {
+      await page.waitForSelector(ST.LOADING_SPINNER, { visible: false, timeout: 45000});
+	});
+	
+	it('Initial Amount of Rows', async () => {
       await click(page, ST.CONTROL_PANEL_BUTTON);
       await testInitialControlPanelValues(page, 3);
     });
@@ -955,10 +960,9 @@ export function testPharyngealProject () {
 
   describe('Control Panel PHARYNGEAL', () => {
     it('The control panel opened with right amount of rows.', async () => {
-      await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000});
       await page.waitFor(30000);
       if (await isVisible(page, ST.LOADING_SPINNER)){
-        await page.waitForSelector(ST.LOADING_SPINNER, { hidden: true, timeout: 45000 });
+        await page.waitForSelector(ST.LOADING_SPINNER, { visible: false, timeout: 45000 });
       }
       await click(page, ST.CONTROL_PANEL_BUTTON);
       await testInitialControlPanelValues(page, 10);

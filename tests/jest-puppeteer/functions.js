@@ -24,8 +24,9 @@ export const resetCameraTestWithCanvasWidget = async (page, expectedCameraPositi
 
 
 export const testInitialControlPanelValues = async (page, values) => {
-  await wait4selector(page, ST.CONTROL_PANEL_SELECTOR, { visible: true })
+  await wait4selector(page, ST.CONTROL_PANEL_SELECTOR, { visible: true , timeout : 60000})
   const rows = await page.evaluate(async selector => $(selector).length, ST.STANDARD_ROW_SELECTOR);
+  console.log("Rows ", rows);
   expect(rows).toEqual(values);
 }
 
@@ -170,12 +171,6 @@ export const testCameraControls = async (page, expectedCameraPosition) => {
 
 
 export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPosition) => {
-  const asyncForEach = async (array, callback) => {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array)
-    }
-  };
-
   const scheduler = [
     [zoomClicks * 2, ST.ZOOM_BUTTON_SELECTOR, ST.ZOOM_BUTTON_CANVAS_2_SELECTOR],
     [panClicks * 2, ST.PAN_RIGHT_BUTTON_SELECTOR, ST.PAN_RIGHT_BUTTON_CANVAS_2_SELECTOR],
@@ -185,18 +180,17 @@ export const testCameraControlsWithCanvasWidget = async (page, expectedCameraPos
   const timeout = 5000;
   const inBtwTimeout = 20;
 
-  await asyncForEach(scheduler, async ([repetitions, firstSelector, secondSelector]) => {
-    
-    for (let i in Array(repetitions).fill(1)) {
-      page.click(firstSelector);
-      await page.waitFor(inBtwTimeout);
-      page.click(secondSelector);
-      await page.waitFor(inBtwTimeout);
+  async (array, callback) => {
+    for (let index = 0; index < array.length; index++) {
+     page.click(firstSelector);
+     await page.waitFor(inBtwTimeout);
+     page.click(secondSelector);
+     await page.waitFor(inBtwTimeout);
     }
+    
     await page.waitFor(timeout);
     await resetCameraTest(page, expectedCameraPosition);
-  })
-
+  };
 }
 
 

@@ -9,7 +9,7 @@ import {
 
 import * as ST from './selectors';
 
-const baseURL = process.env.url ||  'http://live.geppetto.org';
+const baseURL = 'http://live.geppetto.org';
 
 describe('Test live.geppetto.org', () => {
     beforeAll(async () => {
@@ -25,8 +25,8 @@ describe('Test live.geppetto.org', () => {
     /**Tests Dashboard is present with all default projects**/
     describe('Test Dashboard', () => {
         const PROJECT_IDS = [1, 3, 4, 5, 6, 8, 9, 16, 18, 58];
-        it.each(PROJECT_IDS)('Project width id %i from core bundle are present', async id => {
-            wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
+        it.each(PROJECT_IDS)('Project width id %i from core bundle are present', async (id) => {
+            await wait4selector(page, `div[project-id="${id}"]`, { timeout: 60000})
         })
 
         it("Open Single Component HH Project", async () => {
@@ -96,12 +96,6 @@ describe('Test live.geppetto.org', () => {
                     await page.evaluate(async () => eval('hhcell').hhpop[0].bioPhys1.membraneProperties.naChans.na.h.q.getTimeSeries().length == 6001)
                 ).toBeTruthy()
             })
-
-            it('REPEATED!! Right amount of graph elements for Plot1', async () => {
-                await page.evaluate(async () => Plot1.plotData(eval('hhcell').hhpop[0].v))
-                await testPlotWidgets(page, "Plot1", 1)
-            })
-
         })
     })
 })
