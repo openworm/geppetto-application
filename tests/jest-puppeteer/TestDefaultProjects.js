@@ -20,16 +20,16 @@ describe('Test Default Projects', () => {
     jest.setTimeout(200000);
   });
 
-  // describe('Test Dashboard', () => testDashboard());
-  // describe('Single Component HH Project', () => testSingleComponentHHProject());
-  // describe('Acnet Project', () => testACNET2Project());
-  // describe('C302 Network Project', () => testC302NetworkProject());
+  describe('Test Dashboard', () => testDashboard());
+  describe('Single Component HH Project', () => testSingleComponentHHProject());
+  describe('Acnet Project', () => testACNET2Project());
+  describe('C302 Network Project', () => testC302NetworkProject());
   describe('Ca1 Project', () => testCa1Project());
-  // describe('EyeWire Project', () => testEyeWireProject());
-  // describe('Pharyngeal Project', () => testPharyngealProject());
-  // describe('cElegansConnectome Project', () => testC302Connectome());
-  // describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
-  // describe('cElegansPVDR Project', () => testPVDRNeuronProject());
+  describe('EyeWire Project', () => testEyeWireProject());
+  describe('Pharyngeal Project', () => testPharyngealProject());
+  describe('cElegansConnectome Project', () => testC302Connectome());
+  describe('cElegansMuscleModel Project', () => testPMuscleCellProject());
+  describe('cElegansPVDR Project', () => testPVDRNeuronProject());
 
   // TODO: Uncomment after https://github.com/openworm/geppetto-client/pull/94
   // describe('Cylinders Project', () => testCylindersProject());
