@@ -763,16 +763,26 @@ export function testCa1Project () {
 	});
 	
 	it('Initial Amount of Rows', async () => {
-      await click(page, ST.CONTROL_PANEL_BUTTON);
-      await testInitialControlPanelValues(page, 3);
+      try {
+        await click(page, ST.CONTROL_PANEL_BUTTON);
+        await testInitialControlPanelValues(page, 3);
+      }
+      catch (e) {
+        console.log("Error: ", e);
+      }   
     });
 
     it('Hide Control Panel', async () => {
-      await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
-      await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
-      await page.evaluate(async selector => {
-        $(selector).hide()
-      }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+      try {
+        await click(page, ST.STATE_VARIABLE_FILTER_BUTTON_SELECTOR);
+        await click(page, ST.PROJECT_FILTER_BUTTON_SELECTOR);
+        await page.evaluate(async selector => {
+          $(selector).hide()
+        }, ST.CONTROL_PANEL_CONTAINER_SELECTOR)
+      }
+      catch (e) {
+        console.log("Error: ", e);
+      }
     });
 
     it('Spotlight', async () => {
