@@ -26,7 +26,6 @@ export const resetCameraTestWithCanvasWidget = async (page, expectedCameraPositi
 export const testInitialControlPanelValues = async (page, values) => {
   await wait4selector(page, ST.CONTROL_PANEL_SELECTOR, { visible: true , timeout : 60000})
   const rows = await page.evaluate(async selector => $(selector).length, ST.STANDARD_ROW_SELECTOR);
-  console.log("Rows ", rows);
   expect(rows).toEqual(values);
 }
 
