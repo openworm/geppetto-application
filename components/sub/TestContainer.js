@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Test from './Test';
 
 const mapStateToProps = state => ({
-  instanceName: (state.client.selected !== undefined ? state.client.selected.scope.name : "no data selected"),
+  instanceName: (state.client.instance_selected !== undefined ? state.client.instance_selected.scope.name : "no data selected"),
   error: state.client.error
 });
 

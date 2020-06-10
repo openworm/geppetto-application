@@ -19,10 +19,10 @@ export default class Test3 extends React.Component {
   componentDidMount () {
     let currentValue = "no_data";
 
-    var handleChange = () => {
+    var handleChange = action => {
       let previousValue = currentValue;
-      if (GEPPETTO.StoreManager.store.getState().client.selected !== undefined) {
-        currentValue = GEPPETTO.StoreManager.store.getState().client.selected.scope.name;
+      if (GEPPETTO.StoreManager.store.getState().client.instance_selected !== undefined) {
+        currentValue = GEPPETTO.StoreManager.store.getState().client.instance_selected.scope.name;
       }
       if (previousValue !== currentValue) {
         this.setState({ instanceName: currentValue });

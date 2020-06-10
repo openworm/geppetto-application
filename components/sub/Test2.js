@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SELECT } from 'geppetto-client/js/common/actions/actions';
 
 var GEPPETTO = require('geppetto');
 var Rnd = require('react-rnd').default;
@@ -16,11 +17,11 @@ export default class Test2 extends React.Component {
 
   componentDidMount () {
     var that = this;
-    GEPPETTO.StoreManager.eventsCallback["SELECT_INSTANCE"].list.push(action => {
-      if (GEPPETTO.StoreManager.store.getState().client.selected !== undefined) {
+    GEPPETTO.StoreManager.eventsCallback[GEPPETTO.StoreManager.clientActions.SELECT].list.push(action => {
+      if (GEPPETTO.StoreManager.store.getState().client.instance_selected !== undefined) {
         console.log('la action pushata dentro l handler dal middleware e')
         console.log(action);
-        that.setState({ instanceName: GEPPETTO.StoreManager.store.getState().client.selected.scope.name });
+        that.setState({ instanceName: GEPPETTO.StoreManager.store.getState().client.instance_selected.scope.name });
       }
     });
   }

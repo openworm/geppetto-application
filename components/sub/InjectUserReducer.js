@@ -7,7 +7,7 @@ export default class InjectUserReducer extends React.Component {
 
   constructor (props) {
     super(props);
-    
+
     this.state = {
       instanceName: "no_data",
       error: undefined
@@ -15,21 +15,27 @@ export default class InjectUserReducer extends React.Component {
 
     this.unsubscriber = undefined;
   }
-    
-  componentDidMount () {
-    const userInitState = { user: undefined }
 
-    GEPPETTO.StoreManager.store.reduceManager.add("test2", 
-      function (state = userInitState, action) {
-        console.log('ue ue sono iniettato'); 
-        console.log(action); 
-        return state;
-      });
-  }
+  /*
+   * componentDidMount () {
+   *   const userInitState = { user: undefined }
+   */
 
-  componentWillUnmount () {
-    this.unsubscriber();
-  }
+  /*
+   *   GEPPETTO.StoreManager.store.reduceManager.add("test2",
+   *     function (state = userInitState, action) {
+   *       console.log('ue ue sono iniettato');
+   *       console.log(action);
+   *       return state;
+   *     });
+   * }
+   */
+
+  /*
+   * componentWillUnmount () {
+   *   this.unsubscriber();
+   * }
+   */
 
   render () {
     return (
@@ -54,7 +60,7 @@ export default class InjectUserReducer extends React.Component {
           <p>{"Check my componentDidMount if you need a blue print to inject a reducer."}</p>
         </div>
       </Rnd>
-      
+
     );
   }
 }
