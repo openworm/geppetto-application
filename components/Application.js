@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+  Logo,
   Canvas,
   Console,
   Spotlight,
@@ -10,20 +11,19 @@ import {
   SimulationControls
 } from 'geppetto-client/js/components/reduxConnector';
 
-import Logo from 'geppetto-client/js/components/interface/logo/Logo';
 import Share from 'geppetto-client/js/components/interface/share/Share';
-// import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
 import LinkButton from 'geppetto-client/js/components/interface/linkButton/LinkButton';
 import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedDrawer';
 import ForegroundControls from 'geppetto-client/js/components/interface/foregroundControls/ForegroundControls';
-import InjectUserReducer from './sub/InjectUserReducer';
+// import InjectUserReducer from './sub/InjectUserReducer';
 
-import Test2 from './sub/Test2';
-import Test3 from './sub/Test3';
-import TestContainer from './sub/TestContainer';
+// import Test2 from './sub/Test2';
+
+// import Test3 from './sub/Test3';
+
+// import TestContainer from './sub/TestContainer';
 
 const Home = require('geppetto-client/js/components/interface/home/HomeButton');
-// const Console = require('geppetto-client/js/components/interface/console/Console');
 
 var $ = require('jquery');
 var GEPPETTO = require('geppetto');
@@ -42,6 +42,8 @@ export default class Application extends Component {
     this.passThroughDataFilter = function (entities) {
       return entities;
     };
+
+    this.reducerUnsubscriber = undefined;
   }
 
   voltage_color (x) {
@@ -69,6 +71,10 @@ export default class Application extends Component {
     window.voltage_color = function (x) {
       return this.voltage_color(x);
     }.bind(this);
+  }
+
+  componentWillUnmount () {
+    this.unsubscriber();
   }
 
   componentDidMount () {
@@ -101,17 +107,6 @@ export default class Application extends Component {
   }
 
   render () {
-
-    /*
-     * The components here below have been used for the POC of the redux refactoring
-     * they might be interesting for whoever wants to see how the store and actions and callbacks (etc)
-     * have been implemented.
-     *
-     * <TestContainer />
-     *   <Test2 />
-     *   <Test3 />
-     *   <InjectUserReducer />
-     */
 
     return (
       <div id='controls' style={{ height: '100%', width: '100%' }}>
