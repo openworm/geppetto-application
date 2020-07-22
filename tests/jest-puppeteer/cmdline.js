@@ -3,7 +3,7 @@ const urljoin = require('url-join');
 
 export const getCommandLineArg = (param, defaultValue) => {
   let value = process.argv.find(arg => arg.startsWith(param))
-  
+
   if (value) {
     return value.replace(`${param}=`, '')
   } else {
@@ -11,8 +11,8 @@ export const getCommandLineArg = (param, defaultValue) => {
   }
 }
 
-export const baseURL = getCommandLineArg('--url', 'http://localhost:8080/org.geppetto.frontend');
 
+export const baseURL = process.env.url ||  'http://localhost:8080/org.geppetto.frontend';
 const getFullPath = (relativePath = 'geppetto?') => urljoin(baseURL, relativePath);
 
 export const getUrlFromProjectId = (id = undefined) => urljoin(baseURL, 'geppetto?') + (id ? `load_project_from_id=${id}` : '');
