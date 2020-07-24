@@ -4,6 +4,7 @@ module.exports = {
   "testPathIgnorePatterns": [
     "<rootDir>/node_modules/",
     "<rootDir>/geppetto-client/",
-    "<rootDir>/geppetto-client/__tests__/"
+    "<rootDir>/geppetto-client/__tests__/",
+    "<rootDir>/tests/casperjs"
   ]
 };

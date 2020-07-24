@@ -7,7 +7,7 @@ import { wait4selector, click } from './utils';
 import * as ST from './selectors';
 
 const COLLAPSE_WIDGET_HEIGHT = 35;
-const baseURL = process.env.url ||  'http://localhost:8080/org.geppetto.frontend';
+const baseURL = process.env.url || 'http://localhost:8080/org.geppetto.frontend';
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
@@ -184,7 +184,7 @@ describe('Test UI Components', () => {
           }, widgetName)
 
           const widgetExpectedDimensions = await page.evaluate( async () => ({
-            width: Math.round($(window).width()-.2),
+            width: Math.round($(window).width() - .2),
             height: Math.round($(window).height() - 5.2)
           }))
 
