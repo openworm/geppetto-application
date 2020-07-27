@@ -133,7 +133,7 @@ export default class Application extends Component {
         <div id="footer">
           <div id="footerHeader">
             <TabbedDrawer labels={["Console", "Experiments"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
-              <Console />
+              <Console id="Console" />
               <ExperimentsTable />
             </TabbedDrawer>
           </div>
