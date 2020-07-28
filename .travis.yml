@@ -15,7 +15,7 @@ services:
 before_install:
   - if [ $TRAVIS_BRANCH != "master" ]; then git clone -b $TRAVIS_BRANCH https://github.com/openworm/geppetto-client.git; fi
 script:
-  - travis_retry docker build -t=$IMAGE_NAME --build-arg targetBranch=$DEFAULT_BRANCH --build-arg originBranch=$TRAVIS_PULL_REQUEST_BRANCH --build-arg defaultBranch=$DEFAULT_BRANCH $DOCKER_FOLDER
+  - travis_retry docker build -t=$IMAGE_NAME --build-arg targetBranch=$TRAVIS_BRANCH --build-arg originBranch=$TRAVIS_PULL_REQUEST_BRANCH --build-arg defaultBranch=$DEFAULT_BRANCH $DOCKER_FOLDER
   - travis_retry docker run  -t -dit --name=$CONTAINER_NAME -p 8080:8080 $IMAGE_NAME
   - bash $TRAVIS_BUILD_DIR/tests/casperjs/utilities/test_geppetto_server.sh
   - sleep 30
