@@ -7,7 +7,7 @@ import { wait4selector, click } from './utils';
 import * as ST from './selectors';
 
 const COLLAPSE_WIDGET_HEIGHT = 35;
-const baseURL = process.env.url ||  'http://localhost:8080/org.geppetto.frontend';
+const baseURL = process.env.url || 'http://localhost:8080/org.geppetto.frontend';
 
 describe('Test UI Components', () => {
   beforeAll(async () => {
@@ -33,7 +33,7 @@ describe('Test UI Components', () => {
 
     describe('Landing page', () => {
       it("Spinner goes away", async () => {
-        await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true })
+        await wait4selector(page, ST.SPINNER_SELECTOR, { hidden: true , timeout : 5000})
       })
 
       it.each(ST.ELEMENTS_IN_LANDING_PAGE)('%s', async (msg, selector) => {
@@ -184,7 +184,7 @@ describe('Test UI Components', () => {
           }, widgetName)
 
           const widgetExpectedDimensions = await page.evaluate( async () => ({
-            width: Math.round($(window).width()-.2),
+            width: Math.round($(window).width() - .2),
             height: Math.round($(window).height() - 5.2)
           }))
 

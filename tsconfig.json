@@ -15,6 +15,6 @@
         "types": []
       },
       "include": [
-        "./node_modules/@geppettoengine/geppetto-client/js/components/interface/flexLayout2/src/**/*", "./@geppettoengine/geppetto-client/js/components/interface/flexLayout2/examples/demo/*"
+        "./node_modules/@geppettoengine/geppetto-client/components/interface/flexLayout2/src/**/*", "./@geppettoengine/geppetto-client/components/interface/flexLayout2/examples/demo/*"
         ]
 }

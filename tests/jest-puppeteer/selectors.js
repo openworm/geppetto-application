@@ -41,7 +41,7 @@ export const SEARCH_ICON_MESSAGE = 'Attempting to open spotlight';
 
 
 export const CONSOLE_SELECTOR = 'div.fa.fa-terminal';
-export const CONSOLE_OUTPUT_SELECTOR = '#undefined_console';
+export const CONSOLE_OUTPUT_SELECTOR = '#Console_console';
 
 export const DRAWER_SELECTOR = 'div[class*="consoleContainer"]';
 export const DRAWER_MINIMIZE_ICON_SELECTOR = '.minIcons';

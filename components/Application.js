@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import Logo from 'geppetto-client/js/components/interface/logo/Logo';
-import Share from 'geppetto-client/js/components/interface/share/Share';
-import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
-import SpotLight from 'geppetto-client/js/components/interface/spotlight/spotlight';
-import LinkButton from 'geppetto-client/js/components/interface/linkButton/LinkButton';
-import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedDrawer';
-import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
-import SimulationControls from 'geppetto-client/js/components/interface/simulationControls/ExperimentControls';
-import ForegroundControls from 'geppetto-client/js/components/interface/foregroundControls/ForegroundControls';
+import Logo from '@geppettoengine/geppetto-client/components/interface/logo/Logo';
+import Share from '@geppettoengine/geppetto-client/components/interface/share/Share';
+import Canvas from '@geppettoengine/geppetto-client/components/interface/3dCanvas/Canvas';
+import SpotLight from '@geppettoengine/geppetto-client/components/interface/spotlight/spotlight';
+import LinkButton from '@geppettoengine/geppetto-client/components/interface/linkButton/LinkButton';
+import TabbedDrawer from '@geppettoengine/geppetto-client/components/interface/drawer/TabbedDrawer';
+import ControlPanel from '@geppettoengine/geppetto-client/components/interface/controlPanel/controlpanel';
+import SimulationControls from '@geppettoengine/geppetto-client/components/interface/simulationControls/ExperimentControls';
+import ForegroundControls from '@geppettoengine/geppetto-client/components/interface/foregroundControls/ForegroundControls';
 
-const Home = require('geppetto-client/js/components/interface/home/HomeButton');
-const Console = require('geppetto-client/js/components/interface/console/Console');
-const SaveControl = require('geppetto-client/js/components/interface/save/SaveControl');
-const ExperimentsTable = require('geppetto-client/js/components/interface/experimentsTable/ExperimentsTable');
+const Home = require('@geppettoengine/geppetto-client/components/interface/home/HomeButton');
+const Console = require('@geppettoengine/geppetto-client/components/interface/console/Console');
+const SaveControl = require('@geppettoengine/geppetto-client/components/interface/save/SaveControl');
+const ExperimentsTable = require('@geppettoengine/geppetto-client/components/interface/experimentsTable/ExperimentsTable');
 
 var $ = require('jquery');
 var GEPPETTO = require('geppetto');
@@ -133,7 +133,7 @@ export default class Application extends Component {
         <div id="footer">
           <div id="footerHeader">
             <TabbedDrawer labels={["Console", "Experiments"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
-              <Console />
+              <Console id="Console" />
               <ExperimentsTable />
             </TabbedDrawer>
           </div>
