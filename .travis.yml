@@ -8,7 +8,7 @@ env:
     - DOCKER_FOLDER: "https://github.com/openworm/org.geppetto.git#feature/254:utilities/docker/livegeppetto/"
     - IMAGE_NAME: geppetto
     - CONTAINER_NAME: geppetto_container
-    - DEFAULT_BRANCH: master
+    - DEFAULT_BRANCH: development
     - LANDING_PAGE: "http://localhost:8080/org.geppetto.frontend"
 services:
   - docker
