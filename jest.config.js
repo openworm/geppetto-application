@@ -1,6 +1,6 @@
 module.exports = {
   "preset": "jest-puppeteer",
-  "testRegex": "(tests/jest-puppeteer/TestDefault.*|(\\.|/)(test|spec))\\.[jt]sx?$",
+  "testRegex": "(tests/jest-puppeteer/Test.*|(\\.|/)(test|spec))\\.[jt]sx?$",
   "testPathIgnorePatterns": [
     "<rootDir>/node_modules/",
     "<rootDir>/geppetto-client/",
