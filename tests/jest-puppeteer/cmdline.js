@@ -12,7 +12,7 @@ export const getCommandLineArg = (param, defaultValue) => {
 }
 
 
-export const baseURL = process.env.url ||  'http://localhost:8080/org.geppetto.frontend';
+export const baseURL = process.env.url ||  'https://localhost:8080/org.geppetto.frontend';
 const getFullPath = (relativePath = 'geppetto?') => urljoin(baseURL, relativePath);
 
 export const getUrlFromProjectId = (id = undefined) => urljoin(baseURL, 'geppetto?') + (id ? `load_project_from_id=${id}` : '');
