@@ -9,12 +9,12 @@ import {
   ControlPanel,
   ExperimentsTable,
   SimulationControls
-} from 'geppetto-client/js/components/reduxConnector';
+} from '@geppettoengine/geppetto-client/components/reduxConnector';
 
-import Share from 'geppetto-client/js/components/interface/share/Share';
-import LinkButton from 'geppetto-client/js/components/interface/linkButton/LinkButton';
-import TabbedDrawer from 'geppetto-client/js/components/interface/drawer/TabbedDrawer';
-import ForegroundControls from 'geppetto-client/js/components/interface/foregroundControls/ForegroundControls';
+import Share from '@geppettoengine/geppetto-client/components/interface/share/Share';
+import LinkButton from '@geppettoengine/geppetto-client/components/interface/linkButton/LinkButton';
+import TabbedDrawer from '@geppettoengine/geppetto-client/components/interface/drawer/TabbedDrawer';
+import ForegroundControls from '@geppettoengine/geppetto-client/components/interface/foregroundControls/ForegroundControls';
 // import InjectUserReducer from './sub/InjectUserReducer';
 
 // import Test2 from './sub/Test2';
@@ -23,8 +23,7 @@ import ForegroundControls from 'geppetto-client/js/components/interface/foregrou
 
 // import TestContainer from './sub/TestContainer';
 
-const Home = require('geppetto-client/js/components/interface/home/HomeButton');
-
+const Home = require('@geppettoengine/geppetto-client/components/interface/home/HomeButton');
 var $ = require('jquery');
 var GEPPETTO = require('geppetto');
 
@@ -118,7 +117,7 @@ export default class Application extends Component {
           <LinkButton
             left={41}
             top={390}
-            icon='fa fa-github' 
+            icon='fa fa-github'
             url='https://github.com/openworm/org.geppetto' />
         </div>
 
@@ -161,7 +160,7 @@ export default class Application extends Component {
         <div id="footer">
           <div id="footerHeader">
             <TabbedDrawer labels={["Console", "Experiments"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
-              <Console />
+              <Console id="Console" />
               <ExperimentsTable />
             </TabbedDrawer>
           </div>
