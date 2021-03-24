@@ -5,10 +5,8 @@ on:
   pull_request:
   workflow_dispatch:  
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Deploy the local and remote versions of geppetto-vfb
-  deploy-test:
+  geppetto-application-tests:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # total job timeout:
@@ -61,5 +59,5 @@ jobs:
       - name: Run Tests
         continue-on-error: true
         run: npm test -- --verbose --colors
-      - name: Stop VFB server   
+      - name: Stop Geppetto server   
         run: docker stop geppetto_container
