@@ -21,30 +21,34 @@ jobs:
         shell: bash
         run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
         id: git_branch
+      
+      - name : Checkout org.geppetto
+        uses : actions/checkout@v2.3.4
+        with : 
+          repository:  openworm/org.geppetto.git
+          path : ./org.geppetto
+          ref: development 
+      - name : Build org.geppetto
+        run : |
+          cd ./org.geppetto
+          git checkout ${{ steps.git_branch.outputs.branch }} || git checkout development
+          cd ..  
+        
+      - name : Checkout geppetto-client
+        uses : actions/checkout@v2.3.4
+        with : 
+          repository:  openworm/geppetto-client
+          path : ./geppetto-client
+          ref: development 
+      - name : Build geppetto-client
+        run : |
+          cd ./geppetto-client
+          git checkout ${{ steps.git_branch.outputs.branch }} || git checkout development
+          cd ..
     
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      
-      - name: Build and push local wss
-        id: docker_build_local
-        timeout-minutes: 15
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: "geppetto/geppetto-application:${{ steps.git_branch.outputs.branch }}"
-          build-args: |
-            targetBranch=${{ steps.git_branch.outputs.branch }}
-            originBranch=${{ steps.git_branch.outputs.branch }}
-            defaultBranch=development
-      
-      - name: Image digest
-        run: |
-          echo "local:${{ steps.docker_build_local.outputs.digest }}"
-          echo "remote:${{ steps.docker_build_remote.outputs.digest }}"
-                
+      - name: Build image
+        run:  docker build -t=geppetto_container --build-arg targetBranch=${{ steps.git_branch.outputs.branch }} --build-arg originBranch=${{ steps.git_branch.outputs.branch }} --build-arg defaultBranch=development "https://github.com/openworm/org.geppetto.git#development:utilities/docker/geppetto/"
+
       - name: Install Puppeteer
         run: npm install jest@24.8.0 jest-image-snapshot@4.1.0 puppeteer@1.17.0 jest-puppeteer@4.3.0 @babel/preset-env@7.4.5 url-join@4.0.0 @babel/core@7.4.5
       - name: Start Geppetto
