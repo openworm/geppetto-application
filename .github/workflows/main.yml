@@ -47,12 +47,12 @@ jobs:
           cd ..
     
       - name: Build image
-        run:  docker build -t=geppetto_container --build-arg targetBranch=${{ steps.git_branch.outputs.branch }} --build-arg originBranch=${{ steps.git_branch.outputs.branch }} --build-arg defaultBranch=development "https://github.com/openworm/org.geppetto.git#development:utilities/docker/geppetto/"
+        run:  docker build -t=geppetto --build-arg targetBranch=${{ steps.git_branch.outputs.branch }} --build-arg originBranch=${{ steps.git_branch.outputs.branch }} --build-arg defaultBranch=development "https://github.com/openworm/org.geppetto.git#development:utilities/docker/geppetto/"
 
       - name: Install Puppeteer
         run: npm install jest@24.8.0 jest-image-snapshot@4.1.0 puppeteer@1.17.0 jest-puppeteer@4.3.0 @babel/preset-env@7.4.5 url-join@4.0.0 @babel/core@7.4.5
       - name: Start Geppetto
-        run: docker run -t -dit --name=geppetto_container  -p 8080:8080 "geppetto/geppetto-application:${{ steps.git_branch.outputs.branch }}";
+        run: docker run -t -dit --name=geppetto_container  -p 8080:8080 "geppetto";
       - name: Wait for Geppetto Server to be up
         run: |  
           export LANDING_PAGE="http://localhost:8080/org.geppetto.frontend/geppetto"  
