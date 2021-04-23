@@ -13,6 +13,18 @@
     "type": "website",
     "url": "http://live.geppetto.org",
     "icon" :"geppetto/style/favicon.png",
-    "image": "http://www.geppetto.org/images/logo.png"
+    "image": "http://www.geppetto.org/images/logo.png",
+    "errorDialog": {
+      "message" : "Whoops, I broke Geppetto! @geppettoengine help!",
+      "githubButton": {
+        "enabled" : true,
+        "url" : "https://github.com/openworm/org.geppetto/issues/new"
+      },
+      "twitterButton": {
+        "enabled" : true,
+        "url" : "http://geppetto.org",
+        "message" : "Whoops, I broke Geppetto! @geppettoengine help!"
+      }
+    }
   }
 }
