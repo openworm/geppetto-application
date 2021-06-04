@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
-import Logo from '@geppettoengine/geppetto-client/components/interface/logo/Logo';
+
+import {
+  Logo,
+  Canvas,
+  Console,
+  Spotlight,
+  SaveControl,
+  ControlPanel,
+  ExperimentsTable,
+  SimulationControls
+} from '@geppettoengine/geppetto-client/components';
+
 import Share from '@geppettoengine/geppetto-client/components/interface/share/Share';
-import Canvas from '@geppettoengine/geppetto-client/components/interface/3dCanvas/Canvas';
-import SpotLight from '@geppettoengine/geppetto-client/components/interface/spotlight/spotlight';
 import LinkButton from '@geppettoengine/geppetto-client/components/interface/linkButton/LinkButton';
 import TabbedDrawer from '@geppettoengine/geppetto-client/components/interface/drawer/TabbedDrawer';
-import ControlPanel from '@geppettoengine/geppetto-client/components/interface/controlPanel/controlpanel';
-import SimulationControls from '@geppettoengine/geppetto-client/components/interface/simulationControls/ExperimentControls';
 import ForegroundControls from '@geppettoengine/geppetto-client/components/interface/foregroundControls/ForegroundControls';
+// import InjectUserReducer from './sub/InjectUserReducer';
+
+// import Test2 from './sub/Test2';
+
+// import Test3 from './sub/Test3';
+
+// import TestContainer from './sub/TestContainer';
 
 const Home = require('@geppettoengine/geppetto-client/components/interface/home/HomeButton');
-const Console = require('@geppettoengine/geppetto-client/components/interface/console/Console');
-const SaveControl = require('@geppettoengine/geppetto-client/components/interface/save/SaveControl');
-const ExperimentsTable = require('@geppettoengine/geppetto-client/components/interface/experimentsTable/ExperimentsTable');
-
 var $ = require('jquery');
 var GEPPETTO = require('geppetto');
 
@@ -31,15 +41,17 @@ export default class Application extends Component {
     this.passThroughDataFilter = function (entities) {
       return entities;
     };
+
+    this.reducerUnsubscriber = undefined;
   }
 
   voltage_color (x) {
     x = (x + 0.07) / 0.1; // normalization
     if (x < 0) {
-      x = 0; 
+      x = 0;
     }
     if (x > 1) {
-      x = 1; 
+      x = 1;
     }
     if (x < 0.25) {
       return [0, x * 4, 1];
@@ -60,20 +72,36 @@ export default class Application extends Component {
     }.bind(this);
   }
 
+  componentWillUnmount () {
+    this.unsubscriber();
+  }
+
   componentDidMount () {
+    const applicationInitState = { application: {} }
+
+    GEPPETTO.EventManager.store.reduceManager.add("application",
+      // The function here is the application reducer injected
+      function (state = applicationInitState, action) {
+        /*
+         * console.log("the action arriving to the application reducer is:");
+         * console.log(action);
+         */
+        return state;
+      });
+
     GEPPETTO.G.setIdleTimeOut(-1);
     GEPPETTO.G.enableLocalStorage(false);
 
     if (this.refs.canvasRef !== undefined) {
-      this.refs.canvasRef.displayAllInstances();
+      this.refs.canvasRef.getWrappedInstance().displayAllInstances();
     }
 
     if (this.refs.controlPanelRef !== undefined) {
-      this.refs.controlPanelRef.setDataFilter(this.passThroughDataFilter);
+      this.refs.controlPanelRef.getWrappedInstance().setDataFilter(this.passThroughDataFilter);
     }
 
     if (this.refs.spotlightRef !== undefined) {
-      this.refs.spotlightRef.addSuggestion(GEPPETTO.Spotlight.plotSample, GEPPETTO.Resources.PLAY_FLOW);
+      this.refs.spotlightRef.getWrappedInstance().addSuggestion(GEPPETTO.Spotlight.plotSample, GEPPETTO.Resources.PLAY_FLOW);
     }
   }
 
@@ -81,7 +109,6 @@ export default class Application extends Component {
 
     return (
       <div id='controls' style={{ height: '100%', width: '100%' }}>
-
         <Logo
           logo='gpt-gpt_logo'
           id="geppettologo" />
@@ -90,7 +117,7 @@ export default class Application extends Component {
           <LinkButton
             left={41}
             top={390}
-            icon='fa fa-github' 
+            icon='fa fa-github'
             url='https://github.com/openworm/org.geppetto' />
         </div>
 
@@ -122,7 +149,7 @@ export default class Application extends Component {
         </div>
 
         <div id="spotlight" style={{ top: 0 }}>
-          <SpotLight ref="spotlightRef" icon={"styles.Modal"} />
+          <Spotlight ref="spotlightRef" icon={"styles.Modal"} />
         </div>
 
         <div id="controlpanel" style={{ top: 0 }}>

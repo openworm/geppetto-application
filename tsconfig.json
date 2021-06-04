@@ -1,20 +1,27 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "commonjs",
-        "target": "es6",
-        "stripInternal":true,
-        "alwaysStrict":true,
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
-        "strict": true,
-        "noUnusedLocals": true,
-        "jsx": "react",
-        "types": []
-      },
-      "include": [
-        "./node_modules/@geppettoengine/geppetto-client/components/interface/flexLayout2/src/**/*", "./@geppettoengine/geppetto-client/components/interface/flexLayout2/examples/demo/*"
-        ]
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "esnext",
+    "stripInternal":true,
+    "skipLibCheck": true,
+    "alwaysStrict":false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": false,
+    "strict": false,
+    "noUnusedLocals": false,
+    "jsx": "react",
+    "types": ["node"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "lib": ["esnext", "dom"],
+  "include": [
+    "./components/*", "@geppettoengine/geppetto-client/common/**/*", "./node_modules/@geppettoengine/geppetto-client/geppetto-ui/src/flex-layout/src/**/*", "./@geppettoengine/geppetto-client/geppetto-ui/src/flex-layout/examples/demo/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

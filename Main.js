@@ -3,20 +3,31 @@ global.GEPPETTO_CONFIGURATION = require('./GeppettoConfiguration.json');
 
 jQuery(function () {
   require('@geppettoengine/geppetto-client-initialization');
-  var React = require('react');
-  var ReactDOM = require('react-dom');
-  var Route = require('react-router-dom').Route;
-  var Switch = require('react-router-dom').Switch;
-  var Redirect = require('react-router-dom').Redirect;
-  var Router = require('react-router-dom').BrowserRouter;
-  var Application = require('./components/Application').default;
+  const React = require('react');
+  const ReactDOM = require('react-dom');
+  const Route = require('react-router-dom').Route;
+  const Switch = require('react-router-dom').Switch;
+  const Redirect = require('react-router-dom').Redirect;
+  const Router = require('react-router-dom').BrowserRouter;
+  const Application = require('./components/Application').default;
+  const { Provider } = require('react-redux');
+  const { createStore } = require("@geppettoengine/geppetto-client/common");
+
+  const store = createStore(
+    {},
+    {},
+    [],
+    {}
+  )
 
   ReactDOM.render(
-    <Router basename={GEPPETTO_CONFIGURATION.contextPath}>
-      <Switch>
-        <Route path="/geppetto" component={Application} />
-        <Redirect from="/" to="/geppetto" />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router basename={GEPPETTO_CONFIGURATION.contextPath}>
+        <Switch>
+          <Route path="/geppetto" component={Application} />
+          <Redirect from="/" to="/geppetto" />
+        </Switch>
+      </Router>
+    </Provider>
     , document.getElementById('mainContainer'));
 });
