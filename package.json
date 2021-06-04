@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@geppettoengine/geppetto-client": "openworm/geppetto-client#feature/145-enhancements",
-    "jest": "^24.8.0",
     "jest-puppeteer": "^4.3.0",
     "puppeteer": "^1.17.0",
     "react-redux": "^7.0.3",
