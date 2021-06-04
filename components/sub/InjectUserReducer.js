@@ -22,7 +22,7 @@ export default class InjectUserReducer extends React.Component {
    */
 
   /*
-   *   GEPPETTO.StoreManager.store.reduceManager.add("test2",
+   *   GEPPETTO.EventManager.store.reduceManager.add("test2",
    *     function (state = userInitState, action) {
    *       console.log('ue ue sono iniettato');
    *       console.log(action);

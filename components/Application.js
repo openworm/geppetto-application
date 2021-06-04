@@ -9,7 +9,7 @@ import {
   ControlPanel,
   ExperimentsTable,
   SimulationControls
-} from '@geppettoengine/geppetto-client/components/reduxConnector';
+} from '@geppettoengine/geppetto-client/components';
 
 import Share from '@geppettoengine/geppetto-client/components/interface/share/Share';
 import LinkButton from '@geppettoengine/geppetto-client/components/interface/linkButton/LinkButton';
@@ -79,7 +79,7 @@ export default class Application extends Component {
   componentDidMount () {
     const applicationInitState = { application: {} }
 
-    GEPPETTO.StoreManager.store.reduceManager.add("application",
+    GEPPETTO.EventManager.store.reduceManager.add("application",
       // The function here is the application reducer injected
       function (state = applicationInitState, action) {
         /*

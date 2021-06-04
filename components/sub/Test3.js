@@ -21,15 +21,15 @@ export default class Test3 extends React.Component {
 
     var handleChange = action => {
       let previousValue = currentValue;
-      if (GEPPETTO.StoreManager.store.getState().client.instance_selected !== undefined) {
-        currentValue = GEPPETTO.StoreManager.store.getState().client.instance_selected.scope.name;
+      if (GEPPETTO.EventManager.store.getState().client.instance_selected !== undefined) {
+        currentValue = GEPPETTO.EventManager.store.getState().client.instance_selected.scope.name;
       }
       if (previousValue !== currentValue) {
         this.setState({ instanceName: currentValue });
       }
     }
 
-    this.unsubscriber = GEPPETTO.StoreManager.store.subscribe(handleChange);
+    this.unsubscriber = GEPPETTO.EventManager.store.subscribe(handleChange);
   }
 
   componentWillUnmount () {
